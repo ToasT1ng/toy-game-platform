@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>toy-lostark</title>
+
+</head>
+
+<body>
+    <h1>테스트</h1>
+    <table id="productTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productList}">
+            <td th:text="${product.name}">name</td>
+            <td th:text="${product.category}">category</td>
+            <td th:text="${product.price}">price</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
