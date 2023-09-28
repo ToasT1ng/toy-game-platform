@@ -1,7 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>toy-lostark</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 
 <body>
@@ -22,5 +24,15 @@
         </tr>
         </tbody>
     </table>
+
+    <h1>추가</h1>
+    <p>이름 <input type="text" id="name"></p>
+    <p>카테고리 <input type="text" id="category"></p>
+    <p>가격 <input type="number" id="price"></p>
+    <button id="createButton">추가</button>
+
+    <h1>삭제</h1>
+    <p>아이디 <input type="number" id="deleteId"></p>
+    <button id="deleteButton">삭제</button>
 </body>
 </html>

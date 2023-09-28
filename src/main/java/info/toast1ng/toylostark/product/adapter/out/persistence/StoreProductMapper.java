@@ -8,11 +8,8 @@ import java.util.List;
 
 @Component
 public class StoreProductMapper {
-    int count = 2;
     public StoreProductJpaEntity mapToJpaEntity(StoreProduct storeProduct) {
-        count++;
         return StoreProductJpaEntity.builder()
-                .id(count)
                 .category(storeProduct.getCategory())
                 .name(storeProduct.getName())
                 .price(storeProduct.getPrice())
