@@ -17,11 +17,15 @@ public class StoreProductJpaEntity {
     private String category;
     private int price;
 
+    @Column(name = "delete_flag")
+    private boolean deleteFlag;
+
     @Builder
-    public StoreProductJpaEntity(long id, String name, String category, int price) {
+    public StoreProductJpaEntity(long id, String name, String category, int price, boolean deleteFlag) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
+        this.deleteFlag = deleteFlag;
     }
 }

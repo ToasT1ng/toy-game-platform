@@ -1,6 +1,7 @@
 package info.toast1ng.toylostark.product.adapter.out.persistence;
 
 import info.toast1ng.toylostark.common.PersistenceAdapter;
+import info.toast1ng.toylostark.product.application.port.out.DeleteStoreProductPort;
 import info.toast1ng.toylostark.product.application.port.out.LoadStoreProductPort;
 import info.toast1ng.toylostark.product.application.port.out.RegisterStoreProductPort;
 import info.toast1ng.toylostark.product.domain.StoreProduct;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class StoreProductPersistenceAdapter implements RegisterStoreProductPort, LoadStoreProductPort {
+public class StoreProductPersistenceAdapter implements RegisterStoreProductPort, LoadStoreProductPort, DeleteStoreProductPort {
     private final StoreProductMapper mapper;
     private final SpringDataStoreProductRepository repository;
 
@@ -27,6 +28,11 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
 
     @Override
     public StoreProduct loadStoreProduct(long id) {
-        return mapper.mapToDomainObject(repository.getReferenceById(id));
+        return mapper.mapToDomainObject(repository.findById(id));
+    }
+
+    @Override
+    public void deleteStoreProduct(long id) {
+        repository.deleteStoreProduct(id);
     }
 }
