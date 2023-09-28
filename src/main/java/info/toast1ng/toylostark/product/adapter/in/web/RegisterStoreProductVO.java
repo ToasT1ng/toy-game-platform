@@ -4,7 +4,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @Data
-public class MakeStoreProductVO {
+public class RegisterStoreProductVO {
     enum ProductCategory {clothes, pet}
     private String name;
     private ProductCategory category;

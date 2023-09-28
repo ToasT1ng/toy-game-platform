@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class MakeProductCommand {
+public class RegisterProductCommand {
     private String name;
     private String category;
     private int price;

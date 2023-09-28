@@ -1,25 +1,27 @@
 package info.toast1ng.toylostark.product.application;
 
-import info.toast1ng.toylostark.product.application.port.in.GetStoreProductUseCase;
-import info.toast1ng.toylostark.product.application.port.out.GetStoreProductPort;
+import info.toast1ng.toylostark.product.application.port.in.GetStoreProductQuery;
+import info.toast1ng.toylostark.product.application.port.out.LoadStoreProductPort;
 import info.toast1ng.toylostark.product.domain.StoreProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
-public class GetStoreProductService implements GetStoreProductUseCase {
-    private final GetStoreProductPort port;
+public class GetStoreProductService implements GetStoreProductQuery {
+    private final LoadStoreProductPort port;
 
     @Override
-    public List<StoreProduct> getStoreProduct() {
-        return port.getStoreProduct();
+    public List<StoreProduct> listStoreProducts() {
+        return port.listStoreProducts();
     }
 
     @Override
-    public StoreProduct getStoreProduct(long id) {
-        return port.getStoreProduct(id);
+    public StoreProduct loadStoreProduct(long id) {
+        return port.loadStoreProduct(id);
     }
 }
