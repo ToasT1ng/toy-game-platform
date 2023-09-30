@@ -1,13 +1,18 @@
 package info.toast1ng.toylostark.product.domain;
 
+import info.toast1ng.toylostark.common.domain.Gold;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 @Builder
-@Data
+@ToString
+@Getter
 public class StoreProduct {
+    public enum GoldType {diamond, ruby}
     private long id;
     private String name;
     private String category;
-    private int price;
+    private GoldType type;
+    private Gold price;
 }

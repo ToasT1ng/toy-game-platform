@@ -23,12 +23,12 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
 
     @Override
     public List<StoreProduct> listStoreProducts() {
-        return mapper.mapToDomainObject(repository.findAll());
+        return mapper.mapToDomainEntity(repository.findAll());
     }
 
     @Override
     public StoreProduct loadStoreProduct(long id) {
-        return mapper.mapToDomainObject(repository.findById(id));
+        return mapper.mapToDomainEntity(repository.findById(id));
     }
 
     @Override

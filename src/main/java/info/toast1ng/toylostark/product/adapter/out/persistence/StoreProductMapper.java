@@ -1,5 +1,6 @@
 package info.toast1ng.toylostark.product.adapter.out.persistence;
 
+import info.toast1ng.toylostark.common.domain.Gold;
 import info.toast1ng.toylostark.product.domain.StoreProduct;
 import org.springframework.stereotype.Component;
 
@@ -12,23 +13,25 @@ public class StoreProductMapper {
         return StoreProductJpaEntity.builder()
                 .category(storeProduct.getCategory())
                 .name(storeProduct.getName())
-                .price(storeProduct.getPrice())
+                .type(storeProduct.getType())
+                .price(storeProduct.getPrice().getAmount())
                 .build();
     }
 
-    public StoreProduct mapToDomainObject(StoreProductJpaEntity entity) {
+    public StoreProduct mapToDomainEntity(StoreProductJpaEntity entity) {
         return StoreProduct.builder()
                 .id(entity.getId())
                 .category(entity.getCategory())
                 .name(entity.getName())
-                .price(entity.getPrice())
+                .type(entity.getType())
+                .price(new Gold(entity.getPrice()))
                 .build();
     }
 
-    public List<StoreProduct> mapToDomainObject(List<StoreProductJpaEntity> entities) {
+    public List<StoreProduct> mapToDomainEntity(List<StoreProductJpaEntity> entities) {
         List<StoreProduct> list = new ArrayList<>();
         for (StoreProductJpaEntity entity : entities) {
-            list.add(mapToDomainObject(entity));
+            list.add(mapToDomainEntity(entity));
         }
         return list;
     }

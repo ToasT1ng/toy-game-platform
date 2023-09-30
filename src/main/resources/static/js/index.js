@@ -6,6 +6,7 @@ $(document).ready(function () {
             data: {
                 category: $("#category").val(),
                 name: $("#name").val(),
+                type : $("#type").val(),
                 price: $("#price").val()
             },
             contentType: "application/x-www-form-urlencoded"

@@ -1,5 +1,6 @@
-package info.toast1ng.toylostark.product.application;
+package info.toast1ng.toylostark.product.application.port.service;
 
+import info.toast1ng.toylostark.common.domain.Gold;
 import info.toast1ng.toylostark.product.application.port.in.RegisterProductCommand;
 import info.toast1ng.toylostark.product.application.port.in.RegisterStoreProductUseCase;
 import info.toast1ng.toylostark.product.application.port.out.RegisterStoreProductPort;
@@ -20,7 +21,8 @@ public class RegisterStoreProductService implements RegisterStoreProductUseCase 
         port.createStoreProduct(StoreProduct.builder()
                 .name(command.getName())
                 .category(command.getCategory())
-                .price(command.getPrice())
+                .type(command.getType())
+                .price(new Gold(command.getPrice()))
                 .build());
     }
 }

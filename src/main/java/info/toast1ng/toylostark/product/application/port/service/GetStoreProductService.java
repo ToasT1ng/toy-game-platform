@@ -1,4 +1,4 @@
-package info.toast1ng.toylostark.product.application;
+package info.toast1ng.toylostark.product.application.port.service;
 
 import info.toast1ng.toylostark.product.application.port.in.GetStoreProductQuery;
 import info.toast1ng.toylostark.product.application.port.out.LoadStoreProductPort;

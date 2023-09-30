@@ -22,6 +22,7 @@ public class StoreProductController {
         registerStoreProductUseCase.registerProduct(RegisterProductCommand.builder()
                 .name(vo.getName())
                 .category(vo.getCategory().name())
+                .type(vo.getType())
                 .price(vo.getPrice())
                 .build());
         return "success";
