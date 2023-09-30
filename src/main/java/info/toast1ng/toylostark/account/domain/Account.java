@@ -20,6 +20,15 @@ public class Account {
     private Golds golds;
     private Date lastLogin;
 
+    public void addDiamond(Gold diamond) {
+        this.golds.diamond.addGold(diamond.getAmount());
+    }
+
+    public void addRuby(Gold ruby) {
+        this.golds.ruby.addGold(ruby.getAmount());
+    }
+
+    @ToString
     @Getter
     public static class Golds {
         private Gold ruby;

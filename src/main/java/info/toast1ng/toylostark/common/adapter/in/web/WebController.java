@@ -1,6 +1,7 @@
 package info.toast1ng.toylostark.common.adapter.in.web;
 
 import info.toast1ng.toylostark.account.application.port.in.GetAccountQuery;
+import info.toast1ng.toylostark.charge.domain.FixedExchangeRates;
 import info.toast1ng.toylostark.product.application.port.in.GetStoreProductQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ public class WebController {
     public ModelAndView myPage() {
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(0));
+        model.addObject("exchangeRates", new FixedExchangeRates().getList());
         model.setViewName("myPage");
         return model;
     }

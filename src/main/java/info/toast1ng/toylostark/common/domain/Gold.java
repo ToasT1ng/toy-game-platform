@@ -7,4 +7,8 @@ import lombok.Data;
 @Data
 public class Gold {
     private int amount;
+
+    public void addGold(int amount) {
+        this.amount += amount;
+    }
 }

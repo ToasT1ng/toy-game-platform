@@ -6,7 +6,7 @@ import info.toast1ng.toylostark.common.domain.Money;
 
 import java.util.Date;
 
-public class Order {
+public class ChargeOrder {
     private long id;
     private Account user;
     private Date date;

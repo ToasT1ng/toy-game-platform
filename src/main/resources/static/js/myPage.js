@@ -1,25 +1,14 @@
 // import { ajax } from "./ajax.js"
 
 $(document).ready(function () {
-    $("#createButton").click(() => {
+    $("#chargeButton").click(() => {
         let query = {
-            url: '/store-products',
+            url: '/charge/diamond/' + $("#exchangeRateId").val(),
             type: 'POST',
             data: {
-                category: $("#category").val(),
-                name: $("#name").val(),
-                type : $("#type").val(),
-                price: $("#price").val()
+                userId: $("#userId").val()
             },
             contentType: "application/x-www-form-urlencoded"
-        };
-        ajax(query);
-    });
-
-    $("#deleteButton").click(() => {
-        let query = {
-            url: '/store-products/' + $("#deleteId").val(),
-            type: 'DELETE'
         };
         ajax(query);
     });

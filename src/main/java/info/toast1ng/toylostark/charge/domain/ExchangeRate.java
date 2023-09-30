@@ -12,7 +12,8 @@ public class ExchangeRate {
     private Gold diamond;
     private int bonus;
 
-    public ExchangeRate(Money price, Gold diamond) {
+    public ExchangeRate(long id, Money price, Gold diamond) {
+        this.id = id;
         this.price = price;
         this.diamond = diamond;
         this.bonus = diamond.getAmount() - (price.getAmount() / 100);

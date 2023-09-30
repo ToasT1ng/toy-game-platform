@@ -3,11 +3,13 @@
     <meta charset="UTF-8">
     <title>toy-lostark</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" th:src="@{/js/ajax.js}"></script>
     <script type="text/javascript" th:src="@{/js/myPage.js}"></script>
 </head>
 
 <body>
     <h1>계정정보</h1>
+    <input type="hidden" id="userId" th:value="${account.id}">
     <table id="accountTable">
         <thead>
         <tr>
@@ -19,17 +21,36 @@
         <tbody>
         <tr>
             <td th:text="${account.username}">username</td>
-            <td th:text="${account.diamond.amount}">diamond</td>
-            <td th:text="${account.ruby.amount}">ruby</td>
+            <td th:text="${account.golds.diamond.amount}">diamond</td>
+            <td th:text="${account.golds.ruby.amount}">ruby</td>
         </tr>
         </tbody>
     </table>
 
-<!--    <h1>추가</h1>-->
-<!--    <p>이름 <input type="text" id="name"></p>-->
-<!--    <p>카테고리 <input type="text" id="category"></p>-->
-<!--    <p>가격 <input type="number" id="price"></p>-->
-<!--    <button id="createButton">추가</button>-->
+    <h1>충전정보</h1>
+    <table id="exchangeTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Diamond</th>
+            <th>Bonus</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="exchangeRate : ${exchangeRates}">
+            <td th:text="${exchangeRate.id}">id</td>
+            <td th:text="${exchangeRate.price.amount}">price</td>
+            <td th:text="${exchangeRate.diamond.amount}">diamond</td>
+            <td th:text="${exchangeRate.bonus}">bonus</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h1>충전</h1>
+    <p>충전정보 아이디<input type="number" id="exchangeRateId"></p>
+    <button id="chargeButton">충전</button>
 
 <!--    <h1>삭제</h1>-->
 <!--    <p>아이디 <input type="number" id="deleteId"></p>-->
