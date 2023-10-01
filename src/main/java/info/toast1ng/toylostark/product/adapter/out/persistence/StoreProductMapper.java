@@ -1,5 +1,6 @@
 package info.toast1ng.toylostark.product.adapter.out.persistence;
 
+import info.toast1ng.toylostark.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toylostark.common.domain.Gold;
 import info.toast1ng.toylostark.product.domain.StoreProduct;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StoreProductMapper {
+public class StoreProductMapper implements BasicMapper<StoreProductJpaEntity, StoreProduct> {
     public StoreProductJpaEntity mapToJpaEntity(StoreProduct storeProduct) {
         return StoreProductJpaEntity.builder()
                 .category(storeProduct.getCategory())

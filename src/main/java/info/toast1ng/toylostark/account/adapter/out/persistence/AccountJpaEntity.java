@@ -5,22 +5,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
-//@Entity
+@Entity
 @Data
-//@Table(name="account")
+@Table(name="account")
 public class AccountJpaEntity {
-//    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
     private String password;
+
+    @Enumerated(value = EnumType.STRING)
     private Account.AccountGrade grade;
     private int ruby;
     private int diamond;
 
-//    @Column(name="last_login")
+    @Column(name="last_login")
     private Date lastLogin;
 
     @Builder

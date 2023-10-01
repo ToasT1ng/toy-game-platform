@@ -1,10 +1,12 @@
 package info.toast1ng.toylostark.common.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @AllArgsConstructor
-@Data
+@Getter
 public class Gold {
     private int amount;
 

@@ -27,6 +27,26 @@
         </tbody>
     </table>
 
+    <h1>충전내역</h1>
+    <table id="chargeOrderTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Diamond</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="chargeOrder : ${chargeOrders}">
+            <td th:text="${chargeOrder.id}">id</td>
+            <td th:text="${chargeOrder.date}">date</td>
+            <td th:text="${chargeOrder.price.amount}">price</td>
+            <td th:text="${chargeOrder.diamond.amount}">diamond</td>
+        </tr>
+        </tbody>
+    </table>
+
     <h1>충전정보</h1>
     <table id="exchangeTable">
         <thead>

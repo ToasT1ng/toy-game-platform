@@ -1,17 +1,25 @@
 package info.toast1ng.toylostark.charge.application.service;
 
 import info.toast1ng.toylostark.account.application.port.out.LoadAccountPort;
+import info.toast1ng.toylostark.account.application.port.out.UpdateAccountPort;
 import info.toast1ng.toylostark.account.domain.Account;
 import info.toast1ng.toylostark.charge.application.port.in.ChargeDiamondCommand;
 import info.toast1ng.toylostark.charge.application.port.in.ChargeDiamondUseCase;
+import info.toast1ng.toylostark.charge.application.port.out.RegisterChargeOrderPort;
+import info.toast1ng.toylostark.charge.domain.ChargeOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Date;
+
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class ChargeDiamondService implements ChargeDiamondUseCase {
     private final LoadAccountPort loadAccountPort;
-
+    private final UpdateAccountPort updateAccountPort;
+    private final RegisterChargeOrderPort registerChargeOrderPort;
 
     @Override
     public void chargeDiamond(ChargeDiamondCommand chargeDiamondCommand) {
@@ -24,9 +32,14 @@ public class ChargeDiamondService implements ChargeDiamondUseCase {
 
         //TODO billing (w. Payment Gateway)
 
-        account.addDiamond(chargeDiamondCommand.getDiamond());
+        registerChargeOrderPort.registerChargeOrder(ChargeOrder.builder()
+                .user(account)
+                .diamond(chargeDiamondCommand.getDiamond())
+                .price(chargeDiamondCommand.getPrice())
+                .date(new Date())
+                .build());
 
-        //TODO save it to Database
-        System.out.println("충전 결과 다이아몬드 " + account.getGolds().getDiamond().getAmount());
+        account.addDiamond(chargeDiamondCommand.getDiamond());
+        updateAccountPort.changeAccountGold(account);
     }
 }
