@@ -17,11 +17,9 @@ public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, L
     private final ChargeOrderMapper mapper;
 
     @Override
-    public void registerChargeOrder(ChargeOrder domainEntity) {
-        System.out.println(domainEntity.toString());
+    public long registerChargeOrder(ChargeOrder domainEntity) {
         ChargeOrderJpaEntity entity = mapper.mapToJpaEntity(domainEntity);
-        System.out.println(entity.toString());
-        repository.save(entity);
+        return repository.save(entity).getId();
     }
 
     @Override
