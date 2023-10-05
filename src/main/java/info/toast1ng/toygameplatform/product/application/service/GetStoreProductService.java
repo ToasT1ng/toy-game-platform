@@ -1,4 +1,4 @@
-package info.toast1ng.toygameplatform.product.application.port.service;
+package info.toast1ng.toygameplatform.product.application.service;
 
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
 import info.toast1ng.toygameplatform.product.application.port.out.LoadStoreProductPort;

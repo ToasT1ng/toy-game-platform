@@ -1,4 +1,4 @@
-package info.toast1ng.toygameplatform.account.application.port.service;
+package info.toast1ng.toygameplatform.account.application.service;
 
 import info.toast1ng.toygameplatform.account.application.port.in.GetAccountQuery;
 import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
