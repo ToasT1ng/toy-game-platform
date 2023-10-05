@@ -23,6 +23,10 @@ public class ChargeOrderJpaEntity {
     private int price;
     private int diamond;
 
+    //TODO 추가하기
+    // private boolean approve
+    // private PaymentType paymentType
+
     @Builder
     public ChargeOrderJpaEntity(long id, long userId, Date date, int price, int diamond) {
         this.id = id;

@@ -1,12 +1,11 @@
-// import { ajax } from "./ajax.js"
-
 $(document).ready(function () {
-    $("#chargeButton").click(() => {
+    $("#chargeKakaoPayButton").click(() => {
         let query = {
             url: '/charge/diamond/' + $("#exchangeRateId").val(),
             type: 'POST',
             data: {
-                userId: $("#userId").val()
+                userId: $("#userId").val(),
+                type: "KAKAO_PAY"
             },
             contentType: "application/x-www-form-urlencoded"
         };
@@ -16,6 +15,7 @@ $(document).ready(function () {
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
+            window.open(data["redirectUrl"], 'kakao_pay', 'width=700px,height=800px,scrollbars=yes');
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });

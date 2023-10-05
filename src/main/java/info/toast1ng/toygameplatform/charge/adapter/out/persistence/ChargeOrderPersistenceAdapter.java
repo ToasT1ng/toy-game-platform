@@ -24,13 +24,13 @@ public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, L
 
     @Override
     public List<ChargeOrder> loadChargeOrder(long userId, int limitNumber) {
-        List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdOrderByDate(userId, PageRequest.of(0, limitNumber));
+        List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdOrderByDateDesc(userId, PageRequest.of(0, limitNumber));
         return mapper.mapToDomainEntity(entities);
     }
 
     @Override
     public List<ChargeOrder> loadChargeOrder(long userId, Date startDate, Date endDate) {
-        List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdAndDateAfterAndDateBeforeOrderByDate(userId, startDate, endDate, PageRequest.of(0, 5));
+        List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdAndDateAfterAndDateBeforeOrderByDateDesc(userId, startDate, endDate, PageRequest.of(0, 5));
         return mapper.mapToDomainEntity(entities);
     }
 }

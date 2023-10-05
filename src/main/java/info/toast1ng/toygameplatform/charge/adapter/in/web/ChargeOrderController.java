@@ -1,8 +1,9 @@
 package info.toast1ng.toygameplatform.charge.adapter.in.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import info.toast1ng.toygameplatform.charge.adapter.out.web.KakaoPayReadyApiResult;
 import info.toast1ng.toygameplatform.charge.adapter.out.web.ReadyApiResult;
-import info.toast1ng.toygameplatform.charge.application.port.in.ChargeDiamondCommand;
+import info.toast1ng.toygameplatform.charge.application.port.in.ReadyCommand;
 import info.toast1ng.toygameplatform.charge.application.port.in.ChargeDiamondUseCase;
 import info.toast1ng.toygameplatform.charge.domain.ExchangeRate;
 import info.toast1ng.toygameplatform.charge.domain.FixedExchangeRates;
@@ -18,16 +19,19 @@ public class ChargeOrderController {
     private final TempApiResultComponent apiResultComponent;
 
     @PostMapping("/charge/diamond/{exchangeRateId}")
-    public String chargeDiamond(ChargeDiamondVO vo, @PathVariable long exchangeRateId) throws JsonProcessingException {
+    public ReadyApiResult chargeDiamond(ChargeDiamondVO vo, @PathVariable long exchangeRateId) throws JsonProcessingException {
         ExchangeRate exchangeRate = new FixedExchangeRates().getList().get((int) exchangeRateId);
 
-        ReadyApiResult readyApiResult = useCase.chargeDiamond(ChargeDiamondCommand.builder()
+        KakaoPayReadyApiResult readyApiResult = (KakaoPayReadyApiResult) useCase.ready(ReadyCommand.builder()
                 .userId(vo.getUserId())
                 .diamond(exchangeRate.getDiamond())
                 .price(exchangeRate.getPrice())
+                .paymentType(vo.getType())
                 .build());
 
         apiResultComponent.setReadyApiResult(readyApiResult);
-        return "success";
+        apiResultComponent.setExchangeRate(exchangeRate);
+        apiResultComponent.setPaymentType(vo.getType());
+        return readyApiResult;
     }
 }

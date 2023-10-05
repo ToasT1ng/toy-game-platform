@@ -1,13 +1,13 @@
-package info.toast1ng.toygameplatform.charge.application.port.in;
+package info.toast1ng.toygameplatform.charge.adapter.out.web;
 
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.common.domain.Money;
-import lombok.Builder;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Builder
-@Data
-public class ChargeDiamondCommand {
+@Getter
+@AllArgsConstructor
+public class KakaoPayReadyApiRequest {
     private long userId;
     private Money price;
     private Gold diamond;

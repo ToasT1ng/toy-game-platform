@@ -7,6 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface SpringDataChargeOrderRepository extends JpaRepository<ChargeOrderJpaEntity, Long> {
-    List<ChargeOrderJpaEntity> findAllByUserIdOrderByDate(long userId, Pageable pageable);
-    List<ChargeOrderJpaEntity> findAllByUserIdAndDateAfterAndDateBeforeOrderByDate(long userId, Date startDate, Date endDate, Pageable pageable);
+    List<ChargeOrderJpaEntity> findAllByUserIdOrderByDateDesc(long userId, Pageable pageable);
+    List<ChargeOrderJpaEntity> findAllByUserIdAndDateAfterAndDateBeforeOrderByDateDesc(long userId, Date startDate, Date endDate, Pageable pageable);
 }
