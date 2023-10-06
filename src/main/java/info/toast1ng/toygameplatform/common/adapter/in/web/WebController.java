@@ -3,12 +3,14 @@ package info.toast1ng.toygameplatform.common.adapter.in.web;
 import info.toast1ng.toygameplatform.account.application.port.in.GetAccountQuery;
 import info.toast1ng.toygameplatform.charge.application.port.in.GetChargeOrderQuery;
 import info.toast1ng.toygameplatform.charge.domain.FixedExchangeRates;
+import info.toast1ng.toygameplatform.common.WebAdapter;
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+@WebAdapter
 @RequiredArgsConstructor
 @Controller
 public class WebController {

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class KakaoPayReadyApiRequest {
+public class ReadyApiRequest {
     private long userId;
     private Money price;
     private Gold diamond;

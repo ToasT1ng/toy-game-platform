@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.product.adapter.in.web;
 
+import info.toast1ng.toygameplatform.common.WebAdapter;
 import info.toast1ng.toygameplatform.product.application.port.in.DeleteStoreProductUseCase;
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
 import info.toast1ng.toygameplatform.product.application.port.in.RegisterProductCommand;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@WebAdapter
 @RequiredArgsConstructor
 @RestController
 public class StoreProductController {

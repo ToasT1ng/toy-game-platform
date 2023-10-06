@@ -1,10 +1,11 @@
 package info.toast1ng.toygameplatform.charge.application.port.out;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import info.toast1ng.toygameplatform.charge.adapter.out.web.KakaoPayReadyApiRequest;
+import info.toast1ng.toygameplatform.charge.adapter.out.web.ReadyApiRequest;
 import info.toast1ng.toygameplatform.charge.adapter.out.web.ReadyApiResult;
+import info.toast1ng.toygameplatform.charge.adapter.out.web.KakaoPayApproveApiRequest;
 
-public interface KakaoPayPort extends PayPort<KakaoPayReadyApiRequest>{
-    ReadyApiResult ready(KakaoPayReadyApiRequest request) throws JsonProcessingException;
-    void approve(String tid, String orderId, String pgToken) throws JsonProcessingException;
+public interface KakaoPayPort extends PayPort<KakaoPayApproveApiRequest>{
+    ReadyApiResult ready(ReadyApiRequest request) throws JsonProcessingException;
+    void approve(KakaoPayApproveApiRequest request) throws JsonProcessingException;
 }

@@ -2,7 +2,7 @@ package info.toast1ng.toygameplatform.charge.adapter.out.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import info.toast1ng.toygameplatform.charge.application.port.out.KakaoPayPort;
-import info.toast1ng.toygameplatform.common.PersistenceAdapter;
+import info.toast1ng.toygameplatform.common.WebAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,13 +15,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.UUID;
 
-@PersistenceAdapter
+@WebAdapter
 public class KakaoPayAdapter implements KakaoPayPort {
     @Value("${kakao.pay.admin.key}")
     private String SERVICE_APP_ADMIN_KEY;
 
     @Override
-    public KakaoPayReadyApiResult ready(KakaoPayReadyApiRequest request) throws JsonProcessingException {
+    public KakaoPayReadyApiResult ready(ReadyApiRequest request) throws JsonProcessingException {
         String randomOrderId = UUID.randomUUID().toString();
 
         HttpHeaders header = new HttpHeaders();
@@ -45,20 +45,19 @@ public class KakaoPayAdapter implements KakaoPayPort {
     }
 
     @Override
-    public void approve(String tid, String orderId, String pgToken) throws JsonProcessingException {
+    public void approve(KakaoPayApproveApiRequest request) throws JsonProcessingException {
         HttpHeaders header = new HttpHeaders();
         header.set(HttpHeaders.AUTHORIZATION, "KakaoAK " + SERVICE_APP_ADMIN_KEY);
         header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("cid", "TC0ONETIME");
-        body.add("tid", tid);
-        body.add("partner_order_id", orderId);
+        body.add("tid", request.getTid());
+        body.add("partner_order_id", request.getOrderId());
         body.add("partner_user_id", "ToasT1ng");
-        body.add("pg_token", pgToken);
+        body.add("pg_token", request.getPgToken());
 
-        HashMap result = postCall("https://kapi.kakao.com/v1/payment/approve", header, body).getBody();
-
+        postCall("https://kapi.kakao.com/v1/payment/approve", header, body);
     }
 
     public <T> ResponseEntity<HashMap> postCall(String url, HttpHeaders header, T body) throws JsonProcessingException {
@@ -68,5 +67,4 @@ public class KakaoPayAdapter implements KakaoPayPort {
         System.out.println("POST Return ===> " + jsonObjectResponseEntity.toString());
         return jsonObjectResponseEntity;
     }
-
 }
