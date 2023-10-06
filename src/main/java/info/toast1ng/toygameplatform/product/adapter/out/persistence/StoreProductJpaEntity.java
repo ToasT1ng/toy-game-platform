@@ -1,6 +1,6 @@
 package info.toast1ng.toygameplatform.product.adapter.out.persistence;
 
-import info.toast1ng.toygameplatform.product.domain.StoreProduct;
+import info.toast1ng.toygameplatform.common.GoldType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class StoreProductJpaEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "gold_type")
-    private StoreProduct.GoldType type;
+    private GoldType type;
 
     private int price;
 
@@ -27,7 +27,7 @@ public class StoreProductJpaEntity {
     private boolean deleteFlag;
 
     @Builder
-    public StoreProductJpaEntity(long id, String name, String category, StoreProduct.GoldType type, int price, boolean deleteFlag) {
+    public StoreProductJpaEntity(long id, String name, String category, GoldType type, int price, boolean deleteFlag) {
         this.id = id;
         this.name = name;
         this.category = category;

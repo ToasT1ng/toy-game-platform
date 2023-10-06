@@ -9,8 +9,8 @@
 
 <body>
     <button id="back">뒤로 가기</button>
-
     <h1>보유 골드량</h1>
+    <input type="hidden" id="userId" th:value="${account.id}">
     <table>
         <thead>
         <tr>
@@ -20,8 +20,8 @@
         </thead>
         <tbody>
         <tr>
-            <td th:text="${golds.ruby.amount}">Ruby</td>
-            <td th:text="${golds.diamond.amount}">Diamond</td>
+            <td th:text="${account.golds.ruby.amount}">ruby</td>
+            <td th:text="${account.golds.diamond.amount}">diamond</td>
         </tr>
         </tbody>
     </table>
@@ -49,9 +49,7 @@
     </table>
 
     <h1>카트</h1>
-    <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> <button id="addCartButton">추가하기</button> </p>
-    <div id="cart"></div>
-    <button id="clearCartButton">카트 비우기</button>
+    <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> </p>
     <br/>
     <button id="purchaseButton">구매</button>
 </body>

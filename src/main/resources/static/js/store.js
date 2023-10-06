@@ -30,24 +30,16 @@ $(document).ready(function () {
 
     let cartItems = [];
 
-    $("#addCartButton").click(() => {
-        let productId = $("#cartProductId").val();
-        let amount = $("#cartProductAmount").val();
-        $("#cart").prepend("<p> 제품 아이디 : " + productId + " / 갯수 : " + amount + "</p>");
-
-        cartItems.push({productId : productId, amount : amount});
-    });
-
-    $("#clearCartButton").click(() => {
-        cartItems = [];
-        $("#cart").empty();
-    });
 
     $("#purchaseButton").click(() => {
         let query = {
             url: '/orders',
             type: 'POST',
-            data: JSON.stringify({cart: cartItems}),
+            data: JSON.stringify({
+                productId : $("#cartProductId").val(),
+                amount : $("#cartProductAmount").val(),
+                userId : $("#userId").val()
+            }),
             contentType: "application/json"
         };
         ajax(query);

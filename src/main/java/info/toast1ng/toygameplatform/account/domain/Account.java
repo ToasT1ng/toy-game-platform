@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.account.domain;
 
+import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,22 @@ public class Account {
 
     public void addDiamond(Gold diamond) {
         this.golds.diamond.addGold(diamond.getAmount());
+    }
+
+    public boolean isAbleToPay(GoldType goldType, Gold totalGold) {
+        if (goldType.equals(GoldType.ruby)) {
+            return this.golds.ruby.getAmount() >= totalGold.getAmount();
+        } else {
+            return this.golds.diamond.getAmount() >= totalGold.getAmount();
+        }
+    }
+
+    public void payGold(GoldType goldType, Gold totalPrice) {
+        if (goldType.equals(GoldType.ruby)) {
+            this.golds.ruby.subtractGold(totalPrice.getAmount());
+        } else {
+            this.golds.diamond.subtractGold(totalPrice.getAmount());
+        }
     }
 
     public void addRuby(Gold ruby) {

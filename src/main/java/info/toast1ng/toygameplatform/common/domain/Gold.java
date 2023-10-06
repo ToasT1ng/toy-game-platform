@@ -10,7 +10,15 @@ import lombok.ToString;
 public class Gold {
     private int amount;
 
+    public void multiplyGold(int amount) {
+        this.amount *= amount;
+    }
+
     public void addGold(int amount) {
         this.amount += amount;
+    }
+
+    public void subtractGold(int amount) {
+        this.amount -= amount;
     }
 }

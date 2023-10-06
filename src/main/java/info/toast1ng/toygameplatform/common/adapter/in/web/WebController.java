@@ -35,7 +35,7 @@ public class WebController {
     public ModelAndView store() {
         ModelAndView model = new ModelAndView();
         model.addObject("productList", getStoreProductQuery.listStoreProducts());
-        model.addObject("golds", getAccountQuery.getGolds(1));
+        model.addObject("account", getAccountQuery.getAccount(1));
         model.setViewName("store");
         return model;
     }

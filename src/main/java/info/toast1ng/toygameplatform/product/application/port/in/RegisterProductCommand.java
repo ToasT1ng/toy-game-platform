@@ -1,6 +1,6 @@
 package info.toast1ng.toygameplatform.product.application.port.in;
 
-import info.toast1ng.toygameplatform.product.domain.StoreProduct;
+import info.toast1ng.toygameplatform.common.GoldType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +9,6 @@ import lombok.Data;
 public class RegisterProductCommand {
     private String name;
     private String category;
-    private StoreProduct.GoldType type;
+    private GoldType type;
     private int price;
 }

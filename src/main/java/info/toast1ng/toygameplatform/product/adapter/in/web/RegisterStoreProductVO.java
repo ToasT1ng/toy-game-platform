@@ -1,6 +1,6 @@
 package info.toast1ng.toygameplatform.product.adapter.in.web;
 
-import info.toast1ng.toygameplatform.product.domain.StoreProduct;
+import info.toast1ng.toygameplatform.common.GoldType;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,6 +9,6 @@ public class RegisterStoreProductVO {
     enum ProductCategory {clothes, pet}
     private String name;
     private ProductCategory category;
-    private StoreProduct.GoldType type;
+    private GoldType type;
     private int price;
 }
