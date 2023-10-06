@@ -19,11 +19,24 @@ public class WebController {
     private final GetChargeOrderQuery getChargeOrderQuery;
 
     @GetMapping({"/", "/index"})
-    public ModelAndView init() {
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/admin")
+    public ModelAndView admin() {
+        ModelAndView model = new ModelAndView();
+        model.addObject("productList", getStoreProductQuery.listStoreProducts());
+        model.setViewName("admin");
+        return model;
+    }
+
+    @GetMapping("/store")
+    public ModelAndView store() {
         ModelAndView model = new ModelAndView();
         model.addObject("productList", getStoreProductQuery.listStoreProducts());
         model.addObject("golds", getAccountQuery.getGolds(1));
-        model.setViewName("index");
+        model.setViewName("store");
         return model;
     }
 

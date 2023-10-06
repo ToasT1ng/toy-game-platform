@@ -1,38 +1,32 @@
-$(document).ready(function () {
-    $("#back").click(() => {
-        window.location.replace("http://localhost:8080");
-    });
+// import { ajax } from "./ajax.js"
 
-    $("#chargeKakaoPayButton").click(() => {
+$(document).ready(function () {
+    $("#createButton").click(() => {
         let query = {
-            url: '/charge/diamond/' + $("#exchangeRateId").val(),
+            url: '/store-products',
             type: 'POST',
             data: {
-                userId: $("#userId").val(),
-                type: "KAKAO_PAY"
+                category: $("#category").val(),
+                name: $("#name").val(),
+                type : $("#type").val(),
+                price: $("#price").val()
             },
             contentType: "application/x-www-form-urlencoded"
         };
         ajax(query);
     });
 
-    // $("#chargePaycoButton").click(() => {
-    //     let query = {
-    //         url: '/charge/diamond/' + $("#exchangeRateId").val(),
-    //         type: 'POST',
-    //         data: {
-    //             userId: $("#userId").val(),
-    //             type: "PAYCO"
-    //         },
-    //         contentType: "application/x-www-form-urlencoded"
-    //     };
-    //     ajax(query);
-    // });
+    $("#deleteButton").click(() => {
+        let query = {
+            url: '/store-products/' + $("#deleteId").val(),
+            type: 'DELETE'
+        };
+        ajax(query);
+    });
 
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
-            window.location.replace(data["redirectUrl"]);
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });

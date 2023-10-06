@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>toy-game-platform</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" th:src="@{/js/ajax.js}"></script>
+    <script type="text/javascript" th:src="@{/js/store.js}"></script>
+</head>
+
+<body>
+    <button id="back">뒤로 가기</button>
+
+    <h1>보유 골드량</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Ruby</th>
+            <th>Diamond</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${golds.ruby.amount}">Ruby</td>
+            <td th:text="${golds.diamond.amount}">Diamond</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1>상품 리스트</h1>
+    <table id="productTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Gold Type</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productList}">
+            <td th:text="${product.id}">id</td>
+            <td th:text="${product.name}">name</td>
+            <td th:text="${product.category}">category</td>
+            <td th:text="${product.type}">type</td>
+            <td th:text="${product.price.amount}">price</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h1>카트</h1>
+    <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> <button id="addCartButton">추가하기</button> </p>
+    <div id="cart"></div>
+    <button id="clearCartButton">카트 비우기</button>
+    <br/>
+    <button id="purchaseButton">구매</button>
+</body>
+</html>
