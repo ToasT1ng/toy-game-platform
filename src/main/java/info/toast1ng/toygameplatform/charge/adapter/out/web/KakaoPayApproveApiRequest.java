@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class KakaoPayApproveApiRequest {
-    private String tid;
-    private String orderId;
+    private long orderId;
     private String pgToken;
 }

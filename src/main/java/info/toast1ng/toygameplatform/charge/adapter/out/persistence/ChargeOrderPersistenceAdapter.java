@@ -2,17 +2,18 @@ package info.toast1ng.toygameplatform.charge.adapter.out.persistence;
 
 import info.toast1ng.toygameplatform.charge.application.port.out.LoadChargeOrderPort;
 import info.toast1ng.toygameplatform.charge.application.port.out.RegisterChargeOrderPort;
+import info.toast1ng.toygameplatform.charge.application.port.out.UpdateChargeOrderStatePort;
 import info.toast1ng.toygameplatform.charge.domain.ChargeOrder;
 import info.toast1ng.toygameplatform.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.Date;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, LoadChargeOrderPort {
+public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, LoadChargeOrderPort, UpdateChargeOrderStatePort {
     private final SpringDataChargeOrderRepository repository;
     private final ChargeOrderMapper mapper;
 
@@ -23,14 +24,18 @@ public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, L
     }
 
     @Override
-    public List<ChargeOrder> loadChargeOrder(long userId, int limitNumber) {
+    public List<ChargeOrder> loadChargeOrders(long userId, int limitNumber) {
         List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdOrderByDateDesc(userId, PageRequest.of(0, limitNumber));
         return mapper.mapToDomainEntity(entities);
     }
 
     @Override
-    public List<ChargeOrder> loadChargeOrder(long userId, Date startDate, Date endDate) {
-        List<ChargeOrderJpaEntity> entities = repository.findAllByUserIdAndDateAfterAndDateBeforeOrderByDateDesc(userId, startDate, endDate, PageRequest.of(0, 5));
-        return mapper.mapToDomainEntity(entities);
+    public ChargeOrder loadChargeOrder(long orderId) {
+        return mapper.mapToDomainEntity(repository.findById(orderId).orElseThrow(EntityNotFoundException::new));
+    }
+
+    @Override
+    public void updateChargeOrderStatePort(long orderId) {
+        repository.updateApprovedStateToTrueByOrderId(orderId);
     }
 }

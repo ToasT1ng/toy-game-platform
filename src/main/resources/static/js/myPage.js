@@ -12,23 +12,23 @@ $(document).ready(function () {
         ajax(query);
     });
 
-    $("#chargePaycoButton").click(() => {
-        let query = {
-            url: '/charge/diamond/' + $("#exchangeRateId").val(),
-            type: 'POST',
-            data: {
-                userId: $("#userId").val(),
-                type: "PAYCO"
-            },
-            contentType: "application/x-www-form-urlencoded"
-        };
-        ajax(query);
-    });
+    // $("#chargePaycoButton").click(() => {
+    //     let query = {
+    //         url: '/charge/diamond/' + $("#exchangeRateId").val(),
+    //         type: 'POST',
+    //         data: {
+    //             userId: $("#userId").val(),
+    //             type: "PAYCO"
+    //         },
+    //         contentType: "application/x-www-form-urlencoded"
+    //     };
+    //     ajax(query);
+    // });
 
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
-            window.open(data["redirectUrl"], 'kakao_pay', 'width=700px,height=800px,scrollbars=yes');
+            window.location.replace(data["redirectUrl"]);
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });

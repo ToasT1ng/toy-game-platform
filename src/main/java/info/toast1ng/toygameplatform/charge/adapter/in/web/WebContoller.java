@@ -6,6 +6,7 @@ import info.toast1ng.toygameplatform.common.WebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @WebAdapter
@@ -13,18 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebContoller {
     private final ChargeDiamondUseCase useCase;
-    private final TempApiResultComponent apiResultComponent;
 
-    @GetMapping("/kakao/pay/completed")
-    public String myPage(@RequestParam("pg_token") String pgToken) throws Exception {
+    @GetMapping("/kakao/pay/{orderId}/completed")
+    public String myPage(@RequestParam("pg_token") String pgToken, @PathVariable long orderId) throws Exception {
         useCase.approve(ApproveCommand.builder()
                 .pgToken(pgToken)
-                .orderId(apiResultComponent.getReadyApiResult().getOrderId())
-                .diamond(apiResultComponent.getExchangeRate().getDiamond())
-                .tid(apiResultComponent.getReadyApiResult().getTid())
-                .price(apiResultComponent.getExchangeRate().getPrice())
-                .userId(apiResultComponent.getReadyApiResult().getUserId())
-                .paymentType(apiResultComponent.getPaymentType())
+                .orderId(orderId)
                 .build());
 
         return "redirect:/myPage";

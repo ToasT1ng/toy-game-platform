@@ -1,6 +1,7 @@
 package info.toast1ng.toygameplatform.charge.domain;
 
 import info.toast1ng.toygameplatform.account.domain.Account;
+import info.toast1ng.toygameplatform.charge.application.port.in.PaymentType;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.common.domain.Money;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,5 @@ public class ChargeOrder {
     private Date date;
     private Money price;
     private Gold diamond;
+    private PaymentType paymentType;
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class ReadyApiResult {
+    protected long orderId;
     protected long userId;
     protected String redirectUrl;
 }

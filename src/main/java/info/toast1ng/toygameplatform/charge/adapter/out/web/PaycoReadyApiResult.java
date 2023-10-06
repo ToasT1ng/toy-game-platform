@@ -8,9 +8,7 @@ import java.util.HashMap;
 @ToString
 @Getter
 public class PaycoReadyApiResult extends ReadyApiResult{
-    private String orderId;
-
-    public PaycoReadyApiResult(String orderId, long userId, HashMap jsonObject) {
+    public PaycoReadyApiResult(long orderId, long userId, HashMap jsonObject) {
         this.orderId = orderId;
         this.userId = userId;
         this.redirectUrl = jsonObject.get("orderSheetUrl").toString();

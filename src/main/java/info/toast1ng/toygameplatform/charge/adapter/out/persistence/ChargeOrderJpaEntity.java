@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.charge.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.charge.application.port.in.PaymentType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,16 +24,21 @@ public class ChargeOrderJpaEntity {
     private int price;
     private int diamond;
 
-    //TODO 추가하기
-    // private boolean approve
-    // private PaymentType paymentType
+    @Column(name = "is_approved")
+    private boolean isApproved;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "payment_type")
+    private PaymentType paymentType;
 
     @Builder
-    public ChargeOrderJpaEntity(long id, long userId, Date date, int price, int diamond) {
+    public ChargeOrderJpaEntity(long id, long userId, Date date, int price, int diamond, boolean isApproved, PaymentType paymentType) {
         this.id = id;
         this.userId = userId;
         this.date = date;
         this.price = price;
         this.diamond = diamond;
+        this.isApproved = isApproved;
+        this.paymentType = paymentType;
     }
 }

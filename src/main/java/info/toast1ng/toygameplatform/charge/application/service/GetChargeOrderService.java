@@ -17,6 +17,6 @@ public class GetChargeOrderService implements GetChargeOrderQuery {
 
     @Override
     public List<ChargeOrder> getChargeOrders(long userId) {
-        return port.loadChargeOrder(userId, 5);
+        return port.loadChargeOrders(userId, 5);
     }
 }

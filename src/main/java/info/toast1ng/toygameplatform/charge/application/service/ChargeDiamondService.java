@@ -11,9 +11,7 @@ import info.toast1ng.toygameplatform.charge.application.port.in.ApproveCommand;
 import info.toast1ng.toygameplatform.charge.application.port.in.ChargeDiamondUseCase;
 import info.toast1ng.toygameplatform.charge.application.port.in.PaymentType;
 import info.toast1ng.toygameplatform.charge.application.port.in.ReadyCommand;
-import info.toast1ng.toygameplatform.charge.application.port.out.KakaoPayPort;
-import info.toast1ng.toygameplatform.charge.application.port.out.PaycoPort;
-import info.toast1ng.toygameplatform.charge.application.port.out.RegisterChargeOrderPort;
+import info.toast1ng.toygameplatform.charge.application.port.out.*;
 import info.toast1ng.toygameplatform.charge.domain.ChargeOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,16 +28,26 @@ public class ChargeDiamondService implements ChargeDiamondUseCase {
     private final RegisterChargeOrderPort registerChargeOrderPort;
     private final KakaoPayPort kakaoPayPort;
     private final PaycoPort paycoPort;
+    private final LoadChargeOrderPort loadChargeOrderPort;
+    private final UpdateChargeOrderStatePort updateChargeOrderStatePort;
 
     @Override
     public ReadyApiResult ready(ReadyCommand readyCommand) throws JsonProcessingException {
-        //TODO check payment method
+        Account account = loadAccountPort.loadAccount(readyCommand.getUserId());
+        long orderId = registerChargeOrderPort.registerChargeOrder(ChargeOrder.builder()
+                .user(account)
+                .diamond(readyCommand.getDiamond())
+                .price(readyCommand.getPrice())
+                .date(new Date())
+                .paymentType(readyCommand.getPaymentType())
+                .build());
 
         //TODO ready with PAYMENT TYPE
+        ReadyApiRequest request = new ReadyApiRequest(orderId, readyCommand);
         if (readyCommand.getPaymentType().equals(PaymentType.KAKAO_PAY)) {
-            return kakaoPayPort.ready(new ReadyApiRequest(readyCommand.getUserId(), readyCommand.getPrice(), readyCommand.getDiamond()));
+            return kakaoPayPort.ready(request);
         } else if (readyCommand.getPaymentType().equals(PaymentType.PAYCO)) {
-            return paycoPort.ready(new ReadyApiRequest(readyCommand.getUserId(), readyCommand.getPrice(), readyCommand.getDiamond()));
+            return paycoPort.ready(request);
         }
         //TODO 예외 처리 : ready 실패의 경우
         return null;
@@ -47,23 +55,19 @@ public class ChargeDiamondService implements ChargeDiamondUseCase {
 
     @Override
     public void approve(ApproveCommand approveCommand) throws Exception {
-        if (approveCommand.getPaymentType().equals(PaymentType.KAKAO_PAY)) {
-            kakaoPayPort.approve(new KakaoPayApproveApiRequest(approveCommand.getTid(), approveCommand.getOrderId(), approveCommand.getPgToken()));
+        ChargeOrder chargeOrder = loadChargeOrderPort.loadChargeOrder(approveCommand.getOrderId());
+
+        if (chargeOrder.getPaymentType().equals(PaymentType.KAKAO_PAY)) {
+            kakaoPayPort.approve(new KakaoPayApproveApiRequest(approveCommand.getOrderId(), approveCommand.getPgToken()));
         } else {
             throw new Exception("잘못된 승인 요청");
         }
-
         //TODO 예외 처리 : approve 실패의 경우
 
-        Account account = loadAccountPort.loadAccount(approveCommand.getUserId());
-        account.addDiamond(approveCommand.getDiamond());
-        updateAccountPort.changeAccountGold(account);
+        updateChargeOrderStatePort.updateChargeOrderStatePort(approveCommand.getOrderId());
 
-        registerChargeOrderPort.registerChargeOrder(ChargeOrder.builder()
-                .user(account)
-                .diamond(approveCommand.getDiamond())
-                .price(approveCommand.getPrice())
-                .date(new Date())
-                .build());
+        Account account = loadAccountPort.loadAccount(chargeOrder.getUser().getId());
+        account.addDiamond(chargeOrder.getDiamond());
+        updateAccountPort.changeAccountGold(account);
     }
 }

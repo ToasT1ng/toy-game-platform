@@ -12,7 +12,6 @@ import java.util.List;
 
 @Component
 public class ChargeOrderMapper implements BasicMapper<ChargeOrderJpaEntity, ChargeOrder> {
-
     @Override
     public ChargeOrderJpaEntity mapToJpaEntity(ChargeOrder domainEntity) {
         return ChargeOrderJpaEntity.builder()
@@ -21,6 +20,7 @@ public class ChargeOrderMapper implements BasicMapper<ChargeOrderJpaEntity, Char
                 .date(domainEntity.getDate())
                 .diamond(domainEntity.getDiamond().getAmount())
                 .price(domainEntity.getPrice().getAmount())
+                .paymentType(domainEntity.getPaymentType())
                 .build();
     }
 
@@ -29,11 +29,12 @@ public class ChargeOrderMapper implements BasicMapper<ChargeOrderJpaEntity, Char
         return ChargeOrder.builder()
                 .id(jpaEntity.getId())
                 .user(Account.builder()
-                        .id(jpaEntity.getId())
+                        .id(jpaEntity.getUserId())
                         .build())
                 .date(jpaEntity.getDate())
                 .diamond(new Gold(jpaEntity.getDiamond()))
                 .price(new Money(jpaEntity.getPrice()))
+                .paymentType(jpaEntity.getPaymentType())
                 .build();
     }
 
