@@ -7,6 +7,7 @@ import info.toast1ng.toygameplatform.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
@@ -23,6 +24,11 @@ public class AccountItemPersistenceAdapter implements LoadAccountItemPort, Updat
     @Override
     public List<AccountItem> loadAccountItems(long userId) {
         return mapper.mapToDomainEntity(repository.findAllByUserId(userId));
+    }
+
+    @Override
+    public List<AccountItem> loadAccountItems(long userId, Set<Long> itemIds) {
+        return mapper.mapToDomainEntity(repository.findAllByUserIdAndItemIds(userId, itemIds));
     }
 
     @Override

@@ -59,7 +59,7 @@ public class RegisterOrderService implements RegisterOrderUseCase {
 
         //TODO lock accountItem
         AccountItem accountItem = loadAccountItemPort.loadAccountItem(account.getId(), storeProduct.getId());
-        accountItem.addAmount(registerOrderCommand.getAmount());
+        accountItem.accept(registerOrderCommand.getAmount());
         updateAccountItemPort.updateAccountItem(accountItem);
         //TODO unlock accountItem
     }

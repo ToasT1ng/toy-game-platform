@@ -18,7 +18,7 @@ public class AccountItemMapper implements BasicMapper<AccountItemJpaEntity, Acco
                 .id(domainEntity.getId())
                 .userId(domainEntity.getAccount().getId())
                 .product(StoreProductJpaEntity.builder()
-                        .id(domainEntity.getStoreProduct().getId())
+                        .id(domainEntity.getProduct().getId())
                         .build())
                 .amount(domainEntity.getAmount())
                 .build();
@@ -31,7 +31,7 @@ public class AccountItemMapper implements BasicMapper<AccountItemJpaEntity, Acco
                 .account(Account.builder()
                         .id(jpaEntity.getUserId())
                         .build())
-                .storeProduct(StoreProduct.builder()
+                .product(StoreProduct.builder()
                         .id(jpaEntity.getProduct().getId())
                         .name(jpaEntity.getProduct().getName())
                         .build())

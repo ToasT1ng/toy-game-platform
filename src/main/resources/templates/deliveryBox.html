@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>toy-game-platform</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/basic.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module" th:src="@{/js/ajax.js}"></script>
+    <script type="text/javascript" th:src="@{/js/deliveryBox.js}"></script>
+</head>
+
+<body>
+    <button id="back">뒤로 가기</button>
+
+    <h1>보낸 택배함</h1>
+    <table id="sendDeliveriesTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Receiver ID</th>
+            <th>Items</th>
+            <th>Ruby</th>
+            <th>Date</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="delivery : ${sendDeliveries}">
+            <td th:text="${delivery.id}">ID</td>
+            <td th:text="${delivery.receiver.id}">ID</td>
+            <td th:if="${not #lists.isEmpty(delivery.items)}">
+                <div th:each="item : ${delivery.items}">
+                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                </div>
+            </td>
+            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
+            <td th:text="${delivery.ruby.amount}">Ruby</td>
+            <td th:text="${delivery.date}">Date</td>
+            <td th:text="${delivery.state}">State</td>
+            <td>취소하기 구현 필요</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <h1>받은 택배함</h1>
+    <table id="receivedDeliveriesTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Items</th>
+            <th>Ruby</th>
+            <th>Date</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="delivery : ${receivedDeliveries}">
+            <td th:text="${delivery.id}">ID</td>
+            <td th:each="item : ${delivery.items}">
+                <li>이름 : <div th:text="${item.product.name}">Name</div> // 갯수 : <div th:text="${item.amount}">Amount</div></li>
+            </td>
+            <td th:text="${delivery.ruby.amount}">Ruby</td>
+            <td th:text="${delivery.date}">Date</td>
+            <td th:text="${delivery.state}">State</td>
+            <td>수령하기 구현 필요</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

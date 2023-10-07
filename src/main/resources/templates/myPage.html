@@ -10,7 +10,7 @@
 <body>
     <button id="back">뒤로 가기</button>
     <br/>
-    <button id="delivery">택배함 가기</button>
+    <button id="deliveryBox">택배함 가기</button>
 
     <h1>계정정보</h1>
     <input type="hidden" id="userId" th:value="${account.id}">
@@ -35,17 +35,26 @@
     <table id="itemsTable">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Amount</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="item : ${items}">
-            <td th:text="${item.storeProduct.name}">Name</td>
+            <td th:text="${item.id}">ID</td>
+            <td th:text="${item.product.name}">Name</td>
             <td th:text="${item.amount}">Amount</td>
         </tr>
         </tbody>
     </table>
+
+    <h1>택배 보내기</h1>
+    <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
+    <p>루비 <input type="number" id="rubyAmount"></p>
+    <p>받는 사람 아이디 <input type="number" id="receiverId"> </p>
+    <br/>
+    <button id="deliveryButton">보내기</button>
 
     <h1>아이템 구매 내역</h1>
     <table id="itemOrdersTable">

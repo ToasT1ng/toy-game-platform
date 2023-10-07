@@ -3,6 +3,10 @@ $(document).ready(function () {
         window.location.replace("http://localhost:8080");
     });
 
+    $("#deliveryBox").click(() => {
+        window.location.replace("http://localhost:8080/deliveryBox");
+    });
+
     $("#chargeKakaoPayButton").click(() => {
         let query = {
             url: '/charge/diamond/' + $("#exchangeRateId").val(),
@@ -13,7 +17,36 @@ $(document).ready(function () {
             },
             contentType: "application/x-www-form-urlencoded"
         };
-        ajax(query);
+
+        $.ajax(query).done((data, textStatus, jqXHR) => {
+            ajaxDone(data, textStatus, jqXHR);
+            window.location.replace(data["redirectUrl"]);
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            ajaxFail(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    $("#deliveryButton").click(() => {
+        let query = {
+            url: '/delivery',
+            type: 'POST',
+            data: JSON.stringify({
+                senderId: $("#userId").val(),
+                receiverId: $("#receiverId").val(),
+                items: [
+                    {itemId: $("#cartAccountProductId").val(), amount:$("#cartProductAmount").val()}
+                ],
+                ruby: $("#rubyAmount").val()
+            }),
+            contentType: "application/json"
+        };
+
+        $.ajax(query).done((data, textStatus, jqXHR) => {
+            ajaxDone(data, textStatus, jqXHR);
+            window.location.replace("http://localhost:8080/myPage");
+        }).fail((jqXHR, textStatus, errorThrown) => {
+            ajaxFail(jqXHR, textStatus, errorThrown);
+        });
     });
 
     // $("#chargePaycoButton").click(() => {
@@ -29,14 +62,6 @@ $(document).ready(function () {
     //     ajax(query);
     // });
 
-    function ajax(query) {
-        $.ajax(query).done((data, textStatus, jqXHR) => {
-            ajaxDone(data, textStatus, jqXHR);
-            window.location.replace(data["redirectUrl"]);
-        }).fail((jqXHR, textStatus, errorThrown) => {
-            ajaxFail(jqXHR, textStatus, errorThrown);
-        });
-    }
 
     function ajaxDone(data, textStatus, jqXHR) {
         console.log('성공');

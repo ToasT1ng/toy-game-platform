@@ -11,10 +11,18 @@ import lombok.ToString;
 public class AccountItem {
     private long id;
     private Account account;
-    private StoreProduct storeProduct;
+    private StoreProduct product;
     private int amount;
 
-    public void addAmount(int amount) {
+    public void accept(int amount) {
         this.amount += amount;
+    }
+
+    public void delivery(int amount) {
+        this.amount -= amount;
+    }
+
+    public boolean isAbleToDelivery(int amount) {
+        return this.amount >= amount;
     }
 }

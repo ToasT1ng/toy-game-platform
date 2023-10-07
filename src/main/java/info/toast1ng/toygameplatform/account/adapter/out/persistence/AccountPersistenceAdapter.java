@@ -16,8 +16,7 @@ public class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccount
 
     @Override
     public Account loadAccount(long id) {
-        AccountJpaEntity entity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return mapper.mapToDomainEntity(entity);
+        return mapper.mapToDomainEntity(repository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
