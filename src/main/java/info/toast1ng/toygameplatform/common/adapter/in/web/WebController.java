@@ -1,9 +1,11 @@
 package info.toast1ng.toygameplatform.common.adapter.in.web;
 
+import info.toast1ng.toygameplatform.account.application.port.in.GetAccountItemQuery;
 import info.toast1ng.toygameplatform.account.application.port.in.GetAccountQuery;
 import info.toast1ng.toygameplatform.charge.application.port.in.GetChargeOrderQuery;
 import info.toast1ng.toygameplatform.charge.domain.FixedExchangeRates;
 import info.toast1ng.toygameplatform.common.WebAdapter;
+import info.toast1ng.toygameplatform.order.application.port.in.GetOrderQuery;
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class WebController {
     private final GetStoreProductQuery getStoreProductQuery;
     private final GetAccountQuery getAccountQuery;
     private final GetChargeOrderQuery getChargeOrderQuery;
+    private final GetAccountItemQuery getAccountItemQuery;
+    private final GetOrderQuery getOrderQuery;
 
     @GetMapping({"/", "/index"})
     public String index() {
@@ -44,6 +48,8 @@ public class WebController {
     public ModelAndView myPage() {
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(1));
+        model.addObject("items", getAccountItemQuery.getAccountItems(1));
+        model.addObject("itemOrders", getOrderQuery.getOrders(1));
         model.addObject("exchangeRates", new FixedExchangeRates().getList());
         model.addObject("chargeOrders", getChargeOrderQuery.getChargeOrders(1));
         model.setViewName("myPage");

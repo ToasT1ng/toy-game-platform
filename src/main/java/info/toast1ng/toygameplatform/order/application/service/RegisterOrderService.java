@@ -1,11 +1,11 @@
 package info.toast1ng.toygameplatform.order.application.service;
 
 import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
-import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountProductPort;
+import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountItemPort;
 import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountPort;
-import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountProductPort;
+import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountItemPort;
 import info.toast1ng.toygameplatform.account.domain.Account;
-import info.toast1ng.toygameplatform.account.domain.AccountProduct;
+import info.toast1ng.toygameplatform.account.domain.AccountItem;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.order.application.port.in.RegisterOrderUseCase;
 import info.toast1ng.toygameplatform.order.application.port.out.RegisterOrderPort;
@@ -26,8 +26,8 @@ public class RegisterOrderService implements RegisterOrderUseCase {
     private final UpdateAccountPort updateAccountPort;
     private final LoadStoreProductPort loadStoreProductPort;
     private final RegisterOrderPort registerOrderPort;
-    private final LoadAccountProductPort loadAccountProductPort;
-    private final UpdateAccountProductPort updateAccountProductPort;
+    private final LoadAccountItemPort loadAccountItemPort;
+    private final UpdateAccountItemPort updateAccountItemPort;
 
     @Override
     public void registerOrder(RegisterOrderCommand registerOrderCommand) throws Exception {
@@ -36,6 +36,11 @@ public class RegisterOrderService implements RegisterOrderUseCase {
 
         Gold totalGold = storeProduct.getPrice();
         totalGold.multiplyGold(registerOrderCommand.getAmount());
+
+        //TODO 오류 처리 매끄럽게
+        if (!account.isAbleToPay(storeProduct.getType(), totalGold)) {
+            throw new Exception("money not ready");
+        }
 
         Order order = Order.builder()
                 .user(account)
@@ -47,15 +52,15 @@ public class RegisterOrderService implements RegisterOrderUseCase {
                 .build();
         registerOrderPort.registerOrder(order);
 
-        //TODO 오류 처리 매끄럽게
-        if (!account.isAbleToPay(storeProduct.getType(), totalGold)) {
-            throw new Exception("money not ready");
-        }
+        //TODO lock account
         account.payGold(storeProduct.getType(), totalGold);
-        updateAccountPort.changeAccountGold(account);
+        updateAccountPort.updateAccount(account);
+        //TODO unlock account
 
-        AccountProduct accountProduct = loadAccountProductPort.loadAccountProduct(account.getId(), storeProduct.getId());
-        accountProduct.addAmount(registerOrderCommand.getAmount());
-        updateAccountProductPort.changeAccountProductAmount(accountProduct);
+        //TODO lock accountItem
+        AccountItem accountItem = loadAccountItemPort.loadAccountItem(account.getId(), storeProduct.getId());
+        accountItem.addAmount(registerOrderCommand.getAmount());
+        updateAccountItemPort.updateAccountItem(accountItem);
+        //TODO unlock accountItem
     }
 }

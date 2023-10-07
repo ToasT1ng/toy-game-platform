@@ -9,6 +9,8 @@
 
 <body>
     <button id="back">뒤로 가기</button>
+    <br/>
+    <button id="delivery">택배함 가기</button>
 
     <h1>계정정보</h1>
     <input type="hidden" id="userId" th:value="${account.id}">
@@ -29,25 +31,48 @@
         </tbody>
     </table>
 
-    <h1>충전내역</h1>
-    <table id="chargeOrderTable">
+    <h1>아이템정보</h1>
+    <table id="itemsTable">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Diamond</th>
+            <th>Name</th>
+            <th>Amount</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="chargeOrder : ${chargeOrders}">
-            <td th:text="${chargeOrder.id}">id</td>
-            <td th:text="${chargeOrder.date}">date</td>
-            <td th:text="${chargeOrder.price.amount}">price</td>
-            <td th:text="${chargeOrder.diamond.amount}">diamond</td>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.storeProduct.name}">Name</td>
+            <td th:text="${item.amount}">Amount</td>
         </tr>
         </tbody>
     </table>
+
+    <h1>아이템 구매 내역</h1>
+    <table id="itemOrdersTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Gold Type</th>
+            <th>Price</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="itemOrder : ${itemOrders}">
+            <td th:text="${itemOrder.product.name}">Name</td>
+            <td th:text="${itemOrder.productAmount}">Amount</td>
+            <td th:text="${itemOrder.goldType}">Gold Type</td>
+            <td th:text="${itemOrder.price.amount}">Price</td>
+            <td th:text="${itemOrder.date}">Date</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
     <h1>충전정보</h1>
     <table id="exchangeTable">
@@ -75,8 +100,24 @@
     <button id="chargeKakaoPayButton">카카오페이</button>
     <button id="chargePaycoButton">페이코</button>
 
-<!--    <h1>삭제</h1>-->
-<!--    <p>아이디 <input type="number" id="deleteId"></p>-->
-<!--    <button id="deleteButton">삭제</button>-->
+    <h1>충전내역</h1>
+    <table id="chargeOrderTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Diamond</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="chargeOrder : ${chargeOrders}">
+            <td th:text="${chargeOrder.id}">id</td>
+            <td th:text="${chargeOrder.date}">date</td>
+            <td th:text="${chargeOrder.price.amount}">price</td>
+            <td th:text="${chargeOrder.diamond.amount}">diamond</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>

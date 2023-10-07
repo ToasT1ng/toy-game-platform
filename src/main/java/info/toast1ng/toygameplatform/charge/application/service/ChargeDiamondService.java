@@ -68,6 +68,6 @@ public class ChargeDiamondService implements ChargeDiamondUseCase {
 
         Account account = loadAccountPort.loadAccount(chargeOrder.getUser().getId());
         account.addDiamond(chargeOrder.getDiamond());
-        updateAccountPort.changeAccountGold(account);
+        updateAccountPort.updateAccount(account);
     }
 }

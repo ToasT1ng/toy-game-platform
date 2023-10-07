@@ -27,6 +27,7 @@ $(document).ready(function () {
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
+            location.reload();
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });
