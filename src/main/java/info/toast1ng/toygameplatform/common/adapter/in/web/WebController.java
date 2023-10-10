@@ -84,6 +84,7 @@ public class WebController {
     @GetMapping("/deliveryBox")
     public ModelAndView deliveryBox() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        String username = "admin_user";
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("items", getAccountItemQuery.getAccountItems(username));

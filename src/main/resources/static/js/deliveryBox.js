@@ -3,23 +3,43 @@ $(document).ready(function () {
         window.location.replace("http://localhost:8080/myPage");
     });
 
-    // $("#chargeKakaoPayButton").click(() => {
-    //     let query = {
-    //         url: '/charge/diamond/' + $("#exchangeRateId").val(),
-    //         type: 'POST',
-    //         data: {
-    //             userId: $("#userId").val(),
-    //             type: "KAKAO_PAY"
-    //         },
-    //         contentType: "application/x-www-form-urlencoded"
-    //     };
-    //     ajax(query);
-    // });
+    $(".cancelButtons").click((button) => {
+        let targetId = $(button.currentTarget).attr("id");
+        targetId = targetId.split("_");
+        let query = {
+            url: '/delivery/cancel/' + targetId[0],
+            type: 'POST',
+            contentType: "application/x-www-form-urlencoded"
+        };
+        ajax(query);
+    });
+
+    $(".rejectButtons").click((button) => {
+        let targetId = $(button.currentTarget).attr("id");
+        targetId = targetId.split("_");
+        let query = {
+            url: '/delivery/reject/' + targetId[0],
+            type: 'POST',
+            contentType: "application/x-www-form-urlencoded"
+        };
+        ajax(query);
+    });
+
+    $(".acceptButtons").click((button) => {
+        let targetId = $(button.currentTarget).attr("id");
+        targetId = targetId.split("_");
+        let query = {
+            url: '/delivery/accept/' + targetId[0],
+            type: 'POST',
+            contentType: "application/x-www-form-urlencoded"
+        };
+        ajax(query);
+    });
 
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
-            window.location.replace(data["redirectUrl"]);
+            window.location.reload();
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });

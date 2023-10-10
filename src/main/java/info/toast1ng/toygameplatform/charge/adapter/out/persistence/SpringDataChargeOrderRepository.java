@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface SpringDataChargeOrderRepository extends JpaRepository<ChargeOrderJpaEntity, Long> {
-    @Query("select o from ChargeOrderJpaEntity o where o.userId = :userId and o.isApproved = true order by o.date desc")
+    @Query("select o from ChargeOrderJpaEntity o where o.user.id = :userId and o.isApproved = true order by o.date desc")
     List<ChargeOrderJpaEntity> findAllByUserIdOrderByDateDesc(long userId, Pageable pageable);
 
     @Modifying

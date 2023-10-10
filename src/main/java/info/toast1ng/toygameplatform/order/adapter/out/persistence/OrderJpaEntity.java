@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.order.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.product.adapter.out.persistence.StoreProductJpaEntity;
 import lombok.Builder;
@@ -17,8 +18,10 @@ public class OrderJpaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AccountJpaEntity user;
+
     private Date date;
 
     @ManyToOne
@@ -34,9 +37,9 @@ public class OrderJpaEntity {
     private int price;
 
     @Builder
-    public OrderJpaEntity(long id, long userId, Date date, StoreProductJpaEntity product, int productAmount, GoldType goldType, int price) {
+    public OrderJpaEntity(long id, AccountJpaEntity user, Date date, StoreProductJpaEntity product, int productAmount, GoldType goldType, int price) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
         this.date = date;
         this.product = product;
         this.productAmount = productAmount;

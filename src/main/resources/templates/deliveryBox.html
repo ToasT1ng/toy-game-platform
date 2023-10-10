@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <input type="hidden" id="token" th:value="${session.token}">
     <button id="back">뒤로 가기</button>
 
     <h1>보낸 택배함</h1>
@@ -16,7 +17,7 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Receiver ID</th>
+            <th>Receiver</th>
             <th>Items</th>
             <th>Ruby</th>
             <th>Date</th>
@@ -27,7 +28,7 @@
         <tbody>
         <tr th:each="delivery : ${sendDeliveries}">
             <td th:text="${delivery.id}">ID</td>
-            <td th:text="${delivery.receiver.id}">ID</td>
+            <td th:text="${delivery.receiver.username}">username</td>
             <td th:if="${not #lists.isEmpty(delivery.items)}">
                 <div th:each="item : ${delivery.items}">
                     <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
@@ -37,7 +38,7 @@
             <td th:text="${delivery.ruby.amount}">Ruby</td>
             <td th:text="${delivery.date}">Date</td>
             <td th:text="${delivery.state}">State</td>
-            <td>취소하기 구현 필요</td>
+            <td><button th:id="|${delivery.id}_cancel|" class="cancelButtons">취소하기</button></td>
         </tr>
         </tbody>
     </table>
@@ -61,13 +62,17 @@
         <tbody>
         <tr th:each="delivery : ${receivedDeliveries}">
             <td th:text="${delivery.id}">ID</td>
-            <td th:each="item : ${delivery.items}">
-                <li>이름 : <div th:text="${item.product.name}">Name</div> // 갯수 : <div th:text="${item.amount}">Amount</div></li>
+            <td th:if="${not #lists.isEmpty(delivery.items)}">
+                <div th:each="item : ${delivery.items}">
+                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                </div>
             </td>
+            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
             <td th:text="${delivery.ruby.amount}">Ruby</td>
             <td th:text="${delivery.date}">Date</td>
             <td th:text="${delivery.state}">State</td>
-            <td>수령하기 구현 필요</td>
+            <td><button th:id="|${delivery.id}_accpet|" class="acceptButtons">수령하기</button>
+                <button th:id="|${delivery.id}_reject|" class="rejectButtons">거절하기</button></td>
         </tr>
         </tbody>
     </table>

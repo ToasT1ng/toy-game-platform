@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.delivery.adapter.out;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.common.domain.Gold;
@@ -19,8 +20,14 @@ public class DeliveryMapper implements BasicMapper<DeliveryJpaEntity, Delivery> 
     public DeliveryJpaEntity mapToJpaEntity(Delivery delivery) {
         DeliveryJpaEntity jpaEntity = DeliveryJpaEntity.builder()
                 .id(delivery.getId())
-                .receiverId(delivery.getReceiver().getId())
-                .senderId(delivery.getSender().getId())
+                .receiver(AccountJpaEntity.builder()
+                        .id(delivery.getReceiver().getId())
+                        .username(delivery.getReceiver().getUsername())
+                        .build())
+                .sender(AccountJpaEntity.builder()
+                        .id(delivery.getSender().getId())
+                        .username(delivery.getSender().getUsername())
+                        .build())
                 .date(delivery.getDate())
                 .ruby(delivery.getRuby().getAmount())
                 .state(delivery.getState())
@@ -53,8 +60,14 @@ public class DeliveryMapper implements BasicMapper<DeliveryJpaEntity, Delivery> 
         return Delivery.builder()
                 .id(deliveryJpaEntity.getId())
                 .items(mapToItemDomainEntity(deliveryJpaEntity.getItems()))
-                .sender(Account.builder().id(deliveryJpaEntity.getSenderId()).build())
-                .receiver(Account.builder().id(deliveryJpaEntity.getReceiverId()).build())
+                .sender(Account.builder()
+                        .id(deliveryJpaEntity.getSender().getId())
+                        .username(deliveryJpaEntity.getSender().getUsername())
+                        .build())
+                .receiver(Account.builder()
+                        .id(deliveryJpaEntity.getReceiver().getId())
+                        .username(deliveryJpaEntity.getReceiver().getUsername())
+                        .build())
                 .date(deliveryJpaEntity.getDate())
                 .ruby(new Gold(deliveryJpaEntity.getRuby()))
                 .state(deliveryJpaEntity.getState())

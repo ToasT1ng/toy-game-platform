@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.charge.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.charge.application.port.in.PaymentType;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,9 @@ public class ChargeOrderJpaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //TODO 연관관계 맺기 & DB에 FK 설정하기
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AccountJpaEntity user;
 
     private Date date;
     private int price;
@@ -32,9 +33,9 @@ public class ChargeOrderJpaEntity {
     private PaymentType paymentType;
 
     @Builder
-    public ChargeOrderJpaEntity(long id, long userId, Date date, int price, int diamond, boolean isApproved, PaymentType paymentType) {
+    public ChargeOrderJpaEntity(long id, AccountJpaEntity user, Date date, int price, int diamond, boolean isApproved, PaymentType paymentType) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
         this.date = date;
         this.price = price;
         this.diamond = diamond;

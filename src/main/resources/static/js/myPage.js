@@ -15,6 +15,7 @@ $(document).ready(function () {
         let query = {
             url: '/charge/diamond/' + $("#exchangeRateId").val(),
             type: 'POST',
+            headers: {Authorization:  $("#token").val()},
             data: {
                 userId: $("#userId").val(),
                 type: "KAKAO_PAY"
@@ -34,9 +35,10 @@ $(document).ready(function () {
         let query = {
             url: '/delivery',
             type: 'POST',
+            headers: {Authorization:  $("#token").val()},
             data: JSON.stringify({
                 senderId: $("#userId").val(),
-                receiverId: $("#receiverId").val(),
+                receiverUsername: $("#receiverUsername").val(),
                 items: [
                     {itemId: $("#cartAccountProductId").val(), amount:$("#cartProductAmount").val()}
                 ],

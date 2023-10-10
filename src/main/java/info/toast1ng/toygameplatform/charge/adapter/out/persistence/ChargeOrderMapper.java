@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.charge.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.charge.domain.ChargeOrder;
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
@@ -16,7 +17,10 @@ public class ChargeOrderMapper implements BasicMapper<ChargeOrderJpaEntity, Char
     public ChargeOrderJpaEntity mapToJpaEntity(ChargeOrder domainEntity) {
         return ChargeOrderJpaEntity.builder()
                 .id(domainEntity.getId())
-                .userId(domainEntity.getUser().getId())
+                .user(AccountJpaEntity.builder()
+                        .id(domainEntity.getUser().getId())
+                        .username(domainEntity.getUser().getUsername())
+                        .build())
                 .date(domainEntity.getDate())
                 .diamond(domainEntity.getDiamond().getAmount())
                 .price(domainEntity.getPrice().getAmount())
@@ -29,7 +33,8 @@ public class ChargeOrderMapper implements BasicMapper<ChargeOrderJpaEntity, Char
         return ChargeOrder.builder()
                 .id(jpaEntity.getId())
                 .user(Account.builder()
-                        .id(jpaEntity.getUserId())
+                        .id(jpaEntity.getUser().getId())
+                        .username(jpaEntity.getUser().getUsername())
                         .build())
                 .date(jpaEntity.getDate())
                 .diamond(new Gold(jpaEntity.getDiamond()))

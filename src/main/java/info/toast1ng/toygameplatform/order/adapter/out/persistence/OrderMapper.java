@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.order.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.common.domain.Gold;
@@ -17,7 +18,10 @@ public class OrderMapper implements BasicMapper<OrderJpaEntity, Order> {
     public OrderJpaEntity mapToJpaEntity(Order domainEntity) {
         return OrderJpaEntity.builder()
                 .id(domainEntity.getId())
-                .userId(domainEntity.getUser().getId())
+                .user(AccountJpaEntity.builder()
+                        .id(domainEntity.getUser().getId())
+                        .username(domainEntity.getUser().getUsername())
+                        .build())
                 .product(StoreProductJpaEntity.builder()
                         .id(domainEntity.getProduct().getId())
                         .build())
@@ -33,7 +37,8 @@ public class OrderMapper implements BasicMapper<OrderJpaEntity, Order> {
         return Order.builder()
                 .id(jpaEntity.getId())
                 .user(Account.builder()
-                        .id(jpaEntity.getUserId())
+                        .id(jpaEntity.getUser().getId())
+                        .username(jpaEntity.getUser().getUsername())
                         .build())
                 .product(StoreProduct.builder()
                         .id(jpaEntity.getProduct().getId())

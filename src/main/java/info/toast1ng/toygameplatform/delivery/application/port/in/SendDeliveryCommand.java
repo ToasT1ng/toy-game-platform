@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class SendDeliveryCommand {
     private long senderId;
-    private long receiverId;
+    private String receiverUsername;
     private List<DeliveryItemInfo> items;
     private int ruby;
 

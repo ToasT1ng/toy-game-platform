@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.delivery.adapter.out;
 
+import info.toast1ng.toygameplatform.account.adapter.out.persistence.AccountJpaEntity;
 import info.toast1ng.toygameplatform.delivery.domain.DeliveryState;
 import lombok.Builder;
 import lombok.Data;
@@ -20,11 +21,13 @@ public class DeliveryJpaEntity {
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.PERSIST)
     private List<DeliveryItemJpaEntity> items;
 
-    @Column(name = "sender_user_id")
-    private long senderId;
+    @ManyToOne
+    @JoinColumn(name = "sender_user_id")
+    private AccountJpaEntity sender;
 
-    @Column(name = "receiver_user_id")
-    private long receiverId;
+    @ManyToOne
+    @JoinColumn(name = "receiver_user_id")
+    private AccountJpaEntity receiver;
 
     private Date date;
 
@@ -35,11 +38,11 @@ public class DeliveryJpaEntity {
     private DeliveryState state;
 
     @Builder
-    public DeliveryJpaEntity(long id, List<DeliveryItemJpaEntity> items, long senderId, long receiverId, Date date, int ruby, DeliveryState state) {
+    public DeliveryJpaEntity(long id, List<DeliveryItemJpaEntity> items, AccountJpaEntity sender, AccountJpaEntity receiver, Date date, int ruby, DeliveryState state) {
         this.id = id;
         this.items = items;
-        this.senderId = senderId;
-        this.receiverId = receiverId;
+        this.sender = sender;
+        this.receiver = receiver;
         this.date = date;
         this.ruby = ruby;
         this.state = state;

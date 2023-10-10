@@ -5,6 +5,7 @@ $(document).ready(function () {
         let query = {
             url: '/store-products',
             type: 'POST',
+            headers: {Authorization:  $("#token").val()},
             data: {
                 category: $("#category").val(),
                 name: $("#name").val(),
@@ -19,7 +20,8 @@ $(document).ready(function () {
     $("#deleteButton").click(() => {
         let query = {
             url: '/store-products/' + $("#deleteId").val(),
-            type: 'DELETE'
+            type: 'DELETE',
+            headers: {Authorization:  $("#token").val()}
         };
         ajax(query);
     });

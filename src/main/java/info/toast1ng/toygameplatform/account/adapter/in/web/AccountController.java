@@ -1,6 +1,5 @@
 package info.toast1ng.toygameplatform.account.adapter.in.web;
 
-import info.toast1ng.toygameplatform.account.application.port.in.LoginCommand;
 import info.toast1ng.toygameplatform.account.application.port.in.LoginUseCase;
 import info.toast1ng.toygameplatform.account.application.port.in.SignUpCommand;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +18,4 @@ public class AccountController {
         loginUseCase.signup(command);
         return "success";
     }
-
-    @PostMapping(value = "/login")
-    public String login(LoginCommand command) {
-        loginUseCase.login(command);
-        return "success";
-    }
-
 }

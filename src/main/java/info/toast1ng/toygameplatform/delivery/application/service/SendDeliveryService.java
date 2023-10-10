@@ -32,9 +32,9 @@ public class SendDeliveryService implements SendDeliveryUseCase {
 
     @Override
     public void sendDelivery(SendDeliveryCommand command) throws Exception {
-        if (command.getSenderId() == command.getReceiverId()) throw new Exception("don't send to yourself");
+        Account receiverAccount = loadAccountPort.loadAccount(command.getReceiverUsername());
 
-        Account receiverAccount = loadAccountPort.loadAccount(command.getReceiverId());
+        if (command.getSenderId() == receiverAccount.getId()) throw new Exception("don't send to yourself");
 
         Map<Long, Integer> requestItemIdAmountMap = new HashMap<>();
         for (SendDeliveryCommand.DeliveryItemInfo requestItemInfo : command.getItems()) {
@@ -74,7 +74,7 @@ public class SendDeliveryService implements SendDeliveryUseCase {
 
         registerDeliveryPort.createDelivery(Delivery.builder()
                 .sender(senderAccount)
-                .receiver(Account.builder().id(command.getReceiverId()).build())
+                .receiver(receiverAccount)
                 .items(deliveryItems)
                 .ruby(totalGold)
                 .date(new Date())

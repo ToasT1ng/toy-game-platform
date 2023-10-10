@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerLogInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("requestUrl ==> {}", request.getRequestURI());
+        log.info("request ==> {}", request.getMethod() + " " + request.getRequestURI());
         return super.preHandle(request, response, handler);
     }
 }
