@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface GetDeliveryQuery {
     List<Delivery> getReceivedDeliveries(long userId);
+    List<Delivery> getReceivedDeliveries(String username);
     List<Delivery> getSendDeliveries(long userId);
+    List<Delivery> getSendDeliveries(String username);
 }

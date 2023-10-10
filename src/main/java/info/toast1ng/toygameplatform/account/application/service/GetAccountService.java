@@ -17,6 +17,11 @@ public class GetAccountService implements GetAccountQuery {
     }
 
     @Override
+    public Account getAccount(String username) {
+        return port.loadAccount(username);
+    }
+
+    @Override
     public Account.Golds getGolds(long id) {
         return port.loadAccount(id).getGolds();
     }

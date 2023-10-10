@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GetOrderQuery {
     List<Order> getOrders(long userId);
+
+    List<Order> getOrders(String username);
 }

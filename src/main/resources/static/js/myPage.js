@@ -7,6 +7,10 @@ $(document).ready(function () {
         window.location.replace("http://localhost:8080/deliveryBox");
     });
 
+    $("#logoutButton").click(() => {
+        window.location.replace("http://localhost:8080/logout");
+    });
+
     $("#chargeKakaoPayButton").click(() => {
         let query = {
             url: '/charge/diamond/' + $("#exchangeRateId").val(),

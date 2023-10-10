@@ -32,6 +32,11 @@ public class AccountItemPersistenceAdapter implements LoadAccountItemPort, Updat
     }
 
     @Override
+    public List<AccountItem> loadAccountItems(String username) {
+        return mapper.mapToDomainEntity(repository.findAllByUsername(username));
+    }
+
+    @Override
     public void updateAccountItem(AccountItem accountItem) {
         repository.save(mapper.mapToJpaEntity(accountItem));
     }

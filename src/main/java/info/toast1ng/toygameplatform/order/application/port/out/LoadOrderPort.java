@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface LoadOrderPort {
     List<Order> loadOrders(long userId);
+    List<Order> loadOrders(String username);
 }

@@ -9,4 +9,5 @@ public interface LoadAccountItemPort {
     AccountItem loadAccountItem(long userId, long productId);
     List<AccountItem> loadAccountItems(long userId);
     List<AccountItem> loadAccountItems(long userId, Set<Long> productIds);
+    List<AccountItem> loadAccountItems(String username);
 }

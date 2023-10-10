@@ -24,4 +24,9 @@ public class OrderPersistenceAdapter implements RegisterOrderPort, LoadOrderPort
     public List<Order> loadOrders(long userId) {
         return mapper.mapToDomainEntity(repository.findAllByUserIdOrderByDateDesc(userId, PageRequest.of(0, 5)));
     }
+
+    @Override
+    public List<Order> loadOrders(String username) {
+        return null;
+    }
 }

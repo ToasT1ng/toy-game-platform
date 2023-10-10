@@ -20,10 +20,20 @@ public class DeliveryPersistenceAdapter implements LoadDeliveryPort, RegisterDel
         return mapper.mapToDomainEntity(repository.findAllByReceiverIdOrderByDateDesc(userId, PageRequest.of(0, 10)));
     }
 
+//    @Override
+//    public List<Delivery> loadReceivedDelivery(String username) {
+//        return null;
+//    }
+
     @Override
     public List<Delivery> loadSendDelivery(long userId) {
         return mapper.mapToDomainEntity(repository.findAllBySenderIdOrderByDateDesc(userId, PageRequest.of(0, 10)));
     }
+
+//    @Override
+//    public List<Delivery> loadSendDelivery(String username) {
+//        return null;
+//    }
 
     @Override
     public void createDelivery(Delivery delivery) {

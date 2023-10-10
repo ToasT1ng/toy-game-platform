@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GetChargeOrderQuery {
     List<ChargeOrder> getChargeOrders(long userId);
+
+    List<ChargeOrder> getChargeOrders(String username);
 }

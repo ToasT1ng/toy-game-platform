@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetAccountItemQuery {
     List<AccountItem> getAccountItems(long userId);
+    List<AccountItem> getAccountItems(String username);
 }

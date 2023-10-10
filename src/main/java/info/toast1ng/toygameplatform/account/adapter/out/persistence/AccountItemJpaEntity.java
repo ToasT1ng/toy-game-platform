@@ -15,8 +15,9 @@ public class AccountItemJpaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AccountJpaEntity user;
 
     @ManyToOne
     @JoinColumn(name = "store_product_id")
@@ -25,7 +26,9 @@ public class AccountItemJpaEntity {
     private int amount;
 
     public AccountItemJpaEntity(long userId, long productId) {
-        this.userId = userId;
+        this.user = AccountJpaEntity.builder()
+                .id(userId)
+                .build();
         this.product = StoreProductJpaEntity.builder()
                 .id(productId)
                 .build();
@@ -33,9 +36,9 @@ public class AccountItemJpaEntity {
     }
 
     @Builder
-    public AccountItemJpaEntity(long id, long userId, StoreProductJpaEntity product, int amount) {
+    public AccountItemJpaEntity(long id, AccountJpaEntity user, StoreProductJpaEntity product, int amount) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
         this.product = product;
         this.amount = amount;
     }
