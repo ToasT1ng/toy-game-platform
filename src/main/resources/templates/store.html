@@ -5,49 +5,35 @@
 </head>
 
 <body>
-    <button id="back">뒤로 가기</button>
-    <h1>보유 골드량</h1>
-    <input type="hidden" id="userId" th:value="${account.id}">
-    <table>
-        <thead>
-        <tr>
-            <th>Ruby</th>
-            <th>Diamond</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${account.golds.ruby.amount}">ruby</td>
-            <td th:text="${account.golds.diamond.amount}">diamond</td>
-        </tr>
-        </tbody>
-    </table>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<div class="container">
+    <div class="wide-card card-container">
+        <input type="hidden" id="userId" th:value="${account.id}">
+        <div class="card-section">
+            <h1>상품 리스트</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Name</div>
+                <div class="col">Category</div>
+                <div class="col">Gold Type</div>
+                <div class="col">Price</div>
+            </div>
+            <div th:each="product : ${productList}" class="row">
+                <div th:text="${product.id}" class="col">id</div>
+                <div th:text="${product.name}" class="col">name</div>
+                <div th:text="${product.category}" class="col">category</div>
+                <div th:text="${product.type}" class="col">type</div>
+                <div th:text="${product.price.amount}" class="col">price</div>
 
-    <h1>상품 리스트</h1>
-    <table id="productTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Gold Type</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${productList}">
-            <td th:text="${product.id}">id</td>
-            <td th:text="${product.name}">name</td>
-            <td th:text="${product.category}">category</td>
-            <td th:text="${product.type}">type</td>
-            <td th:text="${product.price.amount}">price</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h1>구매하기</h1>
-    <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> </p>
-    <br/>
-    <button id="purchaseButton">구매</button> <button id="deliveryButton">선물</button>
+            </div>
+        </div>
+        <div class="card-section">
+            <h1>구매하기</h1>
+            <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> </p>
+            <br/>
+            <button class="btn" id="purchaseButton">구매</button> <button class="btn" id="deliveryButton">선물</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

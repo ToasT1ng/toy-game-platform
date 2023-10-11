@@ -5,131 +5,114 @@
 </head>
 
 <body>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
 <div class="container">
     <div class="wide-card card-container">
-    <button id="back">뒤로 가기</button>
-    <br/>
-    <button id="deliveryBox">택배함 가기</button>
+        <div class="card-section">
+            <button class="btn" id="back">뒤로 가기</button>
+            <button class="btn" id="deliveryBox">택배함 가기</button>
+            <input type="hidden" id="userId" th:value="${account.id}">
+            <br/>
+            <button class="btn" id="logoutButton">로그아웃</button>
+        </div>
+        <div class="card-section">
+            <h1>계정정보</h1>
+            <div class="row row-header">
+                <div class="col">Username</div>
+                <div class="col">Diamond</div>
+                <div class="col">Ruby</div>
+            </div>
+            <div class="row">
+                <div th:text="${account.username}" class="col">Username</div>
+                <div th:text="${account.golds.diamond.amount}" class="col">Diamond</div>
+                <div th:text="${account.golds.ruby.amount}" class="col">Ruby</div>
+            </div>
+        </div>
+        <div class="card-section">
+            <h1>아이템정보</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Name</div>
+                <div class="col">Amount</div>
+            </div>
+            <div th:each="item : ${items}" class="row">
+                <div th:text="${item.id}" class="col">ID</div>
+                <div th:text="${item.product.name}" class="col">Name</div>
+                <div th:text="${item.amount}" class="col">Amount</div>
+            </div>
+        </div>
 
-    <h1>계정정보</h1>
-    <input type="hidden" id="userId" th:value="${account.id}">
-    <button id="logoutButton">로그아웃</button>
-<!--    <div th:value="${#ctx.httpSession.token}"></div>-->
-    <table id="accountTable">
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Diamond</th>
-            <th>Ruby</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${account.username}">username</td>
-            <td th:text="${account.golds.diamond.amount}">diamond</td>
-            <td th:text="${account.golds.ruby.amount}">ruby</td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="card-section">
+            <h1>택배 보내기</h1>
+            <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
+            <p>루비 <input type="number" id="rubyAmount"></p>
+            <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
+            <br/>
+            <button class="btn" id="deliveryButton">보내기</button>
+        </div>
 
-    <h1>아이템정보</h1>
-    <table id="itemsTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Amount</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.id}">ID</td>
-            <td th:text="${item.product.name}">Name</td>
-            <td th:text="${item.amount}">Amount</td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="card-section">
+            <h1>아이템 구매 내역</h1>
+            <div class="row row-header">
+                <div class="col">Name</div>
+                <div class="col">Amount</div>
+                <div class="col">Gold Type</div>
+                <div class="col">Price</div>
+                <div class="col">Date</div>
+            </div>
+            <div th:each="itemOrder : ${itemOrders}" class="row">
+                <div th:text="${itemOrder.product.name}" class="col">Name</div>
+                <div th:text="${itemOrder.productAmount}" class="col">Amount</div>
+                <div th:text="${itemOrder.goldType}" class="col">Gold Type</div>
+                <div th:text="${itemOrder.price.amount}" class="col">Price</div>
+                <div th:text="${itemOrder.date}" class="col">Date</div>
+            </div>
+        </div>
 
-    <h1>택배 보내기</h1>
-    <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
-    <p>루비 <input type="number" id="rubyAmount"></p>
-    <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
-    <br/>
-    <button id="deliveryButton">보내기</button>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
-    <h1>아이템 구매 내역</h1>
-    <table id="itemOrdersTable">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Gold Type</th>
-            <th>Price</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="itemOrder : ${itemOrders}">
-            <td th:text="${itemOrder.product.name}">Name</td>
-            <td th:text="${itemOrder.productAmount}">Amount</td>
-            <td th:text="${itemOrder.goldType}">Gold Type</td>
-            <td th:text="${itemOrder.price.amount}">Price</td>
-            <td th:text="${itemOrder.date}">Date</td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="card-section">
+            <h1>충전정보</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Price</div>
+                <div class="col">Diamond</div>
+                <div class="col">Bonus</div>
+            </div>
+            <div th:each="exchangeRate : ${exchangeRates}" class="row">
+                <div th:text="${exchangeRate.id}" class="col">id</div>
+                <div th:text="${exchangeRate.price.amount}" class="col">price</div>
+                <div th:text="${exchangeRate.diamond.amount}" class="col">diamond</div>
+                <div th:text="${exchangeRate.bonus}" class="col">bonus</div>
+            </div>
+        </div>
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+        <div class="card-section">
+            <h1>충전</h1>
+            <p>충전정보 아이디 <input type="number" id="exchangeRateId"></p>
+            <div class="errorMessages" id="chargeErrorBox"></div>
+            <button class="btn" id="chargeKakaoPayButton">카카오페이</button>
+            <button class="btn" id="chargePaycoButton">페이코</button>
+        </div>
 
-    <h1>충전정보</h1>
-    <table id="exchangeTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Price</th>
-            <th>Diamond</th>
-            <th>Bonus</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="exchangeRate : ${exchangeRates}">
-            <td th:text="${exchangeRate.id}">id</td>
-            <td th:text="${exchangeRate.price.amount}">price</td>
-            <td th:text="${exchangeRate.diamond.amount}">diamond</td>
-            <td th:text="${exchangeRate.bonus}">bonus</td>
-        </tr>
-        </tbody>
-    </table>
-
-
-    <h1>충전</h1>
-    <p>충전정보 아이디 <input type="number" id="exchangeRateId"></p>
-    <div class="errorMessages" id="chargeErrorBox"></div>
-    <button id="chargeKakaoPayButton">카카오페이</button>
-    <button id="chargePaycoButton">페이코</button>
-
-    <h1>충전내역</h1>
-    <table id="chargeOrderTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Diamond</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="chargeOrder : ${chargeOrders}">
-            <td th:text="${chargeOrder.id}">id</td>
-            <td th:text="${chargeOrder.date}">date</td>
-            <td th:text="${chargeOrder.price.amount}">price</td>
-            <td th:text="${chargeOrder.diamond.amount}">diamond</td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="card-section">
+            <h1>충전내역</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Date</div>
+                <div class="col">Price</div>
+                <div class="col">Diamond</div>
+            </div>
+            <div th:each="chargeOrder : ${chargeOrders}" class="row">
+                <div th:text="${chargeOrder.id}" class="col">id</div>
+                <div th:text="${chargeOrder.date}" class="col">bonus</div>
+                <div th:text="${chargeOrder.price.amount}" class="col">price</div>
+                <div th:text="${chargeOrder.diamond.amount}" class="col">diamond</div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

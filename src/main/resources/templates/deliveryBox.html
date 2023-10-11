@@ -7,72 +7,65 @@
 <body>
 <div class="container">
     <div class="wide-card card-container">
-    <button id="back">뒤로 가기</button>
-
-    <h1>보낸 택배함</h1>
-    <table id="sendDeliveriesTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Receiver</th>
-            <th>Items</th>
-            <th>Ruby</th>
-            <th>Date</th>
-            <th>State</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="delivery : ${sendDeliveries}">
-            <td th:text="${delivery.id}">ID</td>
-            <td th:text="${delivery.receiver.username}">username</td>
-            <td th:if="${not #lists.isEmpty(delivery.items)}">
-                <div th:each="item : ${delivery.items}">
-                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+        <div class="card-section">
+            <button class="btn" id="back">뒤로 가기</button>
+        </div>
+        <div class="card-section">
+            <h1>보낸 택배함</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Receiver</div>
+                <div class="col">Items</div>
+                <div class="col">Ruby</div>
+                <div class="col">Date</div>
+                <div class="col">State</div>
+                <div class="col">Action</div>
+            </div>
+            <div th:each="delivery : ${sendDeliveries}" class="row">
+                <div th:text="${delivery.id}" class="col">ID</div>
+                <div th:text="${delivery.receiver.username}" class="col">username</div>
+                <div th:if="${not #lists.isEmpty(delivery.items)}" class="col">
+                    <div th:each="item : ${delivery.items}">
+                        <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                    </div>
                 </div>
-            </td>
-            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
-            <td th:text="${delivery.ruby.amount}">Ruby</td>
-            <td th:text="${delivery.date}">Date</td>
-            <td th:text="${delivery.state}">State</td>
-            <td><button th:id="|${delivery.id}_cancel|" class="cancelButtons">취소하기</button></td>
-        </tr>
-        </tbody>
-    </table>
+                <div th:unless="${not #lists.isEmpty(delivery.items)}" class="col"></div>
+                <div th:text="${delivery.ruby.amount}" class="col">Ruby</div>
+                <div th:text="${delivery.date}" class="col">Date</div>
+                <div th:text="${delivery.state}" class="col">State</div>
+                <div class="col"><button class="btn" th:id="|${delivery.id}_cancel|" class="cancelButtons">취소하기</button></div>
+            </div>
+        </div>
 
-    <br/>
-    <br/>
-    <br/>
+        <br/>
+        <br/>
+        <br/>
 
-    <h1>받은 택배함</h1>
-    <table id="receivedDeliveriesTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Items</th>
-            <th>Ruby</th>
-            <th>Date</th>
-            <th>State</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="delivery : ${receivedDeliveries}">
-            <td th:text="${delivery.id}">ID</td>
-            <td th:if="${not #lists.isEmpty(delivery.items)}">
-                <div th:each="item : ${delivery.items}">
-                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+        <div class="card-section">
+            <h1>받은 택배함</h1>
+            <div class="row row-header">
+                <div class="col">ID</div>
+                <div class="col">Items</div>
+                <div class="col">Ruby</div>
+                <div class="col">Date</div>
+                <div class="col">State</div>
+                <div class="col">Action</div>
+            </div>
+            <div th:each="delivery : ${receivedDeliveries}" class="row">
+                <div th:text="${delivery.id}" class="col">ID</div>
+                <div th:if="${not #lists.isEmpty(delivery.items)}" class="col">
+                    <div th:each="item : ${delivery.items}">
+                        <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                    </div>
                 </div>
-            </td>
-            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
-            <td th:text="${delivery.ruby.amount}">Ruby</td>
-            <td th:text="${delivery.date}">Date</td>
-            <td th:text="${delivery.state}">State</td>
-            <td><button th:id="|${delivery.id}_accpet|" class="acceptButtons">수령하기</button>
-                <button th:id="|${delivery.id}_reject|" class="rejectButtons">거절하기</button></td>
-        </tr>
-        </tbody>
-    </table>
+                <div th:unless="${not #lists.isEmpty(delivery.items)}" class="col"></div>
+                <div th:text="${delivery.ruby.amount}" class="col">Ruby</div>
+                <div th:text="${delivery.date}" class="col">Date</div>
+                <div th:text="${delivery.state}" class="col">State</div>
+                <div class="col"><button class="btn" th:id="|${delivery.id}_accpet|" class="acceptButtons">수령하기</button>
+                    <button class="btn" th:id="|${delivery.id}_reject|" class="rejectButtons">거절하기</button></div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

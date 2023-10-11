@@ -6,4 +6,8 @@ $(document).ready(function () {
     $("#store").click(() => {
         window.location.replace("http://localhost:8080/store");
     });
+
+    $("#game").click(() => {
+        window.location.replace("http://localhost:8080/game");
+    });
 });

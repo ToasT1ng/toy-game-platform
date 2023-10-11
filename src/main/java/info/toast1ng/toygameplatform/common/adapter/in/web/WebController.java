@@ -68,6 +68,15 @@ public class WebController {
         return model;
     }
 
+    @GetMapping("/game")
+    public ModelAndView game() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
+        model.setViewName("game");
+        return model;
+    }
+
     @GetMapping("/myPage")
     public ModelAndView myPage() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

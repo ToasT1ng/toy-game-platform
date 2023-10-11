@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
+    <script type="text/javascript" th:src="@{/js/store.js}"></script>
+</head>
+
+<body>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
+<div class="container">
+    <div class="wide-card card-container">
+        <div class="card-section">
+            <h1>게임하기</h1>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
