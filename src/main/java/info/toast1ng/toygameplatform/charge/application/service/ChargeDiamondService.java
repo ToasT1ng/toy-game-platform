@@ -64,7 +64,7 @@ public class ChargeDiamondService implements ChargeDiamondUseCase {
         }
         //TODO 예외 처리 : approve 실패의 경우
 
-        updateChargeOrderStatePort.updateChargeOrderStatePort(approveCommand.getOrderId());
+        updateChargeOrderStatePort.updateChargeOrderState(approveCommand.getOrderId());
 
         Account account = loadAccountPort.loadAccount(chargeOrder.getUser().getId());
         account.addDiamond(chargeOrder.getDiamond());

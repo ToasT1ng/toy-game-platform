@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Builder
 @ToString
@@ -20,4 +19,16 @@ public class Delivery {
     private Date date;
     private Gold ruby;
     private DeliveryState state;
+
+    public void updateDeliveryState(DeliveryState state) {
+        this.state = state;
+    }
+
+    public Map<Long, Integer> getItemProductMap() {
+        Map<Long, Integer> result = new HashMap<>();
+        for (DeliveryItem item : items) {
+            result.put(item.getProduct().getId(), item.getAmount());
+        }
+        return result;
+    }
 }

@@ -1,6 +1,5 @@
 package info.toast1ng.toygameplatform.charge.application.service;
 
-import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
 import info.toast1ng.toygameplatform.charge.application.port.in.GetChargeOrderQuery;
 import info.toast1ng.toygameplatform.charge.application.port.out.LoadChargeOrderPort;
 import info.toast1ng.toygameplatform.charge.domain.ChargeOrder;
@@ -15,7 +14,6 @@ import java.util.List;
 @Service
 public class GetChargeOrderService implements GetChargeOrderQuery {
     private final LoadChargeOrderPort port;
-    private final LoadAccountPort loadAccountPort;
 
     @Override
     public List<ChargeOrder> getChargeOrders(long userId) {
@@ -24,6 +22,6 @@ public class GetChargeOrderService implements GetChargeOrderQuery {
 
     @Override
     public List<ChargeOrder> getChargeOrders(String username) {
-        return port.loadChargeOrders(loadAccountPort.loadAccount(username).getId(), 5);
+        return port.loadChargeOrders(username, 5);
     }
 }

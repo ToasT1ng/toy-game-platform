@@ -17,4 +17,7 @@ public interface SpringDataAccountItemRepository extends JpaRepository<AccountIt
 
     @Query(value = "select at from AccountItemJpaEntity at where at.user.username = :username")
     List<AccountItemJpaEntity> findAllByUsername(String username);
+
+    @Query(value = "select at from AccountItemJpaEntity at where at.user.id = :userId and at.product.id IN :productIds")
+    List<AccountItemJpaEntity> findAllByUserIdAndProductIds(long userId, Set<Long> productIds);
 }

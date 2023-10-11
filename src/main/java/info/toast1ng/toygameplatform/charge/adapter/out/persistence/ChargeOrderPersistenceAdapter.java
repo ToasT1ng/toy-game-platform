@@ -30,12 +30,18 @@ public class ChargeOrderPersistenceAdapter implements RegisterChargeOrderPort, L
     }
 
     @Override
+    public List<ChargeOrder> loadChargeOrders(String username, int limitNumber) {
+        List<ChargeOrderJpaEntity> entities = repository.findAllByUsernameOrderByDateDesc(username, PageRequest.of(0, limitNumber));
+        return mapper.mapToDomainEntity(entities);
+    }
+
+    @Override
     public ChargeOrder loadChargeOrder(long orderId) {
         return mapper.mapToDomainEntity(repository.findById(orderId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
-    public void updateChargeOrderStatePort(long orderId) {
+    public void updateChargeOrderState(long orderId) {
         repository.updateApprovedStateToTrueByOrderId(orderId);
     }
 }

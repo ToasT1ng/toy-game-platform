@@ -3,7 +3,6 @@ package info.toast1ng.toygameplatform.account.application.service;
 import info.toast1ng.toygameplatform.account.application.port.in.LoginCommand;
 import info.toast1ng.toygameplatform.account.application.port.in.LoginUseCase;
 import info.toast1ng.toygameplatform.account.application.port.in.SignUpCommand;
-import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
 import info.toast1ng.toygameplatform.account.application.port.out.RegisterAccountPort;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.common.domain.Gold;
@@ -20,7 +19,6 @@ import java.util.Date;
 public class LoginService implements LoginUseCase {
     private final RegisterAccountPort registerAccountPort;
     private final PasswordEncoder passwordEncoder;
-    private final LoadAccountPort loadAccountPort;
 
     @Override
     public void signup(SignUpCommand command) {

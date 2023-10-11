@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface LoadChargeOrderPort {
     List<ChargeOrder> loadChargeOrders(long userId, int limitNumber);
-//    List<ChargeOrder> loadChargeOrders(long userId, Date startDate, Date endDate);
+    List<ChargeOrder> loadChargeOrders(String username, int limitNumber);
     ChargeOrder loadChargeOrder(long orderId);
 }

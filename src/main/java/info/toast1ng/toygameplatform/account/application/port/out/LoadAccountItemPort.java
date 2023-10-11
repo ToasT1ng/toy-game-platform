@@ -8,6 +8,7 @@ import java.util.Set;
 public interface LoadAccountItemPort {
     AccountItem loadAccountItem(long userId, long productId);
     List<AccountItem> loadAccountItems(long userId);
-    List<AccountItem> loadAccountItems(long userId, Set<Long> productIds);
+    List<AccountItem> loadAccountItems(long userId, Set<Long> itemIds);
     List<AccountItem> loadAccountItems(String username);
+    List<AccountItem> loadAccountItemsByProductIds(long userId, Set<Long> productIds);
 }

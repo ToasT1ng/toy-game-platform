@@ -1,6 +1,5 @@
 package info.toast1ng.toygameplatform.order.application.service;
 
-import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
 import info.toast1ng.toygameplatform.order.application.port.in.GetOrderQuery;
 import info.toast1ng.toygameplatform.order.application.port.out.LoadOrderPort;
 import info.toast1ng.toygameplatform.order.domain.Order;
@@ -13,7 +12,6 @@ import java.util.List;
 @Service
 public class GetOrderService implements GetOrderQuery {
     private final LoadOrderPort loadOrderPort;
-    private final LoadAccountPort loadAccountPort;
 
     @Override
     public List<Order> getOrders(long userId) {
@@ -22,6 +20,6 @@ public class GetOrderService implements GetOrderQuery {
 
     @Override
     public List<Order> getOrders(String username) {
-        return loadOrderPort.loadOrders(loadAccountPort.loadAccount(username).getId());
+        return loadOrderPort.loadOrders(username);
     }
 }
