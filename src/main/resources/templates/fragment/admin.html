@@ -1,13 +1,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>toy-game-platform</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="module" th:src="@{/js/ajax.js}"></script>
+    <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
     <script type="text/javascript" th:src="@{/js/admin.js}"></script>
 </head>
 
 <body>
+<div class="container">
+    <div class="wide-card card-container">
     <h1>상품 리스트</h1>
     <table id="productTable">
         <thead>
@@ -41,5 +40,7 @@
     <h1>삭제</h1>
     <p>아이디 <input type="number" id="deleteId"></p>
     <button id="deleteButton">삭제</button>
+    </div>
+</div>
 </body>
 </html>

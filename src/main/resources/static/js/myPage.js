@@ -28,6 +28,7 @@ $(document).ready(function () {
             window.location.replace(data["redirectUrl"]);
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
+            $("#chargeErrorBox").prepend(jqXHR.responseText);
         });
     });
 

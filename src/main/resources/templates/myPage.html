@@ -1,23 +1,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>toy-game-platform</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="module" th:src="@{/js/ajax.js}"></script>
+    <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
     <script type="text/javascript" th:src="@{/js/myPage.js}"></script>
 </head>
 
 <body>
+<div class="container">
+    <div class="wide-card card-container">
     <button id="back">뒤로 가기</button>
     <br/>
     <button id="deliveryBox">택배함 가기</button>
 
     <h1>계정정보</h1>
-    <button id="logoutButton">로그아웃</button>
     <input type="hidden" id="userId" th:value="${account.id}">
+    <button id="logoutButton">로그아웃</button>
 <!--    <div th:value="${#ctx.httpSession.token}"></div>-->
-    <div th:value="${token}"></div>
-    <input type="hidden" id="token" th:value="${session.token}">
     <table id="accountTable">
         <thead>
         <tr>
@@ -109,7 +106,8 @@
 
 
     <h1>충전</h1>
-    <p>충전정보 아이디<input type="number" id="exchangeRateId"></p>
+    <p>충전정보 아이디 <input type="number" id="exchangeRateId"></p>
+    <div class="errorMessages" id="chargeErrorBox"></div>
     <button id="chargeKakaoPayButton">카카오페이</button>
     <button id="chargePaycoButton">페이코</button>
 
@@ -132,5 +130,7 @@
         </tr>
         </tbody>
     </table>
+    </div>
+</div>
 </body>
 </html>

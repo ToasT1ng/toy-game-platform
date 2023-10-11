@@ -11,7 +11,7 @@ public class SendDeliveryCommand {
     private long senderId;
     private String receiverUsername;
     private List<DeliveryItemInfo> items;
-    private int ruby;
+    private int ruby = 0;
 
     @NoArgsConstructor
     @Data
