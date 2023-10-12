@@ -1,28 +1,69 @@
-button {
-    width: 100%;
-    display: block;
-    margin-bottom: 10px;
-    z-index: 1;
-    position: relative;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+/*button {*/
+/*    width: 100%;*/
+/*    display: block;*/
+/*    margin-bottom: 10px;*/
+/*    z-index: 1;*/
+/*    position: relative;*/
+/*    -moz-box-sizing: border-box;*/
+/*    -webkit-box-sizing: border-box;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*.btn {*/
+/*    !*background-color: #4d90fe; *!*/
+/*    background-color: rgb(104, 145, 162);*/
+/*    !* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*!*/
+/*    padding: 0px;*/
+/*    font-weight: 700;*/
+/*    font-size: 14px;*/
+/*    height: 36px;*/
+/*    -moz-border-radius: 3px;*/
+/*    -webkit-border-radius: 3px;*/
+/*    border-radius: 3px;*/
+/*    border: none;*/
+/*    -o-transition: all 0.218s;*/
+/*    -moz-transition: all 0.218s;*/
+/*    -webkit-transition: all 0.218s;*/
+/*    transition: all 0.218s;*/
+/*}*/
+
+
+:root {
+    --jumbotron-padding-y: 3rem;
 }
 
-.btn {
-    /*background-color: #4d90fe; */
-    background-color: rgb(104, 145, 162);
-    /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
-    padding: 0px;
-    font-weight: 700;
-    font-size: 14px;
-    height: 36px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: none;
-    -o-transition: all 0.218s;
-    -moz-transition: all 0.218s;
-    -webkit-transition: all 0.218s;
-    transition: all 0.218s;
+.jumbotron {
+    padding-top: var(--jumbotron-padding-y);
+    padding-bottom: var(--jumbotron-padding-y);
+    margin-bottom: 0;
+    background-color: #fff;
 }
+@media (min-width: 768px) {
+    .jumbotron {
+        padding-top: calc(var(--jumbotron-padding-y) * 2);
+        padding-bottom: calc(var(--jumbotron-padding-y) * 2);
+    }
+}
+
+.jumbotron p:last-child {
+    margin-bottom: 0;
+}
+
+.jumbotron-heading {
+    font-weight: 300;
+}
+
+.jumbotron .container {
+    max-width: 40rem;
+}
+
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }

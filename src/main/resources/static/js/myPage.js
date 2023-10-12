@@ -32,30 +32,6 @@ $(document).ready(function () {
         });
     });
 
-    $("#deliveryButton").click(() => {
-        let query = {
-            url: '/delivery',
-            type: 'POST',
-            headers: {Authorization:  $("#token").val()},
-            data: JSON.stringify({
-                senderId: $("#userId").val(),
-                receiverUsername: $("#receiverUsername").val(),
-                items: [
-                    {itemId: $("#cartAccountProductId").val(), amount:$("#cartProductAmount").val()}
-                ],
-                ruby: $("#rubyAmount").val()
-            }),
-            contentType: "application/json"
-        };
-
-        $.ajax(query).done((data, textStatus, jqXHR) => {
-            ajaxDone(data, textStatus, jqXHR);
-            window.location.replace("http://localhost:8080/myPage");
-        }).fail((jqXHR, textStatus, errorThrown) => {
-            ajaxFail(jqXHR, textStatus, errorThrown);
-        });
-    });
-
     // $("#chargePaycoButton").click(() => {
     //     let query = {
     //         url: '/charge/diamond/' + $("#exchangeRateId").val(),

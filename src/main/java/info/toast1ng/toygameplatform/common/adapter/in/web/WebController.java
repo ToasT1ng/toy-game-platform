@@ -30,8 +30,12 @@ public class WebController {
     private final GetDeliveryQuery getDeliveryQuery;
 
     @GetMapping({"/", "/index"})
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
+        model.setViewName("index");
+        return model;
     }
 
     @GetMapping("signup")
@@ -82,11 +86,29 @@ public class WebController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
+        model.setViewName("myPage");
+        return model;
+    }
+
+    @GetMapping("/myItems")
+    public ModelAndView myItems() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("items", getAccountItemQuery.getAccountItems(username));
         model.addObject("itemOrders", getOrderQuery.getOrders(username));
+        model.setViewName("myItems");
+        return model;
+    }
+
+    @GetMapping("/myCharges")
+    public ModelAndView myCharges() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("exchangeRates", new FixedExchangeRates().getList());
         model.addObject("chargeOrders", getChargeOrderQuery.getChargeOrders(username));
-        model.setViewName("myPage");
+        model.setViewName("myCharges");
         return model;
     }
 

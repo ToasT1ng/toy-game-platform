@@ -1,6 +1,35 @@
 // import { ajax } from "./ajax.js"
 
 $(document).ready(function () {
+
+    $(".launch-purchase-modal").click((button) => {
+        let targetId = $(button.currentTarget).attr("data-whatever");
+        console.log(targetId);
+        $("#cartProductId").val(targetId);
+        $('.exampleModal').modal('show');
+    });
+
+    $("#close-purchase-modal").click((button) => {
+        $('.exampleModal').modal('hide');
+    });
+
+
+
+    // $("#exampleModal").on('shown.bs.tab', function () {
+    //     var button = event.relatedTarget
+    //     // Extract info from data-bs-* attributes
+    //     var recipient = button.getAttribute('data-bs-whatever')
+    //     // If necessary, you could initiate an AJAX request here
+    //     // and then do the updating in a callback.
+    //     //
+    //     // Update the modal's content.
+    //     var modalTitle = exampleModal.querySelector('.modal-title')
+    //     var modalBodyInput = exampleModal.querySelector('.modal-body input')
+    //
+    //     modalTitle.textContent = 'New message to ' + recipient
+    //     modalBodyInput.value = recipient
+    // });
+
     $("#back").click(() => {
         window.location.replace("http://localhost:8080");
     });

@@ -1,23 +1,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
     <script type="text/javascript" th:src="@{/js/login.js}"></script>
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container">
-        <div class="card card-container">
-            <h1>회원가입</h1>
-            <p id="profile-name" class="profile-name-card"></p>
-            <form th:action="@{/account}" class="form-signin"  method="POST">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="text" name="username" id="inputEmail" class="form-control" placeholder="ID" required autofocus>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">등록하기</button>
-            </form><!-- /form -->
-            <div class="forgot-password"><a href="http://localhost:8080/login" class="forgot-password">로그인 하러가기</a></div>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h2>회원가입</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="mb-3">기본정보</h4>
+                <form th:action="@{/account}" method="POST" class="needs-validation" novalidate="">
+                    <div class="mb-3">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="ID" required autofocus>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputPassword">Password <span class="text-muted"></span></label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid password.
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">등록하기</button>
+
+                    <p class="mt-5 text-muted forgot-password"><a href="http://localhost:8080/login">로그인 하러가기</a></p>
+                </form>
+            </div>
+        </div>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">© 2023-2024 Toy Game Platform</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+</div>
 </body>
 </html>

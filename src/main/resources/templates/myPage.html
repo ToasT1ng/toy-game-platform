@@ -1,119 +1,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/myPage.css}">
     <script type="text/javascript" th:src="@{/js/myPage.js}"></script>
 </head>
 
 <body>
 <div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
-<div class="container">
-    <div class="wide-card card-container">
-        <div class="card-section">
-            <button class="btn" id="back">뒤로 가기</button>
-            <button class="btn" id="deliveryBox">택배함 가기</button>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/fragment/myPageSidebar.html :: fragment-my-sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
             <input type="hidden" id="userId" th:value="${account.id}">
-            <br/>
-            <button class="btn" id="logoutButton">로그아웃</button>
-        </div>
-        <div class="card-section">
-            <h1>계정정보</h1>
-            <div class="row row-header">
-                <div class="col">Username</div>
-                <div class="col">Diamond</div>
-                <div class="col">Ruby</div>
+            <div class="container">
+                <div class="wide-card card-container">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                        <h1 class="h2">기본 정보</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group mr-2">
+                                <button class="btn btn-sm btn-outline-secondary" id="logoutButton">로그아웃</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div th:text="${account.username}" class="col">Username</div>
-                <div th:text="${account.golds.diamond.amount}" class="col">Diamond</div>
-                <div th:text="${account.golds.ruby.amount}" class="col">Ruby</div>
-            </div>
-        </div>
-        <div class="card-section">
-            <h1>아이템정보</h1>
-            <div class="row row-header">
-                <div class="col">ID</div>
-                <div class="col">Name</div>
-                <div class="col">Amount</div>
-            </div>
-            <div th:each="item : ${items}" class="row">
-                <div th:text="${item.id}" class="col">ID</div>
-                <div th:text="${item.product.name}" class="col">Name</div>
-                <div th:text="${item.amount}" class="col">Amount</div>
-            </div>
-        </div>
-
-        <div class="card-section">
-            <h1>택배 보내기</h1>
-            <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
-            <p>루비 <input type="number" id="rubyAmount"></p>
-            <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
-            <br/>
-            <button class="btn" id="deliveryButton">보내기</button>
-        </div>
-
-        <div class="card-section">
-            <h1>아이템 구매 내역</h1>
-            <div class="row row-header">
-                <div class="col">Name</div>
-                <div class="col">Amount</div>
-                <div class="col">Gold Type</div>
-                <div class="col">Price</div>
-                <div class="col">Date</div>
-            </div>
-            <div th:each="itemOrder : ${itemOrders}" class="row">
-                <div th:text="${itemOrder.product.name}" class="col">Name</div>
-                <div th:text="${itemOrder.productAmount}" class="col">Amount</div>
-                <div th:text="${itemOrder.goldType}" class="col">Gold Type</div>
-                <div th:text="${itemOrder.price.amount}" class="col">Price</div>
-                <div th:text="${itemOrder.date}" class="col">Date</div>
-            </div>
-        </div>
-
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
-        <div class="card-section">
-            <h1>충전정보</h1>
-            <div class="row row-header">
-                <div class="col">ID</div>
-                <div class="col">Price</div>
-                <div class="col">Diamond</div>
-                <div class="col">Bonus</div>
-            </div>
-            <div th:each="exchangeRate : ${exchangeRates}" class="row">
-                <div th:text="${exchangeRate.id}" class="col">id</div>
-                <div th:text="${exchangeRate.price.amount}" class="col">price</div>
-                <div th:text="${exchangeRate.diamond.amount}" class="col">diamond</div>
-                <div th:text="${exchangeRate.bonus}" class="col">bonus</div>
-            </div>
-        </div>
-
-        <div class="card-section">
-            <h1>충전</h1>
-            <p>충전정보 아이디 <input type="number" id="exchangeRateId"></p>
-            <div class="errorMessages" id="chargeErrorBox"></div>
-            <button class="btn" id="chargeKakaoPayButton">카카오페이</button>
-            <button class="btn" id="chargePaycoButton">페이코</button>
-        </div>
-
-        <div class="card-section">
-            <h1>충전내역</h1>
-            <div class="row row-header">
-                <div class="col">ID</div>
-                <div class="col">Date</div>
-                <div class="col">Price</div>
-                <div class="col">Diamond</div>
-            </div>
-            <div th:each="chargeOrder : ${chargeOrders}" class="row">
-                <div th:text="${chargeOrder.id}" class="col">id</div>
-                <div th:text="${chargeOrder.date}" class="col">bonus</div>
-                <div th:text="${chargeOrder.price.amount}" class="col">price</div>
-                <div th:text="${chargeOrder.diamond.amount}" class="col">diamond</div>
-            </div>
-        </div>
+        </main>
     </div>
 </div>
+
 </body>
 </html>
