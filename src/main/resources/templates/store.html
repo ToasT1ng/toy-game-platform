@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/store.css}">
     <script type="text/javascript" th:src="@{/js/store.js}"></script>
 </head>
 
@@ -11,36 +12,49 @@
         <div th:replace="/fragment/storeSidebar.html :: fragment-store-sidebar"></div>
         <input type="hidden" id="userId" th:value="${account.id}">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <div class="container">
-                <div class="wide-card card-container">
-                    <div class="card-section">
-                        <h1>상품 리스트</h1>
-                        <div class="row row-header">
-                            <div class="col">ID</div>
-                            <div class="col">Name</div>
-                            <div class="col">Category</div>
-                            <div class="col">Gold Type</div>
-                            <div class="col">Price</div>
-                            <div class="col">Action</div>
-                        </div>
-                        <div th:each="product : ${productList}" class="row">
-                            <div th:text="${product.id}" class="col">id</div>
-                            <div th:text="${product.name}" class="col">name</div>
-                            <div th:text="${product.category}" class="col">category</div>
-                            <div th:text="${product.type}" class="col">type</div>
-                            <div th:text="${product.price.amount}" class="col">price</div>
-                            <button type="button" class="btn btn-primary launch-purchase-modal" data-toggle="modal" data-target="#exampleModal" th:data-whatever="|${product.id}|">구매하기</button>
-                            <button type="button" class="btn btn-primary launch-delivery-modal" data-toggle="modal" data-target="#exampleModal" th:data-whatever="|${product.id}|">선물하기</button>
-                        </div>
-                    </div>
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">상품 리스트</h1>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" value="검색">
                 </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">이름</th>
+                            <th scope="col">카테고리</th>
+                            <th scope="col">골드형태</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${productList}" >
+                            <th th:text="${product.id}" scope="row">id</th>
+                            <td th:text="${product.name}">name</td>
+                            <td th:text="${product.category}">category</td>
+                            <td th:text="${product.type}">type</td>
+                            <td th:text="${product.price.amount}">price</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-secondary launch-purchase-modal" data-toggle="modal" data-target="#storeModal" th:data-whatever="|${product.id}|">구매하기</button>
+                                    <button type="button" class="btn btn-outline-secondary launch-delivery-modal" data-toggle="modal" data-target="#storeModal" th:data-whatever="|${product.id}|">선물하기</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container">
+                <div class="modal fade" id="storeModal" tabindex="-1" aria-labelledby="storeModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="storeModalLabel">상품 구매하기</h5>
                             </div>
                             <div class="modal-body">
                                 <form>
@@ -52,6 +66,9 @@
                                         <label for="cartProductAmount" class="col-form-label">갯수:</label>
                                         <input type="number" class="form-control" id="cartProductAmount">
                                     </div>
+                                    <div id="purchase-success-paragraph" class="mb-3 d-none" >
+                                        <p>구매성공! 창이 자동으로 닫힙니다.</p>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -61,12 +78,6 @@
                         </div>
                     </div>
                 </div>
-<!--                <div class="card-section">-->
-<!--                    <h1>구매하기</h1>-->
-<!--                    <p>아이디 <input type="number" id="cartProductId"> 갯수 <input type="number" id="cartProductAmount"> </p>-->
-<!--                    <br/>-->
-
-<!--                </div>-->
             </div>
         </main>
     </div>

@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.product.adapter.out.persistence;
 
+import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.common.PersistenceAdapter;
 import info.toast1ng.toygameplatform.product.application.port.out.DeleteStoreProductPort;
 import info.toast1ng.toygameplatform.product.application.port.out.LoadStoreProductPort;
@@ -24,6 +25,11 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
     @Override
     public List<StoreProduct> listStoreProducts() {
         return mapper.mapToDomainEntity(repository.findAll());
+    }
+
+    @Override
+    public List<StoreProduct> listStoreProducts(GoldType goldType) {
+        return mapper.mapToDomainEntity(repository.findAllByGoldType(goldType));
     }
 
     @Override

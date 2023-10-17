@@ -10,83 +10,90 @@
     <div class="row">
         <div th:replace="/fragment/myPageSidebar.html :: fragment-my-sidebar"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">택배 전송</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button class="btn btn-sm btn-outline-secondary" id="deliveryButton">전송</button>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
-                <p>루비 <input type="number" id="rubyAmount"></p>
-                <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
-                <br/>
-            </div>
-
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">보낸 택배함</h1>
-            </div>
-
-            <div class="wide-card card-container">
-                <div class="card-section">
-                    <div class="row row-header">
-                        <div class="col">ID</div>
-                        <div class="col">Receiver</div>
-                        <div class="col">Items</div>
-                        <div class="col">Ruby</div>
-                        <div class="col">Date</div>
-                        <div class="col">State</div>
-                        <div class="col">Action</div>
-                    </div>
-                    <div th:each="delivery : ${sendDeliveries}" class="row">
-                        <div th:text="${delivery.id}" class="col">ID</div>
-                        <div th:text="${delivery.receiver.username}" class="col">username</div>
-                        <div th:if="${not #lists.isEmpty(delivery.items)}" class="col">
-                            <div th:each="item : ${delivery.items}">
-                                <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
-                            </div>
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">택배 전송</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button class="btn btn-sm btn-outline-secondary" id="deliveryButton">전송</button>
                         </div>
-                        <div th:unless="${not #lists.isEmpty(delivery.items)}" class="col"></div>
-                        <div th:text="${delivery.ruby.amount}" class="col">Ruby</div>
-                        <div th:text="${delivery.date}" class="col">Date</div>
-                        <div th:text="${delivery.state}" class="col">State</div>
-                        <div class="col"><button class="btn cancelButtons" th:id="|${delivery.id}_cancel|">취소하기</button></div>
                     </div>
                 </div>
+                <div>
+                    <p>아이템 아이디 <input type="number" id="cartAccountProductId"> 갯수 <input type="number" id="cartProductAmount"></p>
+                    <p>루비 <input type="number" id="rubyAmount"></p>
+                    <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
+                    <br/>
+                </div>
+            </div>
 
-                <br/>
-                <br/>
-                <br/>
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">보낸 택배함</h1>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Receiver</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">Ruby</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="delivery : ${sendDeliveries}">
+                            <th th:text="${delivery.id}" scope="row">ID</th>
+                            <td th:text="${delivery.receiver.username}">username</td>
+                            <td th:if="${not #lists.isEmpty(delivery.items)}">
+                                <div th:each="item : ${delivery.items}">
+                                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                                </div>
+                            </td>
+                            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
+                            <td th:text="${delivery.ruby.amount}">Ruby</td>
+                            <td th:text="${delivery.date}">Date</td>
+                            <td th:text="${delivery.state}">State</td>
+                            <td ><button class="btn cancelButtons" th:id="|${delivery.id}_cancel|">취소하기</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">받은 택배함</h1>
                 </div>
-                <div>
-                    <div class="row row-header">
-                        <div class="col">ID</div>
-                        <div class="col">Items</div>
-                        <div class="col">Ruby</div>
-                        <div class="col">Date</div>
-                        <div class="col">State</div>
-                        <div class="col">Action</div>
-                    </div>
-                    <div th:each="delivery : ${receivedDeliveries}" class="row">
-                        <div th:text="${delivery.id}" class="col">ID</div>
-                        <div th:if="${not #lists.isEmpty(delivery.items)}" class="col">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">Ruby</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="delivery : ${receivedDeliveries}">
+                        <th th:text="${delivery.id}" scope="row">ID</th>
+                        <td th:if="${not #lists.isEmpty(delivery.items)}" >
                             <div th:each="item : ${delivery.items}">
                                 <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
                             </div>
-                        </div>
-                        <div th:unless="${not #lists.isEmpty(delivery.items)}" class="col"></div>
-                        <div th:text="${delivery.ruby.amount}" class="col">Ruby</div>
-                        <div th:text="${delivery.date}" class="col">Date</div>
-                        <div th:text="${delivery.state}" class="col">State</div>
-                        <div class="col"><button class="btn acceptButtons" th:id="|${delivery.id}_accpet|">수령하기</button>
-                            <button class="btn rejectButtons" th:id="|${delivery.id}_reject|">거절하기</button></div>
-                    </div>
-                </div>
+                        </td>
+                        <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
+                        <td th:text="${delivery.ruby.amount}">Ruby</td>
+                        <td th:text="${delivery.date}">Date</td>
+                        <td th:text="${delivery.state}">State</td>
+                        <td ><button class="btn acceptButtons" th:id="|${delivery.id}_accpet|">수령하기</button>
+                            <button class="btn rejectButtons" th:id="|${delivery.id}_reject|">거절하기</button></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>

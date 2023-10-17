@@ -1,63 +1,38 @@
 // import { ajax } from "./ajax.js"
 
 $(document).ready(function () {
+    $('#sidebar-store-entire-link').addClass("active");
+    let currentActiveSidebar = $('#sidebar-store-entire-link');
+
+    $('#sidebar-store-entire-link').click((aTag) => {
+        currentActiveSidebar.removeClass("active");
+        $(aTag.currentTarget).addClass("active");
+        currentActiveSidebar = $(aTag.currentTarget);
+    });
+
+    $('#sidebar-store-ruby-link').click((aTag) => {
+        currentActiveSidebar.removeClass("active");
+        $(aTag.currentTarget).addClass("active");
+        currentActiveSidebar = $(aTag.currentTarget);
+    });
+
+    $('#sidebar-store-diamond-link').click((aTag) => {
+        currentActiveSidebar.removeClass("active");
+        $(aTag.currentTarget).addClass("active");
+        currentActiveSidebar = $(aTag.currentTarget);
+    });
 
     $(".launch-purchase-modal").click((button) => {
         let targetId = $(button.currentTarget).attr("data-whatever");
         console.log(targetId);
         $("#cartProductId").val(targetId);
-        $('.exampleModal').modal('show');
+        $('#storeModal').modal('show');
     });
 
     $("#close-purchase-modal").click((button) => {
-        $('.exampleModal').modal('hide');
+        $('#storeModal').modal('hide');
     });
 
-
-
-    // $("#exampleModal").on('shown.bs.tab', function () {
-    //     var button = event.relatedTarget
-    //     // Extract info from data-bs-* attributes
-    //     var recipient = button.getAttribute('data-bs-whatever')
-    //     // If necessary, you could initiate an AJAX request here
-    //     // and then do the updating in a callback.
-    //     //
-    //     // Update the modal's content.
-    //     var modalTitle = exampleModal.querySelector('.modal-title')
-    //     var modalBodyInput = exampleModal.querySelector('.modal-body input')
-    //
-    //     modalTitle.textContent = 'New message to ' + recipient
-    //     modalBodyInput.value = recipient
-    // });
-
-    $("#back").click(() => {
-        window.location.replace("http://localhost:8080");
-    });
-
-    $("#createButton").click(() => {
-        let query = {
-            url: '/store-products',
-            type: 'POST',
-            headers: {Authorization:  $("#token").val()},
-            data: {
-                category: $("#category").val(),
-                name: $("#name").val(),
-                type : $("#type").val(),
-                price: $("#price").val()
-            },
-            contentType: "application/x-www-form-urlencoded"
-        };
-        ajax(query);
-    });
-
-    $("#deleteButton").click(() => {
-        let query = {
-            url: '/store-products/' + $("#deleteId").val(),
-            type: 'DELETE',
-            headers: {Authorization:  $("#token").val()}
-        };
-        ajax(query);
-    });
 
     let cartItems = [];
 
@@ -80,6 +55,8 @@ $(document).ready(function () {
     function ajax(query) {
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
+            setTimeout(() => $('#storeModal').modal('hide'), 3000);
+            $("#purchase-success-paragraph").removeClass("d-none");
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });

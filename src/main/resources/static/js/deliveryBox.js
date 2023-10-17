@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#sidebar-delivery-box-link").addClass("active");
+
     $("#back").click(() => {
         window.location.replace("http://localhost:8080/myPage");
     });

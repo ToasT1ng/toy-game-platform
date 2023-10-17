@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.product.application.service;
 
+import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
 import info.toast1ng.toygameplatform.product.application.port.out.LoadStoreProductPort;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
@@ -18,6 +19,11 @@ public class GetStoreProductService implements GetStoreProductQuery {
     @Override
     public List<StoreProduct> listStoreProducts() {
         return port.listStoreProducts();
+    }
+
+    @Override
+    public List<StoreProduct> listStoreProducts(GoldType goldType) {
+        return port.listStoreProducts(goldType);
     }
 
     @Override
