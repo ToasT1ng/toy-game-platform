@@ -1,25 +1,38 @@
 // import { ajax } from "./ajax.js"
 
 $(document).ready(function () {
-    $('#sidebar-store-entire-link').addClass("active");
-    let currentActiveSidebar = $('#sidebar-store-entire-link');
+    let currentActiveSidebar;
+    let currentGoldType = $("#productGoldType").val();
+    if (currentGoldType == "none") {
+        $('#sidebar-store-entire-link').addClass("active");
+        currentActiveSidebar = $('#sidebar-store-entire-link');
+    } else if (currentGoldType == "ruby") {
+        $('#sidebar-store-ruby-link').addClass("active");
+        currentActiveSidebar = $('#sidebar-store-ruby-link');
+    } else {
+        $('#sidebar-store-diamond-link').addClass("active");
+        currentActiveSidebar = $('#sidebar-store-diamond-link');
+    }
 
     $('#sidebar-store-entire-link').click((aTag) => {
         currentActiveSidebar.removeClass("active");
         $(aTag.currentTarget).addClass("active");
         currentActiveSidebar = $(aTag.currentTarget);
+        $("#productGoldType").val("none");
     });
 
     $('#sidebar-store-ruby-link').click((aTag) => {
         currentActiveSidebar.removeClass("active");
         $(aTag.currentTarget).addClass("active");
         currentActiveSidebar = $(aTag.currentTarget);
+        $("#productGoldType").val("ruby");
     });
 
     $('#sidebar-store-diamond-link').click((aTag) => {
         currentActiveSidebar.removeClass("active");
         $(aTag.currentTarget).addClass("active");
         currentActiveSidebar = $(aTag.currentTarget);
+        $("#productGoldType").val("diamond");
     });
 
     $(".launch-purchase-modal").click((button) => {

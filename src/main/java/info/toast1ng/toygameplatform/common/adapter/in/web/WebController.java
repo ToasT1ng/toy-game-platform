@@ -4,15 +4,19 @@ import info.toast1ng.toygameplatform.account.application.port.in.GetAccountItemQ
 import info.toast1ng.toygameplatform.account.application.port.in.GetAccountQuery;
 import info.toast1ng.toygameplatform.charge.application.port.in.GetChargeOrderQuery;
 import info.toast1ng.toygameplatform.charge.domain.FixedExchangeRates;
+import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.common.WebAdapter;
 import info.toast1ng.toygameplatform.delivery.application.port.in.GetDeliveryQuery;
 import info.toast1ng.toygameplatform.order.application.port.in.GetOrderQuery;
 import info.toast1ng.toygameplatform.product.application.port.in.GetStoreProductQuery;
+import info.toast1ng.toygameplatform.product.application.port.in.ListStoreProductsCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,18 +59,30 @@ public class WebController {
     }
 
     @GetMapping("/admin")
-    public ModelAndView admin() {
+    public ModelAndView admin(@RequestParam(required = false, defaultValue="1") int page,
+                              @RequestParam(required = false, defaultValue="5") int limit,
+                              @RequestParam(required = false, defaultValue="") String keyword,
+                              @RequestParam(required = false, defaultValue="none") GoldType goldType) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
-        model.addObject("productList", getStoreProductQuery.listStoreProducts());
+        model.addObject("productList", getStoreProductQuery.listStoreProducts(new ListStoreProductsCommand(keyword, goldType, PageRequest.of(page-1, limit))));
+        model.addObject("searchNameKeyword", keyword);
+        model.addObject("searchGoldType", goldType);
+        model.addObject("account", getAccountQuery.getAccount(username));
         model.setViewName("admin");
         return model;
     }
 
     @GetMapping("/store")
-    public ModelAndView store() {
+    public ModelAndView store(@RequestParam(required = false, defaultValue="1") int page,
+                              @RequestParam(required = false, defaultValue="5") int limit,
+                              @RequestParam(required = false, defaultValue="") String keyword,
+                              @RequestParam(required = false, defaultValue="none") GoldType goldType) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
-        model.addObject("productList", getStoreProductQuery.listStoreProducts());
+        model.addObject("productList", getStoreProductQuery.listStoreProducts(new ListStoreProductsCommand(keyword, goldType, PageRequest.of(page-1, limit))));
+        model.addObject("searchNameKeyword", keyword);
+        model.addObject("searchGoldType", goldType);
         model.addObject("account", getAccountQuery.getAccount(username));
         model.setViewName("store");
         return model;
@@ -95,7 +111,7 @@ public class WebController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
-        model.addObject("items", getAccountItemQuery.getAccountItems(username));
+        model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
         model.addObject("itemOrders", getOrderQuery.getOrders(username));
         model.setViewName("myItems");
         return model;
@@ -118,7 +134,7 @@ public class WebController {
 //        String username = "admin_user";
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
-        model.addObject("items", getAccountItemQuery.getAccountItems(username));
+        model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
         model.addObject("sendDeliveries", getDeliveryQuery.getSendDeliveries(username));
         model.addObject("receivedDeliveries", getDeliveryQuery.getReceivedDeliveries(username));
         model.setViewName("deliveryBox");

@@ -7,12 +7,11 @@
 
 <body>
 <div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
 <div class="container-fluid">
     <div class="row">
         <div th:replace="/fragment/myPageSidebar.html :: fragment-my-sidebar"></div>
-
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <input type="hidden" id="userId" th:value="${account.id}">
             <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">기본 정보</h1>

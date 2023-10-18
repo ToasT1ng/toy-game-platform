@@ -7,18 +7,21 @@
 
 <body>
 <div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
 <div class="container-fluid">
     <div class="row">
         <div th:replace="/fragment/storeSidebar.html :: fragment-store-sidebar"></div>
-        <input type="hidden" id="userId" th:value="${account.id}">
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">상품 리스트</h1>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" value="검색">
-                </div>
+                <form th:action="@{/store}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" name="keyword" th:value="${searchNameKeyword}" class="form-control">
+                        <input id="productGoldType" type="hidden" name="goldType" th:value="${searchGoldType}" class="form-control">
+                    </div>
+                </form>
 
                 <table class="table">
                     <thead class="thead-dark">
@@ -47,6 +50,42 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <nav>
+                    <ul class="pagination justify-content-center"
+                        th:with="startPage=${T(java.lang.Math).floor(productList.number/10)*10 + 1},
+                            endPage=(${startPage + 9 < productList.totalPages ? startPage + 9 : productList.totalPages})">
+                        <th:block th:with="firstPage=@{/store(page=1, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        prevPage=@{/store(page=${productList.number}, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        nextPage=@{/store(page=${productList.number + 2}, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        lastPage=@{/store(page=${productList.totalPages}, keyword=${searchNameKeyword}, goldType=${searchGoldType})}">
+                            <li class="page-item">
+                                <a class="page-link" th:href="${firstPage}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="|page-item ${productList.first} ? 'disabled'|">
+                                <a class="page-link" th:href="${productList.first} ? '#' :${prevPage}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                                th:class="|page-item ${page == productList.number + 1} ? 'active'|">
+                                <a class="page-link" th:text="${page}" th:href="@{/store(page=${page}, keyword=${searchNameKeyword}, goldType=${searchGoldType})}"></a>
+                            </li>
+                            <li th:class="|page-item ${productList.last} ? 'disabled'|">
+                                <a class="page-link" th:href="${productList.last} ? '#' : ${nextPage}" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="${lastPage}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
             </div>
 
             <div class="container">

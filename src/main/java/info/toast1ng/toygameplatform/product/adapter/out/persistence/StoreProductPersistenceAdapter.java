@@ -7,6 +7,8 @@ import info.toast1ng.toygameplatform.product.application.port.out.LoadStoreProdu
 import info.toast1ng.toygameplatform.product.application.port.out.RegisterStoreProductPort;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -28,8 +30,13 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
     }
 
     @Override
-    public List<StoreProduct> listStoreProducts(GoldType goldType) {
-        return mapper.mapToDomainEntity(repository.findAllByGoldType(goldType));
+    public Page<StoreProduct> listStoreProducts(String nameKeyword, Pageable pageable) {
+        return mapper.mapToPagingDomainEntity(repository.findAllByNameContains(nameKeyword, pageable));
+    }
+
+    @Override
+    public Page<StoreProduct> listStoreProducts(String nameKeyword, GoldType goldType, Pageable pageable) {
+        return mapper.mapToPagingDomainEntity(repository.findAllByNameContainsAndGoldType(nameKeyword, goldType, pageable));
     }
 
     @Override

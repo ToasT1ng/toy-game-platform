@@ -5,41 +5,100 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="wide-card card-container">
-    <h1>상품 리스트</h1>
-    <table id="productTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Gold Type</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${productList}">
-            <td th:text="${product.id}">id</td>
-            <td th:text="${product.name}">name</td>
-            <td th:text="${product.category}">category</td>
-            <td th:text="${product.type}">type</td>
-            <td th:text="${product.price.amount}">price</td>
-        </tr>
-        </tbody>
-    </table>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/fragment/storeSidebar.html :: fragment-store-sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">상품 리스트</h1>
+                </div>
 
-    <h1>추가</h1>
-    <input type="hidden" id="token" th:value="${session.token}">
-    <p>이름 <input type="text" id="name"></p>
-    <p>카테고리 <input type="text" id="category"></p>
-    <p>골드형태 <input type="text" id="type"></p>
-    <p>가격 <input type="number" id="price"></p>
-    <button id="createButton">추가</button>
+                <form th:action="@{/admin}" method="get">
+                    <div class="input-group mb-3">
+                        <input type="text" name="keyword" th:value="${searchNameKeyword}" class="form-control">
+                        <input id="productGoldType" type="hidden" name="goldType" th:value="${searchGoldType}" class="form-control">
+                    </div>
+                </form>
 
-    <h1>삭제</h1>
-    <p>아이디 <input type="number" id="deleteId"></p>
-    <button id="deleteButton">삭제</button>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">카테고리</th>
+                        <th scope="col">골드형태</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${productList}" >
+                        <th th:text="${product.id}" scope="row">id</th>
+                        <td th:text="${product.name}">name</td>
+                        <td th:text="${product.category}">category</td>
+                        <td th:text="${product.type}">type</td>
+                        <td th:text="${product.price.amount}">price</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-secondary launch-purchase-modal deleteButton" th:data-whatever="|${product.id}|">삭제하기</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <nav>
+                    <ul class="pagination justify-content-center"
+                        th:with="startPage=${T(java.lang.Math).floor(productList.number/10)*10 + 1},
+                            endPage=(${startPage + 9 < productList.totalPages ? startPage + 9 : productList.totalPages})">
+                        <th:block th:with="firstPage=@{/admin(page=1, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        prevPage=@{/admin(page=${productList.number}, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        nextPage=@{/admin(page=${productList.number + 2}, keyword=${searchNameKeyword}, goldType=${searchGoldType})},
+                        lastPage=@{/admin(page=${productList.totalPages}, keyword=${searchNameKeyword}, goldType=${searchGoldType})}">
+                            <li class="page-item">
+                                <a class="page-link" th:href="${firstPage}" aria-label="First">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            <li th:class="|page-item ${productList.first} ? 'disabled'|">
+                                <a class="page-link" th:href="${productList.first} ? '#' :${prevPage}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                                th:class="|page-item ${page == productList.number + 1} ? 'active'|">
+                                <a class="page-link" th:text="${page}" th:href="@{/admin(page=${page}, keyword=${searchNameKeyword}, goldType=${searchGoldType})}"></a>
+                            </li>
+                            <li th:class="|page-item ${productList.last} ? 'disabled'|">
+                                <a class="page-link" th:href="${productList.last} ? '#' : ${nextPage}" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="${lastPage}" aria-label="Last">
+                                    <span aria-hidden="true">Last</span>
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">추가</h1>
+                </div>
+
+                <p>이름 <input type="text" id="name"></p>
+                <p>카테고리 <input type="text" id="category"></p>
+                <p>골드형태 <input type="text" id="type"></p>
+                <p>가격 <input type="number" id="price"></p>
+                <button id="createButton">추가</button>
+            </div>
+        </main>
     </div>
 </div>
 </body>

@@ -20,7 +20,7 @@ public class GetAccountItemService implements GetAccountItemQuery {
     }
 
     @Override
-    public List<AccountItem> getAccountItems(String username) {
-        return loadAccountItemPort.loadAccountItems(username);
+    public List<AccountItem> getAccountItems(String username, int minAmount) {
+        return loadAccountItemPort.loadAccountItems(username, minAmount);
     }
 }

@@ -9,6 +9,6 @@ public interface LoadAccountItemPort {
     AccountItem loadAccountItem(long userId, long productId);
     List<AccountItem> loadAccountItems(long userId);
     List<AccountItem> loadAccountItems(long userId, Set<Long> itemIds);
-    List<AccountItem> loadAccountItems(String username);
+    List<AccountItem> loadAccountItems(String username, int minAmount);
     List<AccountItem> loadAccountItemsByProductIds(long userId, Set<Long> productIds);
 }

@@ -3,6 +3,7 @@ package info.toast1ng.toygameplatform.product.adapter.out.persistence;
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -35,5 +36,9 @@ public class StoreProductMapper implements BasicMapper<StoreProductJpaEntity, St
             list.add(mapToDomainEntity(entity));
         }
         return list;
+    }
+
+    public Page<StoreProduct> mapToPagingDomainEntity(Page<StoreProductJpaEntity> page) {
+        return page.map(this::mapToDomainEntity);
     }
 }
