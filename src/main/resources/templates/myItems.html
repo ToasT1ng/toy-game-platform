@@ -16,6 +16,15 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">아이템 목록</h1>
                 </div>
+                <div class="row pt-3 px-4">
+                    <div th:each="item : ${items}" class="col-xs-1 d-flex bg-white border border-dark m-0 p-0 position-relative">
+                        <div class="p-3 gem-image-box">
+                            <img class="img-fluid d-block mx-auto my-auto" th:src="@{/img/turtle.png}" th:alt="${item.product.name}" width="75" height="75">
+                        </div>
+<!--                        <div th:text="${item.product.name}" class="float-right">Name</div>-->
+                        <div th:text="${item.amount}" class="h5 text-black m-0 position-absolute bottom-right"></div>
+                    </div>
+                </div>
                 <div>
                     <div class="row row-header">
                         <div class="col">ID</div>
