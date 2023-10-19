@@ -15,4 +15,11 @@ public class StoreProduct {
     private String category;
     private GoldType type;
     private Gold price;
+    private Image image;
+
+    public void changeDetails(String name, Gold price, Image image) {
+        this.name = name;
+        this.price = price;
+        this.image = image;
+    }
 }

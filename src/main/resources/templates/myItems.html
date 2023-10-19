@@ -19,9 +19,8 @@
                 <div class="row pt-3 px-4">
                     <div th:each="item : ${items}" class="col-xs-1 d-flex bg-white border border-dark m-0 p-0 position-relative">
                         <div class="p-3 gem-image-box">
-                            <img class="img-fluid d-block mx-auto my-auto" th:src="@{/img/turtle.png}" th:alt="${item.product.name}" width="75" height="75">
+                            <img class="img-fluid d-block mx-auto my-auto" src="https://drive.google.com/uc?export=view&id=19FAJQh4YBlHngcX1I2zCQtya_n5S9Gmb" th:alt="${item.product.name}" width="75" height="75">
                         </div>
-<!--                        <div th:text="${item.product.name}" class="float-right">Name</div>-->
                         <div th:text="${item.amount}" class="h5 text-black m-0 position-absolute bottom-right"></div>
                     </div>
                 </div>

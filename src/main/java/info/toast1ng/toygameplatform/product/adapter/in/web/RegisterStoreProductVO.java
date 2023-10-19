@@ -11,4 +11,5 @@ public class RegisterStoreProductVO {
     private ProductCategory category;
     private GoldType type;
     private int price;
+    private String imageUrl;
 }

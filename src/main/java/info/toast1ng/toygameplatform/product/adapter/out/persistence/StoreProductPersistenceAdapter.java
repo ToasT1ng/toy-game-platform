@@ -5,6 +5,7 @@ import info.toast1ng.toygameplatform.common.PersistenceAdapter;
 import info.toast1ng.toygameplatform.product.application.port.out.DeleteStoreProductPort;
 import info.toast1ng.toygameplatform.product.application.port.out.LoadStoreProductPort;
 import info.toast1ng.toygameplatform.product.application.port.out.RegisterStoreProductPort;
+import info.toast1ng.toygameplatform.product.application.port.out.UpdateStoreProductPort;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class StoreProductPersistenceAdapter implements RegisterStoreProductPort, LoadStoreProductPort, DeleteStoreProductPort {
+public class StoreProductPersistenceAdapter implements RegisterStoreProductPort, LoadStoreProductPort, DeleteStoreProductPort, UpdateStoreProductPort {
     private final StoreProductMapper mapper;
     private final SpringDataStoreProductRepository repository;
 
@@ -47,5 +48,10 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
     @Override
     public void deleteStoreProduct(long id) {
         repository.deleteStoreProduct(id);
+    }
+
+    @Override
+    public void updateStoreProduct(StoreProduct storeProduct) {
+        repository.save(mapper.mapToJpaEntity(storeProduct));
     }
 }

@@ -14,6 +14,11 @@
             <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">상품 리스트</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button class="btn btn-sm btn-outline-secondary" id="launch-create-product-modal">상품 추가</button>
+                        </div>
+                    </div>
                 </div>
 
                 <form th:action="@{/admin}" method="get">
@@ -23,10 +28,11 @@
                     </div>
                 </form>
 
-                <table class="table">
+                <table class="table text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">이미지</th>
                         <th scope="col">이름</th>
                         <th scope="col">카테고리</th>
                         <th scope="col">골드형태</th>
@@ -36,14 +42,18 @@
                     </thead>
                     <tbody>
                     <tr th:each="product : ${productList}" >
-                        <th th:text="${product.id}" scope="row">id</th>
-                        <td th:text="${product.name}">name</td>
-                        <td th:text="${product.category}">category</td>
-                        <td th:text="${product.type}">type</td>
-                        <td th:text="${product.price.amount}">price</td>
-                        <td>
+                        <th class="align-middle" th:text="${product.id}" scope="row">id</th>
+                        <td class="align-middle">
+                            <img th:if="${product.image.url != ''}" th:src="${product.image.url}" width="30" height="30">
+                        </td>
+                        <td class="align-middle" th:text="${product.name}">name</td>
+                        <td class="align-middle" th:text="${product.category}">category</td>
+                        <td class="align-middle" th:text="${product.type}">type</td>
+                        <td class="align-middle" th:text="${product.price.amount}">price</td>
+                        <td class="align-middle">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-secondary launch-purchase-modal deleteButton" th:data-whatever="|${product.id}|">삭제하기</button>
+                                <button type="button" class="btn btn-outline-secondary deleteButton" th:data-whatever="|${product.id}|">삭제</button>
+                                <button type="button" class="btn btn-outline-secondary launch-change-modal changeButton" th:data-whatever="|${product.id}|">수정</button>
                             </div>
                         </td>
                     </tr>
@@ -87,16 +97,60 @@
                 </nav>
             </div>
 
-            <div class="paragraph">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">추가</h1>
-                </div>
+<!--            <div class="paragraph">-->
+<!--                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">-->
+<!--                    <h1 class="h2">추가</h1>-->
+<!--                </div>-->
 
-                <p>이름 <input type="text" id="name"></p>
-                <p>카테고리 <input type="text" id="category"></p>
-                <p>골드형태 <input type="text" id="type"></p>
-                <p>가격 <input type="number" id="price"></p>
-                <button id="createButton">추가</button>
+<!--                <p>이름 <input type="text" id="name"></p>-->
+<!--                <p>카테고리 <input type="text" id="category"></p>-->
+<!--                <p>골드형태 <input type="text" id="type"></p>-->
+<!--                <p>가격 <input type="number" id="price"></p>-->
+<!--                <p>이미지주소 <input type="text" id="imageUrl"></p>-->
+<!--                <button id="createButton">추가</button>-->
+<!--            </div>-->
+
+            <div class="container">
+                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addProductModalLabel">상품 추가하기</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="name" class="col-form-label">상품 이름:</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="category" class="col-form-label">카테고리:</label>
+                                        <input type="text" class="form-control" id="category">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="type" class="col-form-label">골드형태:</label>
+                                        <input type="text" class="form-control" id="type">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="col-form-label">가격:</label>
+                                        <input type="number" class="form-control" id="price">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="imageUrl" class="col-form-label">이미지주소:</label>
+                                        <input type="text" class="form-control" id="imageUrl">
+                                    </div>
+                                    <div id="success-paragraph" class="mb-3 d-none" >
+                                        <p>추가성공! 창이 자동으로 닫힙니다.</p>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="close-create-product-modal" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-primary" id="createButton">추가</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

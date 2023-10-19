@@ -35,6 +35,17 @@ $(document).ready(function () {
         $("#productGoldType").val("diamond");
     });
 
+    $("#launch-create-product-modal").click((button) => {
+        // let targetId = $(button.currentTarget).attr("data-whatever");
+        // console.log(targetId);
+        // $("#cartProductId").val(targetId);
+        $('#addProductModal').modal('show');
+    });
+
+    $("#close-create-product-modal").click((button) => {
+        $('#addProductModal').modal('hide');
+    });
+
     $("#createButton").click(() => {
         let query = {
             url: '/store-products',
@@ -44,11 +55,14 @@ $(document).ready(function () {
                 category: $("#category").val(),
                 name: $("#name").val(),
                 type : $("#type").val(),
-                price: $("#price").val()
+                price: $("#price").val(),
+                imageUrl: $("#imageUrl").val()
             },
             contentType: "application/x-www-form-urlencoded"
         };
         ajax(query);
+        // setTimeout(() => $('#addProductModal').modal('hide'), 3000);
+        // $("#success-paragraph").removeClass("d-none");
     });
 
     $(".deleteButton").click((button) => {

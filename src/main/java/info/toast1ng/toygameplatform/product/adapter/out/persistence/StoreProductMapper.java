@@ -2,6 +2,7 @@ package info.toast1ng.toygameplatform.product.adapter.out.persistence;
 
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.common.domain.Gold;
+import info.toast1ng.toygameplatform.product.domain.Image;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ public class StoreProductMapper implements BasicMapper<StoreProductJpaEntity, St
                 .name(storeProduct.getName())
                 .type(storeProduct.getType())
                 .price(storeProduct.getPrice().getAmount())
+                .imageUrl(storeProduct.getImage().getUrl())
                 .build();
     }
 
@@ -27,6 +29,7 @@ public class StoreProductMapper implements BasicMapper<StoreProductJpaEntity, St
                 .name(entity.getName())
                 .type(entity.getType())
                 .price(new Gold(entity.getPrice()))
+                .image(new Image(entity.getImageUrl()))
                 .build();
     }
 

@@ -26,13 +26,17 @@ public class StoreProductJpaEntity {
     @Column(name = "delete_flag")
     private boolean deleteFlag;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Builder
-    public StoreProductJpaEntity(long id, String name, String category, GoldType type, int price, boolean deleteFlag) {
+    public StoreProductJpaEntity(long id, String name, String category, GoldType type, int price, boolean deleteFlag, String imageUrl) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.type = type;
         this.price = price;
         this.deleteFlag = deleteFlag;
+        this.imageUrl = imageUrl;
     }
 }

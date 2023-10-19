@@ -1,15 +1,13 @@
 package info.toast1ng.toygameplatform.product.application.port.in;
 
-import info.toast1ng.toygameplatform.common.GoldType;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-public class RegisterProductCommand {
+public class UpdateProductCommand {
+    private long id;
     private String name;
-    private String category;
-    private GoldType type;
     private int price;
     private String imageUrl;
 }

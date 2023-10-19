@@ -44,3 +44,12 @@
     * 모든 회원의 재화 보유량과 아이템 목록이 확인 가능해야함
     * 택배를 통해 재화나 아이템을 추가 부여할 수 있어야함
 * 아이템 목록을 갱신할 수 있어야함
+
+
+# 출처
+## 이미지 출처
+* https://www.flaticon.com/free-icon/gem_2047088?term=ruby&page=1&position=31&origin=search&related_id=2047088
+* https://www.flaticon.com/free-icon/ruby_9412347?term=ruby&page=1&position=38&origin=search&related_id=9412347
+* https://www.flaticon.com/free-icon/turtle_5228468?related_id=5228468
+* https://www.flaticon.com/free-icon/dog_9134573?term=dog&page=1&position=18&origin=search&related_id=9134573
+* https://www.flaticon.com/free-icon/kitty_763773?term=cat&page=1&position=71&origin=search&related_id=763773

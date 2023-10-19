@@ -26,6 +26,7 @@ public class StoreProductController {
                 .category(vo.getCategory().name())
                 .type(vo.getType())
                 .price(vo.getPrice())
+                .imageUrl(vo.getImageUrl())
                 .build());
         return "success";
     }
@@ -37,6 +38,12 @@ public class StoreProductController {
 
     @DeleteMapping("/store-products/{id}")
     public String deleteStoreProduct(@PathVariable long id) {
+        deleteStoreProductUseCase.deleteStoreProduct(id);
+        return "success";
+    }
+
+    @PutMapping("/store-products/{id}")
+    public String updateStoreProduct(@PathVariable long id) {
         deleteStoreProductUseCase.deleteStoreProduct(id);
         return "success";
     }
