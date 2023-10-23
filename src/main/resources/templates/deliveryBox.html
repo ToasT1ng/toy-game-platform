@@ -32,7 +32,7 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">보낸 택배함</h1>
                 </div>
-                <table class="table">
+                <table class="table text-center">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -46,18 +46,26 @@
                     </thead>
                     <tbody>
                         <tr th:each="delivery : ${sendDeliveries}">
-                            <th th:text="${delivery.id}" scope="row">ID</th>
-                            <td th:text="${delivery.receiver.username}">username</td>
-                            <td th:if="${not #lists.isEmpty(delivery.items)}">
+                            <th th:text="${delivery.id}" scope="row" class="align-middle">ID</th>
+                            <td th:text="${delivery.receiver.username}" class="align-middle">username</td>
+                            <td th:if="${not #lists.isEmpty(delivery.items)}" class="align-middle">
                                 <div th:each="item : ${delivery.items}">
-                                    <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                                    <div>
+                                        <div class="p-3 d-inline">
+                                            <img class="img-fluid d-inline mx-auto my-auto" th:if="${item.product.image.url != ''}" th:src="${item.product.image.url}" width="30" height="30">
+                                        </div>
+                                        <span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개
+                                    </div>
                                 </div>
                             </td>
-                            <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
-                            <td th:text="${delivery.ruby.amount}">Ruby</td>
-                            <td th:text="${delivery.date}">Date</td>
-                            <td th:text="${delivery.state}">State</td>
-                            <td ><button class="btn cancelButtons" th:id="|${delivery.id}_cancel|">취소하기</button></td>
+                            <td th:unless="${not #lists.isEmpty(delivery.items)}" class="align-middle"></td>
+                            <td th:text="|${delivery.ruby.amount}개|" class="align-middle">Ruby</td>
+                            <td th:text="${delivery.date}" class="align-middle">Date</td>
+                            <td th:text="${delivery.state}" class="align-middle">State</td>
+                            <td th:if="${#strings.equals(delivery.state, 'wait')}">
+                                <button class="btn cancelButtons" th:id="|${delivery.id}_cancel|">취소하기</button>
+                            </td>
+                            <td th:unless="${#strings.equals(delivery.state, 'wait')}">
                         </tr>
                     </tbody>
                 </table>
@@ -67,7 +75,7 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">받은 택배함</h1>
                 </div>
-                <table class="table">
+                <table class="table text-center">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -80,18 +88,26 @@
                     </thead>
                     <tbody>
                     <tr th:each="delivery : ${receivedDeliveries}">
-                        <th th:text="${delivery.id}" scope="row">ID</th>
-                        <td th:if="${not #lists.isEmpty(delivery.items)}" >
+                        <th th:text="${delivery.id}" scope="row" class="align-middle">ID</th>
+                        <td th:if="${not #lists.isEmpty(delivery.items)}" class="align-middle">
                             <div th:each="item : ${delivery.items}">
-                                <p><span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개</p>
+                                <div>
+                                    <div class="p-3 d-inline">
+                                        <img class="img-fluid d-inline mx-auto my-auto" th:if="${item.product.image.url != ''}" th:src="${item.product.image.url}" width="30" height="30">
+                                    </div>
+                                    <span th:text="${item.product.name}">Name</span> //  <span th:text="${item.amount}">Amount</span>개
+                                </div>
                             </div>
                         </td>
-                        <td th:unless="${not #lists.isEmpty(delivery.items)}"></td>
-                        <td th:text="${delivery.ruby.amount}">Ruby</td>
-                        <td th:text="${delivery.date}">Date</td>
-                        <td th:text="${delivery.state}">State</td>
-                        <td ><button class="btn acceptButtons" th:id="|${delivery.id}_accpet|">수령하기</button>
-                            <button class="btn rejectButtons" th:id="|${delivery.id}_reject|">거절하기</button></td>
+                        <td th:unless="${not #lists.isEmpty(delivery.items)}" class="align-middle"></td>
+                        <td th:text="|${delivery.ruby.amount}개|" class="align-middle">Ruby</td>
+                        <td th:text="${delivery.date}" class="align-middle">Date</td>
+                        <td th:text="${delivery.state}" class="align-middle">State</td>
+                        <td th:if="${#strings.equals(delivery.state, 'wait')}">
+                            <button class="btn acceptButtons" th:id="|${delivery.id}_accpet|">수령하기</button>
+                            <button class="btn rejectButtons" th:id="|${delivery.id}_reject|">거절하기</button>
+                        </td>
+                        <td th:unless="${#strings.equals(delivery.state, 'wait')}">
                     </tr>
                     </tbody>
                 </table>

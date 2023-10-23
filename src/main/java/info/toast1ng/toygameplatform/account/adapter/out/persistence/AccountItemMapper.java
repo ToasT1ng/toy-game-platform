@@ -4,6 +4,7 @@ import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.account.domain.AccountItem;
 import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.product.adapter.out.persistence.StoreProductJpaEntity;
+import info.toast1ng.toygameplatform.product.domain.Image;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class AccountItemMapper implements BasicMapper<AccountItemJpaEntity, Acco
                 .product(StoreProduct.builder()
                         .id(jpaEntity.getProduct().getId())
                         .name(jpaEntity.getProduct().getName())
+                        .image(new Image(jpaEntity.getProduct().getImageUrl()))
                         .build())
                 .amount(jpaEntity.getAmount())
                 .build();

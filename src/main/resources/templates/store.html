@@ -27,6 +27,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">이미지</th>
                             <th scope="col">이름</th>
                             <th scope="col">카테고리</th>
                             <th scope="col">골드형태</th>
@@ -36,11 +37,14 @@
                     </thead>
                     <tbody>
                         <tr th:each="product : ${productList}" >
-                            <th th:text="${product.id}" scope="row">id</th>
-                            <td th:text="${product.name}">name</td>
-                            <td th:text="${product.category}">category</td>
-                            <td th:text="${product.type}">type</td>
-                            <td th:text="${product.price.amount}">price</td>
+                            <th class="align-middle" th:text="${product.id}" scope="row">id</th>
+                            <td class="align-middle">
+                                <img th:if="${product.image.url != ''}" th:src="${product.image.url}" width="30" height="30">
+                            </td>
+                            <td class="align-middle" th:text="${product.name}">name</td>
+                            <td class="align-middle" th:text="${product.category}">category</td>
+                            <td class="align-middle" th:text="${product.type}">type</td>
+                            <td class="align-middle" th:text="${product.price.amount}">price</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-outline-secondary launch-purchase-modal" data-toggle="modal" data-target="#storeModal" th:data-whatever="|${product.id}|">구매하기</button>

@@ -6,6 +6,7 @@ import info.toast1ng.toygameplatform.common.adapter.out.persistence.BasicMapper;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.order.domain.Order;
 import info.toast1ng.toygameplatform.product.adapter.out.persistence.StoreProductJpaEntity;
+import info.toast1ng.toygameplatform.product.domain.Image;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +44,7 @@ public class OrderMapper implements BasicMapper<OrderJpaEntity, Order> {
                 .product(StoreProduct.builder()
                         .id(jpaEntity.getProduct().getId())
                         .name(jpaEntity.getProduct().getName())
+                        .image(new Image(jpaEntity.getProduct().getImageUrl()))
                         .build())
                 .productAmount(jpaEntity.getProductAmount())
                 .date(jpaEntity.getDate())

@@ -7,6 +7,7 @@ import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.delivery.domain.Delivery;
 import info.toast1ng.toygameplatform.delivery.domain.DeliveryItem;
 import info.toast1ng.toygameplatform.product.adapter.out.persistence.StoreProductJpaEntity;
+import info.toast1ng.toygameplatform.product.domain.Image;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import org.springframework.stereotype.Component;
 
@@ -89,6 +90,7 @@ public class DeliveryMapper implements BasicMapper<DeliveryJpaEntity, Delivery> 
                 .product(StoreProduct.builder()
                         .id(deliveryItemJpaEntity.getProduct().getId())
                         .name(deliveryItemJpaEntity.getProduct().getName())
+                        .image(new Image(deliveryItemJpaEntity.getProduct().getImageUrl()))
                         .build())
                 .amount(deliveryItemJpaEntity.getAmount())
                 .build();
