@@ -1,5 +1,6 @@
 package info.toast1ng.toygameplatform.account.domain;
 
+import info.toast1ng.toygameplatform.account.application.port.in.ChangeAccountInfoCommand;
 import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import lombok.Builder;
@@ -22,9 +23,20 @@ public class Account implements UserDetails {
     private long id;
     private String username;
     private String password;
+    private String mailAddress;
+    private String nickname;
     private AccountGrade grade;
     private Golds golds;
     private Date lastLogin;
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void updateInfo(ChangeAccountInfoCommand command) {
+        this.mailAddress = command.getMailAddress();
+        this.nickname = command.getNickname();
+    }
 
     public void addDiamond(Gold diamond) {
         this.golds.diamond.addGold(diamond.getAmount());

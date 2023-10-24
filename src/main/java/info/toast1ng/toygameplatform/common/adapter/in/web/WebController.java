@@ -97,38 +97,56 @@ public class WebController {
         return model;
     }
 
-    @GetMapping("/myPage")
+    @GetMapping("/my-page")
     public ModelAndView myPage() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
-        model.setViewName("myPage");
+        model.setViewName("my-page");
         return model;
     }
 
-    @GetMapping("/myItems")
+    @GetMapping("/edit-info")
+    public ModelAndView editInfo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
+        model.setViewName("edit-info");
+        return model;
+    }
+
+    @GetMapping("/edit-password")
+    public ModelAndView editPassword() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
+        model.setViewName("edit-password");
+        return model;
+    }
+
+    @GetMapping("/my-items")
     public ModelAndView myItems() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
         model.addObject("itemOrders", getOrderQuery.getOrders(username));
-        model.setViewName("myItems");
+        model.setViewName("my-items");
         return model;
     }
 
-    @GetMapping("/myCharges")
+    @GetMapping("/my-charges")
     public ModelAndView myCharges() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("exchangeRates", new FixedExchangeRates().getList());
         model.addObject("chargeOrders", getChargeOrderQuery.getChargeOrders(username));
-        model.setViewName("myCharges");
+        model.setViewName("my-charges");
         return model;
     }
 
-    @GetMapping("/deliveryBox")
+    @GetMapping("/delivery-box")
     public ModelAndView deliveryBox() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 //        String username = "admin_user";
@@ -137,7 +155,7 @@ public class WebController {
         model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
         model.addObject("sendDeliveries", getDeliveryQuery.getSendDeliveries(username));
         model.addObject("receivedDeliveries", getDeliveryQuery.getReceivedDeliveries(username));
-        model.setViewName("deliveryBox");
+        model.setViewName("delivery-box");
         return model;
     }
 }

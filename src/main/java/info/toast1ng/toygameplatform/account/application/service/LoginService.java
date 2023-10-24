@@ -25,6 +25,8 @@ public class LoginService implements LoginUseCase {
         registerAccountPort.createAccount(Account.builder()
                 .username(command.getUsername())
                 .password(passwordEncoder.encode(command.getPassword()))
+                .mailAddress(command.getMailAddress())
+                .nickname(command.getNickname())
                 .golds(Account.Golds.builder()
                         .ruby(new Gold(100))
                         .diamond(new Gold(0))

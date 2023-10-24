@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/myPage.css}">
+    <script type="text/javascript" th:src="@{/js/my-page.js}"></script>
+</head>
+
+<body>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/fragment/myPageSidebar.html :: fragment-my-sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">기본 정보</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button class="btn btn-sm btn-outline-secondary" id="editAccount">수정하기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td th:text="${account.username}"></td>
+                        </tr>
+                        <tr>
+                            <th>Password</th>
+                            <td>**** <button class="btn btn-sm btn-outline-secondary" id="editPassword">수정하기</button></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td th:text="${account.mailAddress}"></td>
+                        </tr>
+                        <tr>
+                            <th>Nickname</th>
+                            <td th:text="${account.nickname}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

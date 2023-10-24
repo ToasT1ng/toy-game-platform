@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#myPage").click(() => {
-        window.location.replace("http://localhost:8080/myPage");
+        window.location.replace("http://localhost:8080/my-page");
     });
 
     $("#store").click(() => {

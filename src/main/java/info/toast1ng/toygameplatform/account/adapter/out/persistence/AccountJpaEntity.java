@@ -18,6 +18,12 @@ public class AccountJpaEntity {
     private String username;
     private String password;
 
+    @Column(name = "mail_address")
+    private String mailAddress;
+
+    @Column(name = "nickname")
+    private String nickname;
+
     @Enumerated(value = EnumType.STRING)
     private Account.AccountGrade grade;
     private int ruby;
@@ -27,10 +33,12 @@ public class AccountJpaEntity {
     private Date lastLogin;
 
     @Builder
-    public AccountJpaEntity(long id, String username, String password, Account.AccountGrade grade, int ruby, int diamond, Date lastLogin) {
+    public AccountJpaEntity(long id, String username, String password, String mailAddress, String nickname, Account.AccountGrade grade, int ruby, int diamond, Date lastLogin) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.mailAddress = mailAddress;
+        this.nickname = nickname;
         this.grade = grade;
         this.ruby = ruby;
         this.diamond = diamond;

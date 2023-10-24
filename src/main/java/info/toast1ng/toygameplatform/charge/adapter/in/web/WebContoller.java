@@ -22,6 +22,6 @@ public class WebContoller {
                 .orderId(orderId)
                 .build());
 
-        return "redirect:/myCharges";
+        return "redirect:/my-charges";
     }
 }

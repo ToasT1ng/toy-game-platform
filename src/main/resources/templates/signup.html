@@ -17,7 +17,7 @@
                 <h4 class="mb-3">기본정보</h4>
                 <form th:action="@{/account}" method="POST" class="needs-validation" novalidate="">
                     <div class="mb-3">
-                        <label for="username">Username</label>
+                        <label for="username">Username <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
@@ -30,16 +30,24 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <label for="mailAddress">Email <span class="text-danger">*</span></label>
+                        <input type="email" name="mailAddress" class="form-control" id="mailAddress" placeholder="you@example.com">
                         <div class="invalid-feedback">
                             Please enter a valid email address.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="inputPassword">Password <span class="text-muted"></span></label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <label for="nickname">Nickname <span class="text-danger">*</span></label>
+                        <input type="text" name="nickname" class="form-control" id="nickname" placeholder="Nickname">
+                        <div class="invalid-feedback">
+                            Please enter a valid nickname.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                         <div class="invalid-feedback">
                             Please enter a valid password.
                         </div>

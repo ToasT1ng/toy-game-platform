@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#sidebar-delivery-box-link").addClass("active");
 
     $("#back").click(() => {
-        window.location.replace("http://localhost:8080/myPage");
+        window.location.replace("http://localhost:8080/my-page");
     });
 
     $("#deliveryButton").click(() => {
@@ -23,7 +23,7 @@ $(document).ready(function () {
 
         $.ajax(query).done((data, textStatus, jqXHR) => {
             ajaxDone(data, textStatus, jqXHR);
-            window.location.replace("http://localhost:8080/deliveryBox");
+            window.location.replace("http://localhost:8080/delivery-box");
         }).fail((jqXHR, textStatus, errorThrown) => {
             ajaxFail(jqXHR, textStatus, errorThrown);
         });
