@@ -27,11 +27,13 @@
                 <div>
                     <div class="row row-header">
                         <div class="col">ID</div>
+                        <div class="col">Product ID</div>
                         <div class="col">Name</div>
                         <div class="col">Amount</div>
                     </div>
                     <div th:each="item : ${items}" class="row">
                         <div th:text="${item.id}" class="col">ID</div>
+                        <div th:text="${item.product.id}" class="col">Product ID</div>
                         <div th:text="${item.product.name}" class="col">Name</div>
                         <div th:text="${item.amount}" class="col">Amount</div>
                     </div>

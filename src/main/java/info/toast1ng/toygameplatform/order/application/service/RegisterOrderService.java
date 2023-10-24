@@ -1,9 +1,9 @@
 package info.toast1ng.toygameplatform.order.application.service;
 
-import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
 import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountItemPort;
-import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountPort;
+import info.toast1ng.toygameplatform.account.application.port.out.LoadAccountPort;
 import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountItemPort;
+import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountPort;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.account.domain.AccountItem;
 import info.toast1ng.toygameplatform.common.domain.Gold;
@@ -38,9 +38,19 @@ public class RegisterOrderService implements RegisterOrderUseCase {
         totalGold.multiplyGold(registerOrderCommand.getAmount());
 
         //TODO 오류 처리 매끄럽게
-        if (!account.isAbleToPay(storeProduct.getType(), totalGold)) {
-            throw new Exception("money not ready");
+        if (account.getGrade().equals(Account.AccountGrade.user)) {
+            if (!account.isAbleToPay(storeProduct.getType(), totalGold)) throw new Exception("player doesn't have enough money");
+            //TODO lock account
+            account.payGold(storeProduct.getType(), totalGold);
+            updateAccountPort.updateAccount(account);
+            //TODO unlock account
         }
+
+        //TODO lock accountItem
+        AccountItem accountItem = loadAccountItemPort.loadAccountItem(account.getId(), storeProduct.getId());
+        accountItem.accept(registerOrderCommand.getAmount());
+        updateAccountItemPort.updateAccountItem(accountItem);
+        //TODO unlock accountItem
 
         Order order = Order.builder()
                 .user(account)
@@ -51,16 +61,5 @@ public class RegisterOrderService implements RegisterOrderUseCase {
                 .date(new Date())
                 .build();
         registerOrderPort.registerOrder(order);
-
-        //TODO lock account
-        account.payGold(storeProduct.getType(), totalGold);
-        updateAccountPort.updateAccount(account);
-        //TODO unlock account
-
-        //TODO lock accountItem
-        AccountItem accountItem = loadAccountItemPort.loadAccountItem(account.getId(), storeProduct.getId());
-        accountItem.accept(registerOrderCommand.getAmount());
-        updateAccountItemPort.updateAccountItem(accountItem);
-        //TODO unlock accountItem
     }
 }

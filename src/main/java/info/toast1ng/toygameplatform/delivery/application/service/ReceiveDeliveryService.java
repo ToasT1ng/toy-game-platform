@@ -35,8 +35,10 @@ public class ReceiveDeliveryService implements ReceiveDeliveryUseCase {
         Delivery delivery = loadDeliveryPort.loadWaitDelivery(id);
 
         Account receiver = loadAccountPort.loadAccount(delivery.getReceiver().getId());
-        addRuby(delivery, receiver);
-        changeAccountItems(delivery, receiver);
+        if (!receiver.getGrade().equals(Account.AccountGrade.admin)) {
+            addRuby(delivery, receiver);
+        }
+        addAccountItems(delivery, receiver);
 
         delivery.updateDeliveryState(DeliveryState.accept);
         updateDeliveryPort.updateDelivery(delivery);
@@ -50,7 +52,7 @@ public class ReceiveDeliveryService implements ReceiveDeliveryUseCase {
         //TODO unlock account
     }
 
-    private void changeAccountItems(Delivery delivery, Account account) {
+    private void addAccountItems(Delivery delivery, Account account) {
         //TODO lock account item
         Map<Long, Integer> itemProductMap = delivery.getItemProductMap();
         List<AccountItem> receiverItems = loadAccountItemPort.loadAccountItemsByProductIds(account.getId(), itemProductMap.keySet());
@@ -75,8 +77,10 @@ public class ReceiveDeliveryService implements ReceiveDeliveryUseCase {
         Delivery delivery = loadDeliveryPort.loadWaitDelivery(id);
 
         Account sender = loadAccountPort.loadAccount(delivery.getSender().getId());
-        addRuby(delivery, sender);
-        changeAccountItems(delivery, sender);
+        if (!sender.getGrade().equals(Account.AccountGrade.admin)) {
+            addRuby(delivery, sender);
+        }
+        addAccountItems(delivery, sender);
 
         delivery.updateDeliveryState(DeliveryState.cancel);
         updateDeliveryPort.updateDelivery(delivery);
@@ -87,8 +91,10 @@ public class ReceiveDeliveryService implements ReceiveDeliveryUseCase {
         Delivery delivery = loadDeliveryPort.loadWaitDelivery(id);
 
         Account sender = loadAccountPort.loadAccount(delivery.getSender().getId());
-        addRuby(delivery, sender);
-        changeAccountItems(delivery, sender);
+        if (!sender.getGrade().equals(Account.AccountGrade.admin)) {
+            addRuby(delivery, sender);
+        }
+        addAccountItems(delivery, sender);
 
         delivery.updateDeliveryState(DeliveryState.reject);
         updateDeliveryPort.updateDelivery(delivery);

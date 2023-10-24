@@ -14,7 +14,7 @@ $(document).ready(function () {
                 senderId: $("#userId").val(),
                 receiverUsername: $("#receiverUsername").val(),
                 items: [
-                    {itemId: $("#cartAccountProductId").val(), amount:$("#cartProductAmount").val()}
+                    {productId: $("#cartProductId").val(), amount:$("#cartProductAmount").val()}
                 ],
                 ruby: $("#rubyAmount").val()
             }),

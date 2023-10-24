@@ -16,7 +16,8 @@ public class SendDeliveryCommand {
     @NoArgsConstructor
     @Data
     public static class DeliveryItemInfo {
-        private long itemId;
+//        private long itemId;
+        private long productId;
         private int amount;
     }
 }

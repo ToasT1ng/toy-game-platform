@@ -36,41 +36,29 @@ public class SendDeliveryService implements SendDeliveryUseCase {
 
         if (command.getSenderId() == receiverAccount.getId()) throw new Exception("don't send to yourself");
 
-        Map<Long, Integer> requestItemIdAmountMap = new HashMap<>();
+        Map<Long, Integer> requestProductIdAmountMap = new HashMap<>();
         for (SendDeliveryCommand.DeliveryItemInfo requestItemInfo : command.getItems()) {
-            requestItemIdAmountMap.put(requestItemInfo.getItemId(),
-                    requestItemIdAmountMap.getOrDefault(requestItemInfo.getItemId(),0) + requestItemInfo.getAmount());
+            requestProductIdAmountMap.put(requestItemInfo.getProductId(),
+                    requestProductIdAmountMap.getOrDefault(requestItemInfo.getProductId(),0) + requestItemInfo.getAmount());
         }
-
-        List<DeliveryItem> deliveryItems = new ArrayList<>();
-
-        List<AccountItem> accountItems = loadAccountItemPort.loadAccountItems(command.getSenderId(), requestItemIdAmountMap.keySet());
-
-        for (AccountItem accountItem : accountItems) {
-            Integer requestProductAmount = requestItemIdAmountMap.get(accountItem.getId());
-            if (!accountItem.isAbleToDelivery(requestProductAmount)) throw new Exception("item not ready");
-
-            deliveryItems.add(DeliveryItem.builder()
-                    .product(accountItem.getProduct())
-                    .amount(requestProductAmount)
-                    .build());
-        }
+        List<AccountItem> accountItems = loadAccountItemPort.loadAccountItemsByProductIds(command.getSenderId(), requestProductIdAmountMap.keySet());
 
         Account senderAccount = loadAccountPort.loadAccount(command.getSenderId());
         Gold totalGold = new Gold(command.getRuby());
-        if (!senderAccount.isAbleToPay(GoldType.ruby, totalGold)) throw new Exception("money not ready");
 
-        //TODO lock account
-        senderAccount.payGold(GoldType.ruby, totalGold);
-        updateAccountPort.updateAccount(senderAccount);
-        //TODO unlock account
-
-        //TODO lock account item
-        for (AccountItem accountItem : accountItems) {
-            accountItem.delivery(requestItemIdAmountMap.get(accountItem.getId()));
-            updateAccountItemPort.updateAccountItem(accountItem);
+        if (!senderAccount.getGrade().equals(Account.AccountGrade.admin)) {
+            if (!senderAccount.isAbleToPay(GoldType.ruby, totalGold)) throw new Exception("player doesn't have money");
+            subtractRuby(senderAccount, totalGold);
         }
-        //TODO unlock account item
+        subtractAccountItems(requestProductIdAmountMap, accountItems);
+
+        List<DeliveryItem> deliveryItems = new ArrayList<>();
+        for (AccountItem accountItem : accountItems) {
+            deliveryItems.add(DeliveryItem.builder()
+                    .product(accountItem.getProduct())
+                    .amount(accountItem.getAmount())
+                    .build());
+        }
 
         registerDeliveryPort.createDelivery(Delivery.builder()
                 .sender(senderAccount)
@@ -81,4 +69,23 @@ public class SendDeliveryService implements SendDeliveryUseCase {
                 .state(DeliveryState.wait)
                 .build());
     }
+
+    private void subtractAccountItems(Map<Long, Integer> requestProductIdAmountMap, List<AccountItem> accountItems) throws Exception {
+        //TODO lock account item
+        for (AccountItem accountItem : accountItems) {
+            Integer requestProductAmount = requestProductIdAmountMap.get(accountItem.getProduct().getId());
+            if (!accountItem.isAbleToDelivery(requestProductAmount)) throw new Exception("player doesn't have this item");
+            accountItem.delivery(requestProductAmount);
+            updateAccountItemPort.updateAccountItem(accountItem);
+        }
+        //TODO unlock account item
+    }
+
+    private void subtractRuby(Account senderAccount, Gold totalGold) {
+        //TODO lock account
+        senderAccount.payGold(GoldType.ruby, totalGold);
+        updateAccountPort.updateAccount(senderAccount);
+        //TODO unlock account
+    }
+
 }
