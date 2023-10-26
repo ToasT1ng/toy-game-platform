@@ -5,28 +5,8 @@ $(document).ready(function () {
         window.location.replace("http://localhost:8080/my-page");
     });
 
-    $("#deliveryButton").click(() => {
-        let query = {
-            url: '/delivery',
-            type: 'POST',
-            headers: {Authorization:  $("#token").val()},
-            data: JSON.stringify({
-                senderId: $("#userId").val(),
-                receiverUsername: $("#receiverUsername").val(),
-                items: [
-                    {productId: $("#cartProductId").val(), amount:$("#cartProductAmount").val()}
-                ],
-                ruby: $("#rubyAmount").val()
-            }),
-            contentType: "application/json"
-        };
-
-        $.ajax(query).done((data, textStatus, jqXHR) => {
-            ajaxDone(data, textStatus, jqXHR);
-            window.location.replace("http://localhost:8080/delivery-box");
-        }).fail((jqXHR, textStatus, errorThrown) => {
-            ajaxFail(jqXHR, textStatus, errorThrown);
-        });
+    $("#sendDeliveryButton").click(() => {
+        window.location.replace("http://localhost:8080/send-delivery");
     });
 
     $(".cancelButtons").click((button) => {

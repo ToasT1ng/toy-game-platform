@@ -149,7 +149,6 @@ public class WebController {
     @GetMapping("/delivery-box")
     public ModelAndView deliveryBox() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        String username = "admin_user";
         ModelAndView model = new ModelAndView();
         model.addObject("account", getAccountQuery.getAccount(username));
         model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
@@ -158,4 +157,15 @@ public class WebController {
         model.setViewName("delivery-box");
         return model;
     }
+
+    @GetMapping("/send-delivery")
+    public ModelAndView sendDelivery() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        ModelAndView model = new ModelAndView();
+        model.addObject("account", getAccountQuery.getAccount(username));
+        model.addObject("items", getAccountItemQuery.getAccountItems(username, 1));
+        model.setViewName("send-delivery");
+        return model;
+    }
+
 }

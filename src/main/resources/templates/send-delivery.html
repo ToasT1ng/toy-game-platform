@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/fragment/commonHeader.html :: fragment-header"></div>
+    <script type="text/javascript" th:src="@{/js/send-delivery.js}"></script>
+</head>
+
+<body>
+<div th:replace="/fragment/goldNavbar.html :: fragment-nav"></div>
+<input type="hidden" id="userId" th:value="${account.id}">
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/fragment/myPageSidebar.html :: fragment-my-sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="paragraph">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">택배 전송</h1>
+                </div>
+
+                <table class="table text-center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${items}">
+                        <th th:text="${item.id}" scope="row" class="align-middle">ID</th>
+                        <td th:text="${item.product.id}" class="align-middle">Product ID</td>
+                        <td th:text="${item.product.name}" class="align-middle">Name</td>
+                        <td th:text="|${item.amount}개|" class="align-middle">Amount</td>
+                        <td class="align-middle">
+                            <button class="btn addDeliveryButtons" th:id="|delivery_${item.product.id}|">추가하기</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <div id="cartArea">
+                        <p>fssfs</p>
+                    </div>
+
+                    <p>루비 <input type="number" id="rubyAmount"></p>
+                    <p>받는 사람 아이디 <input type="text" id="receiverUsername"> </p>
+                    <br/>
+                    <button class="btn btn-sm btn-outline-secondary" id="deliveryButton">전송</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
