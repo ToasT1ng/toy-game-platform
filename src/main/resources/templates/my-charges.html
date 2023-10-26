@@ -14,13 +14,10 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">충전하기</h1>
-                </div>
-                <div>
-                    <p>충전정보 아이디 <input type="number" id="exchangeRateId"></p>
-                    <div class="errorMessages" id="chargeErrorBox"></div>
-                    <button class="btn" id="chargeKakaoPayButton">카카오페이</button>
-                    <button class="btn" id="chargePaycoButton">페이코</button>
+                    <h1 class="h2">충전</h1>
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary launch-charge-modal" data-toggle="modal" data-target="#chargeModal" id="chargeButton">충전하기</button>
+                    </div>
                 </div>
 
                 <table class="table">
@@ -30,6 +27,7 @@
                             <th scope="col">금액</th>
                             <th scope="col">다이아몬드</th>
                             <th scope="col">보너스</th>
+                            <th scope="col">#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,9 +36,46 @@
                             <td th:text="|${exchangeRate.price.amount}원|">price</td>
                             <td th:text="|${exchangeRate.diamond.amount}개|">diamond</td>
                             <td th:text="|${exchangeRate.bonus}개|">bonus</td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="chargeRadio" th:value="|${exchangeRate.id}_${exchangeRate.price.amount}_${exchangeRate.diamond.amount}|">
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="container">
+                <div class="modal fade" id="chargeModal" tabindex="-1" aria-labelledby="chargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="chargeModalLabel">충전하기</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <p>충전정보 아이디 : <span id="exchangeRateId"></span></p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <p>다이아몬드 갯수 : <span id="chargeAmount"></span></p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <p>충전 총액 : <span id="chargePrice"></span></p>
+                                    </div>
+                                    <div id="purchase-success-paragraph" class="mb-3 d-none" >
+                                        <p>충전성공! 창이 자동으로 닫힙니다.</p>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="close-charge-modal" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-primary" id="chargeKakaoPayButton">충전</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="paragraph">

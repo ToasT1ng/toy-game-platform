@@ -1,11 +1,25 @@
 $(document).ready(function () {
     $("#sidebar-my-charges-link").addClass("active");
 
+    $(".launch-charge-modal").click((button) => {
+        let radioValue = $("input[name='chargeRadio']:checked").val();
+        let selectedInfo = radioValue.split("_");
+        console.log(selectedInfo[0]);
+        $("#exchangeRateId").val(selectedInfo[0]);
+        $("#exchangeRateId").after(selectedInfo[0]);
+        $("#chargeAmount").after(selectedInfo[2] + "개");
+        $("#chargePrice").after(selectedInfo[1] + "원");
+        $('#chargeModal').modal('show');
+    });
+
+    $("#close-charge-modal").click((button) => {
+        $('#chargeModal').modal('hide');
+    });
+
     $("#chargeKakaoPayButton").click(() => {
         let query = {
             url: '/charge/diamond/' + $("#exchangeRateId").val(),
             type: 'POST',
-            headers: {Authorization:  $("#token").val()},
             data: {
                 userId: $("#userId").val(),
                 type: "KAKAO_PAY"
