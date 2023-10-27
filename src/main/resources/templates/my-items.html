@@ -16,50 +16,65 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">아이템 목록</h1>
                 </div>
-                <div class="row pt-3 px-4">
-                    <div th:each="item : ${items}" class="col-xs-1 d-flex bg-white border border-dark m-0 p-0 position-relative">
-                        <div class="p-3 gem-image-box">
-                            <img class="img-fluid d-block mx-auto my-auto" src="https://drive.google.com/uc?export=view&id=19FAJQh4YBlHngcX1I2zCQtya_n5S9Gmb" th:alt="${item.product.name}" width="75" height="75">
-                        </div>
-                        <div th:text="${item.amount}" class="h5 text-black m-0 position-absolute bottom-right"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="row row-header">
-                        <div class="col">ID</div>
-                        <div class="col">Product ID</div>
-                        <div class="col">Name</div>
-                        <div class="col">Amount</div>
-                    </div>
-                    <div th:each="item : ${items}" class="row">
-                        <div th:text="${item.id}" class="col">ID</div>
-                        <div th:text="${item.product.id}" class="col">Product ID</div>
-                        <div th:text="${item.product.name}" class="col">Name</div>
-                        <div th:text="${item.amount}" class="col">Amount</div>
-                    </div>
-                </div>
+<!--                <div class="row pt-3 px-4">-->
+<!--                    <div th:each="item : ${items}" class="col-xs-1 d-flex bg-white border border-dark m-0 p-0 position-relative">-->
+<!--                        <div class="p-3 gem-image-box">-->
+<!--                            <img class="img-fluid d-block mx-auto my-auto" src="https://drive.google.com/uc?export=view&id=19FAJQh4YBlHngcX1I2zCQtya_n5S9Gmb" th:alt="${item.product.name}" width="75" height="75">-->
+<!--                        </div>-->
+<!--                        <div th:text="${item.amount}" class="h5 text-black m-0 position-absolute bottom-right"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <table class="table text-center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${items}">
+                        <th th:text="${item.id}" scope="row" class="align-middle">ID</th>
+                        <td th:text="${item.product.id}" class="align-middle">Product ID</td>
+                        <td th:text="${item.product.name}" class="align-middle">Name</td>
+                        <td th:text="|${item.amount}개|" class="align-middle">Amount</td>
+                        <td class="align-middle">
+                            <button class="btn buttons" th:id="|button_${item.product.id}|">삭제하기</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="paragraph">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                     <h1 class="h2">아이템 구매 내역</h1>
                 </div>
-                <div>
-                    <div class="row row-header">
-                        <div class="col">Name</div>
-                        <div class="col">Amount</div>
-                        <div class="col">Gold Type</div>
-                        <div class="col">Price</div>
-                        <div class="col">Date</div>
-                    </div>
-                    <div th:each="itemOrder : ${itemOrders}" class="row">
-                        <div th:text="${itemOrder.product.name}" class="col">Name</div>
-                        <div th:text="${itemOrder.productAmount}" class="col">Amount</div>
-                        <div th:text="${itemOrder.goldType}" class="col">Gold Type</div>
-                        <div th:text="${itemOrder.price.amount}" class="col">Price</div>
-                        <div th:text="${itemOrder.date}" class="col">Date</div>
-                    </div>
-                </div>
+
+                <table class="table text-center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="itemOrder : ${itemOrders}">
+                        <th th:text="${itemOrder.product.name}" scope="row" class="align-middle">Name</th>
+                        <td th:text="|${itemOrder.productAmount}개|" class="align-middle">Amount</td>
+                        <td class="align-middle">
+                            <img class="d-inline" th:if="${#strings.equals(itemOrder.goldType, 'ruby')}" th:src="@{/img/ruby.png}" width="20" height="20">
+                            <img class="d-inline" th:if="${#strings.equals(itemOrder.goldType, 'diamond')}" th:src="@{/img/diamond.png}" width="20" height="20">
+                            <span class="d-inline" th:text="${itemOrder.price.amount}"></span>
+                        </td>
+                        <td th:text="${itemOrder.date}" class="align-middle">Date</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
 
         </main>

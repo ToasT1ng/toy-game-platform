@@ -56,7 +56,7 @@ public class SendDeliveryService implements SendDeliveryUseCase {
         for (AccountItem accountItem : accountItems) {
             deliveryItems.add(DeliveryItem.builder()
                     .product(accountItem.getProduct())
-                    .amount(accountItem.getAmount())
+                    .amount(requestProductIdAmountMap.get(accountItem.getProduct().getId()))
                     .build());
         }
 
