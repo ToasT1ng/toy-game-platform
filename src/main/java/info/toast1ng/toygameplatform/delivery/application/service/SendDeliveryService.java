@@ -6,6 +6,8 @@ import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountI
 import info.toast1ng.toygameplatform.account.application.port.out.UpdateAccountPort;
 import info.toast1ng.toygameplatform.account.domain.Account;
 import info.toast1ng.toygameplatform.account.domain.AccountItem;
+import info.toast1ng.toygameplatform.common.CustomException;
+import info.toast1ng.toygameplatform.common.ErrorCode;
 import info.toast1ng.toygameplatform.common.GoldType;
 import info.toast1ng.toygameplatform.common.domain.Gold;
 import info.toast1ng.toygameplatform.delivery.application.port.in.SendDeliveryCommand;
@@ -34,7 +36,7 @@ public class SendDeliveryService implements SendDeliveryUseCase {
     public void sendDelivery(SendDeliveryCommand command) throws Exception {
         Account receiverAccount = loadAccountPort.loadAccount(command.getReceiverUsername());
 
-        if (command.getSenderId() == receiverAccount.getId()) throw new Exception("don't send to yourself");
+        if (command.getSenderId() == receiverAccount.getId()) throw new CustomException("don't send to yourself", ErrorCode.VALIDATION_FAIL);
 
         Map<Long, Integer> requestProductIdAmountMap = new HashMap<>();
         for (SendDeliveryCommand.DeliveryItemInfo requestItemInfo : command.getItems()) {
@@ -47,7 +49,7 @@ public class SendDeliveryService implements SendDeliveryUseCase {
         Gold totalGold = new Gold(command.getRuby());
 
         if (!senderAccount.getGrade().equals(Account.AccountGrade.admin)) {
-            if (!senderAccount.isAbleToPay(GoldType.ruby, totalGold)) throw new Exception("player doesn't have money");
+            if (!senderAccount.isAbleToPay(GoldType.ruby, totalGold)) throw new CustomException("player doesn't have money", ErrorCode.VALIDATION_FAIL);
             subtractRuby(senderAccount, totalGold);
         }
         subtractAccountItems(requestProductIdAmountMap, accountItems);
@@ -74,7 +76,7 @@ public class SendDeliveryService implements SendDeliveryUseCase {
         //TODO lock account item
         for (AccountItem accountItem : accountItems) {
             Integer requestProductAmount = requestProductIdAmountMap.get(accountItem.getProduct().getId());
-            if (!accountItem.isAbleToDelivery(requestProductAmount)) throw new Exception("player doesn't have this item");
+            if (!accountItem.isAbleToDelivery(requestProductAmount)) throw new CustomException("player doesn't have this item", ErrorCode.VALIDATION_FAIL);
             accountItem.delivery(requestProductAmount);
             updateAccountItemPort.updateAccountItem(accountItem);
         }
