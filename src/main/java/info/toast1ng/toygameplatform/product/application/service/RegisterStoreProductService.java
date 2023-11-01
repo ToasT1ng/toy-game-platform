@@ -18,8 +18,8 @@ public class RegisterStoreProductService implements RegisterStoreProductUseCase 
     private final RegisterStoreProductPort port;
 
     @Override
-    public void registerProduct(RegisterProductCommand command) {
-        port.createStoreProduct(StoreProduct.builder()
+    public long registerProduct(RegisterProductCommand command) {
+        return port.createStoreProduct(StoreProduct.builder()
                 .name(command.getName())
                 .category(command.getCategory())
                 .type(command.getType())

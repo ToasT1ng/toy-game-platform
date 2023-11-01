@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @WebAdapter
 @RequiredArgsConstructor
 @RestController
 public class OrderController {
     private final RegisterOrderUseCase registerOrderUseCase;
 
-    //TODO 빈 요청일 경우 Exception 처리
     @PostMapping("/orders")
-    public String registerOrder(@RequestBody RegisterOrderVO registerOrderVO) throws Exception {
+    public String registerOrder(@Valid @RequestBody RegisterOrderVO registerOrderVO) throws Exception {
         registerOrderUseCase.registerOrder(RegisterOrderCommand.builder()
                 .userId(registerOrderVO.getUserId())
                 .productId(registerOrderVO.getProductId())

@@ -1,4 +1,4 @@
-package info.toast1ng.toygameplatform.common;
+package info.toast1ng.toygameplatform.common.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -21,8 +21,8 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
 
 
     @Override
-    public void createStoreProduct(StoreProduct storeProduct) {
-        repository.save(mapper.mapToJpaEntity(storeProduct));
+    public long createStoreProduct(StoreProduct storeProduct) {
+        return repository.save(mapper.mapToJpaEntity(storeProduct)).getId();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class StoreProductPersistenceAdapter implements RegisterStoreProductPort,
     }
 
     @Override
-    public void updateStoreProduct(StoreProduct storeProduct) {
-        repository.save(mapper.mapToJpaEntity(storeProduct));
+    public long updateStoreProduct(StoreProduct storeProduct) {
+        return repository.save(mapper.mapToJpaEntity(storeProduct)).getId();
     }
 }

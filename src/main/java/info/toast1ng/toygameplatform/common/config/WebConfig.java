@@ -1,6 +1,7 @@
-package info.toast1ng.toygameplatform.common;
+package info.toast1ng.toygameplatform.common.config;
 
 
+import info.toast1ng.toygameplatform.common.log.ControllerLogInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

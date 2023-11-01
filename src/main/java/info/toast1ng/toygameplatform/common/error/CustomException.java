@@ -1,4 +1,4 @@
-package info.toast1ng.toygameplatform.common;
+package info.toast1ng.toygameplatform.common.error;
 
 public class CustomException extends Exception {
     private final ErrorCode code;

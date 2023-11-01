@@ -7,8 +7,11 @@ import info.toast1ng.toygameplatform.product.application.port.in.RegisterProduct
 import info.toast1ng.toygameplatform.product.application.port.in.RegisterStoreProductUseCase;
 import info.toast1ng.toygameplatform.product.domain.StoreProduct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @WebAdapter
@@ -20,15 +23,9 @@ public class StoreProductController {
     private final DeleteStoreProductUseCase deleteStoreProductUseCase;
 
     @PostMapping("/store-products")
-    public String registerStoreProduct(RegisterStoreProductVO vo) {
-        registerStoreProductUseCase.registerProduct(RegisterProductCommand.builder()
-                .name(vo.getName())
-                .category(vo.getCategory().name())
-                .type(vo.getType())
-                .price(vo.getPrice())
-                .imageUrl(vo.getImageUrl())
-                .build());
-        return "success";
+    public ResponseStoreProduct registerStoreProduct(@Valid RegisterStoreProductVO vo) {
+        long id = registerStoreProductUseCase.registerProduct(RegisterProductCommand.of(vo));
+        return ResponseStoreProduct.of(id);
     }
 
     @GetMapping("/store-products")
@@ -37,14 +34,14 @@ public class StoreProductController {
     }
 
     @DeleteMapping("/store-products/{id}")
-    public String deleteStoreProduct(@PathVariable long id) {
+    public ResponseEntity<?> deleteStoreProduct(@PathVariable long id) {
         deleteStoreProductUseCase.deleteStoreProduct(id);
-        return "success";
+        return new ResponseEntity<>(ResponseStoreProduct.of(id), HttpStatus.OK);
     }
 
     @PutMapping("/store-products/{id}")
-    public String updateStoreProduct(@PathVariable long id) {
+    public ResponseEntity<?> updateStoreProduct(@PathVariable long id) {
         deleteStoreProductUseCase.deleteStoreProduct(id);
-        return "success";
+        return new ResponseEntity<>(ResponseStoreProduct.of(id), HttpStatus.OK);
     }
 }

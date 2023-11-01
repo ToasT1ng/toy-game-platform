@@ -1,6 +1,7 @@
-package info.toast1ng.toygameplatform.common;
+package info.toast1ng.toygameplatform.common.error;
 
 public enum ErrorCode {
+    INTERNAL_ERROR(0),
     WRONG_HEADER(-1),
     VALIDATION_FAIL(-2),
     PASSWORD_NOT_MATCH(-3),

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @Configuration
 @RestController
@@ -16,19 +18,19 @@ public class AccountController {
     private final EditAccountUseCase editAccountUseCase;
 
     @PostMapping(value = "/account")
-    public String registerAccount(SignUpCommand command) {
+    public String registerAccount(@Valid SignUpCommand command) {
         loginUseCase.signup(command);
         return "success";
     }
 
     @PutMapping(value = "/account")
-    public String changeAccountInfo(@RequestBody ChangeAccountInfoCommand command) {
+    public String changeAccountInfo(@Valid @RequestBody ChangeAccountInfoCommand command) {
         editAccountUseCase.changeAccountInfo(command);
         return "success";
     }
 
     @PutMapping(value = "/account/password")
-    public String changeAccountPassword(@RequestBody ChangeAccountPasswordCommand command) throws Exception {
+    public String changeAccountPassword(@Valid @RequestBody ChangeAccountPasswordCommand command) throws Exception {
         editAccountUseCase.changeAccountPassword(command);
         return "success";
     }

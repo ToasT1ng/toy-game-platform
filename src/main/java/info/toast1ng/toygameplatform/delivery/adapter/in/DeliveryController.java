@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 public class DeliveryController {
@@ -16,7 +18,7 @@ public class DeliveryController {
     private final ReceiveDeliveryUseCase receiveDeliveryUseCase;
 
     @PostMapping("/delivery")
-    public String sendDelivery(@RequestBody SendDeliveryCommand command) throws Exception {
+    public String sendDelivery(@Valid @RequestBody SendDeliveryCommand command) throws Exception {
         sendDeliveryUseCase.sendDelivery(command);
         return "success";
     }
